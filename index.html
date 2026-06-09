@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Theron — scalable defense solutions. Defense at scale.">
+  <meta name="description" content="Theron — AI-first hard tech company building physical defense systems toward the final iteration of warfare.">
   <title>Theron</title>
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -11,202 +11,181 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
 </head>
-<body>
-  <header class="site-header" id="top">
-    <div class="container header-inner">
-      <a href="#top" class="logo-link" aria-label="Theron home">
-        <img src="assets/logo.svg" alt="Theron" class="logo" width="158" height="70">
+<body class="bg-white font-sans text-base leading-[1.6] text-ink antialiased">
+  <header class="site-header fixed inset-x-0 top-0 z-50 h-[72px] border-b border-line bg-white/90 backdrop-blur-md transition-shadow" id="top">
+    <div class="mx-auto flex h-full w-[min(100%-2.5rem,1180px)] items-center justify-between">
+      <a href="#top" aria-label="Theron home">
+        <img src="assets/logo.svg" alt="Theron" class="h-8 w-auto" width="158" height="70">
       </a>
-      <button class="nav-toggle" aria-expanded="false" aria-controls="site-nav" aria-label="Open menu">
-        <span></span>
-        <span></span>
+      <button class="nav-toggle peer group flex cursor-pointer flex-col justify-center gap-1.5 border-0 bg-transparent p-2 md:hidden" aria-expanded="false" aria-controls="site-nav" aria-label="Open menu">
+        <span class="block h-0.5 w-6 bg-navy transition-transform duration-300 group-aria-expanded:translate-y-1 group-aria-expanded:rotate-45"></span>
+        <span class="block h-0.5 w-6 bg-navy transition-transform duration-300 group-aria-expanded:-translate-y-1 group-aria-expanded:-rotate-45"></span>
       </button>
-      <nav class="site-nav" id="site-nav">
-        <a href="#capabilities">Capabilities</a>
-        <a href="#mission">Mission</a>
-        <a href="#systems">Systems</a>
-        <a href="#about">About</a>
-        <a href="#contact" class="nav-cta">Contact</a>
+      <nav class="site-nav flex items-center gap-8 max-md:pointer-events-none max-md:fixed max-md:inset-x-0 max-md:top-[72px] max-md:-translate-y-[110%] max-md:flex-col max-md:items-stretch max-md:gap-0 max-md:border-b max-md:border-line max-md:bg-white max-md:px-5 max-md:pt-2 max-md:pb-6 max-md:opacity-0 max-md:transition-all max-md:duration-300 max-md:peer-aria-expanded:pointer-events-auto max-md:peer-aria-expanded:translate-y-0 max-md:peer-aria-expanded:opacity-100" id="site-nav">
+        <a href="#capabilities" class="text-[0.8125rem] font-medium uppercase tracking-[0.04em] transition-colors hover:text-navy max-md:border-b max-md:border-line max-md:py-3.5">Capabilities</a>
+        <a href="#mission" class="text-[0.8125rem] font-medium uppercase tracking-[0.04em] transition-colors hover:text-navy max-md:border-b max-md:border-line max-md:py-3.5">Mission</a>
+        <a href="#vision" class="text-[0.8125rem] font-medium uppercase tracking-[0.04em] transition-colors hover:text-navy max-md:border-b max-md:border-line max-md:py-3.5">Vision</a>
+        <a href="#about" class="text-[0.8125rem] font-medium uppercase tracking-[0.04em] transition-colors hover:text-navy max-md:border-b max-md:border-line max-md:py-3.5">About</a>
+        <a href="#contact" class="rounded-[2px] bg-navy px-5 py-2.5 text-[0.8125rem] font-medium uppercase tracking-[0.04em] text-white transition-colors hover:bg-navy-light max-md:mt-3 max-md:text-center">Contact</a>
       </nav>
     </div>
   </header>
 
   <main>
-    <section class="hero">
+    <section class="relative flex min-h-svh items-center overflow-hidden bg-[linear-gradient(165deg,#F7F8FA_0%,#FFFFFF_45%,#EEF2F7_100%)] pt-[72px]">
       <div class="hero-grid" aria-hidden="true"></div>
-      <div class="container hero-content">
-        <p class="eyebrow">Scalable Defense Solutions</p>
-        <h1>Defense at Scale</h1>
-        <p class="hero-lead">
-          Theron develops modular defense systems engineered for rapid deployment,
-          production scalability, and mission-critical performance across contested domains.
-        </p>
-        <div class="hero-actions">
-          <a href="#capabilities" class="btn btn-primary">Explore Capabilities</a>
-          <a href="#contact" class="btn btn-ghost">Get in Touch</a>
+      <div class="relative mx-auto w-[min(100%-2.5rem,1180px)]">
+        <div class="max-w-[720px] pt-24 pb-32 max-md:pt-16 max-md:pb-24">
+          <h1 class="mb-6 text-[clamp(2.75rem,6vw,4.5rem)] font-semibold leading-[1.15] tracking-[-0.02em] text-navy-dark">Defense at Scale</h1>
+          <p class="max-w-[56ch] text-[clamp(1.05rem,2vw,1.2rem)] leading-[1.7]">
+            An AI-first hard tech company building real physical defense
+            systems at scale. Our ultimate aim is the final iteration of
+            warfare: a fully autonomous supersystem for defending the West.
+          </p>
         </div>
       </div>
-      <div class="hero-accent" aria-hidden="true">
-        <img src="assets/mark.png" alt="" width="339" height="231">
+      <div class="pointer-events-none absolute right-[clamp(1rem,8vw,8rem)] bottom-[clamp(2rem,12vh,8rem)] w-[clamp(120px,18vw,240px)] opacity-10 max-md:hidden" aria-hidden="true">
+        <img src="assets/mark.png" alt="" class="h-auto w-full" width="339" height="231">
       </div>
     </section>
 
-    <section class="section" id="capabilities">
-      <div class="container">
-        <div class="section-header">
-          <p class="eyebrow">Capabilities</p>
-          <h2>Built for Every Layer of the Fight</h2>
-          <p class="section-lead">
-            Integrated platforms and subsystems designed to scale from prototype to full-rate production.
+    <section class="py-[clamp(4rem,10vw,7rem)]" id="capabilities">
+      <div class="mx-auto w-[min(100%-2.5rem,1180px)]">
+        <div class="mb-[clamp(2.5rem,5vw,4rem)] text-center">
+          <p class="mb-5 text-xs font-semibold uppercase tracking-[0.2em] text-navy-light">Capabilities</p>
+          <h2 class="mb-4 text-[clamp(2rem,4vw,2.75rem)] font-semibold leading-[1.15] tracking-[-0.02em] text-navy-dark">What We Build</h2>
+          <p class="mx-auto max-w-[56ch] text-[clamp(1.05rem,2vw,1.2rem)] leading-[1.7]">
+            Rooted in hard tech — physical systems that deploy in the
+            field, supported by the software and intelligence layers
+            that make them effective.
           </p>
         </div>
-        <div class="card-grid">
-          <article class="card">
-            <span class="card-index">01</span>
-            <h3>Autonomous Systems</h3>
-            <p>
-              Unmanned platforms and mission software built for persistent operations,
-              distributed command, and rapid fielding.
+        <div class="grid gap-6 md:grid-cols-2">
+          <article class="rounded-[2px] border border-line bg-white p-8 transition hover:border-navy/25 hover:shadow-[0_8px_32px_rgba(7,42,74,0.06)]">
+            <span class="mb-5 block text-xs font-semibold tracking-[0.15em] text-navy-light">01</span>
+            <h3 class="mb-3 text-xl font-semibold leading-snug text-navy-dark">Physical Platforms</h3>
+            <p class="text-[0.9375rem] leading-[1.65]">
+              Real hardware — sensors, actuators, and field-deployable
+              systems built for production and volume.
             </p>
           </article>
-          <article class="card">
-            <span class="card-index">02</span>
-            <h3>Sensor &amp; ISR</h3>
-            <p>
-              Modular sensing architectures that deliver actionable intelligence across
-              air, land, and maritime environments.
+          <article class="rounded-[2px] border border-line bg-white p-8 transition hover:border-navy/25 hover:shadow-[0_8px_32px_rgba(7,42,74,0.06)]">
+            <span class="mb-5 block text-xs font-semibold tracking-[0.15em] text-navy-light">02</span>
+            <h3 class="mb-3 text-xl font-semibold leading-snug text-navy-dark">Controls Software</h3>
+            <p class="text-[0.9375rem] leading-[1.65]">
+              Real-time guidance, targeting, and system control —
+              the software that closes the loop on physical capability.
             </p>
           </article>
-          <article class="card">
-            <span class="card-index">03</span>
-            <h3>Counter-Threat</h3>
-            <p>
-              Scalable detection and defeat capabilities engineered for layered defense
-              against emerging unmanned and asymmetric threats.
+          <article class="rounded-[2px] border border-line bg-white p-8 transition hover:border-navy/25 hover:shadow-[0_8px_32px_rgba(7,42,74,0.06)]">
+            <span class="mb-5 block text-xs font-semibold tracking-[0.15em] text-navy-light">03</span>
+            <h3 class="mb-3 text-xl font-semibold leading-snug text-navy-dark">Artificial Intelligence</h3>
+            <p class="text-[0.9375rem] leading-[1.65]">
+              Perception, classification, and decision-making across
+              the sensor-to-effect chain.
             </p>
           </article>
-          <article class="card">
-            <span class="card-index">04</span>
-            <h3>Precision Effects</h3>
-            <p>
-              Affordable guidance, propulsion, and fire-control subsystems designed for
-              volume production without sacrificing performance.
+          <article class="rounded-[2px] border border-line bg-white p-8 transition hover:border-navy/25 hover:shadow-[0_8px_32px_rgba(7,42,74,0.06)]">
+            <span class="mb-5 block text-xs font-semibold tracking-[0.15em] text-navy-light">04</span>
+            <h3 class="mb-3 text-xl font-semibold leading-snug text-navy-dark">Volume Production</h3>
+            <p class="text-[0.9375rem] leading-[1.65]">
+              Modular architectures built for affordability, portability,
+              and deployment at scale.
             </p>
           </article>
         </div>
       </div>
     </section>
 
-    <section class="section section-dark" id="mission">
-      <div class="container mission-layout">
-        <div class="mission-copy">
-          <p class="eyebrow eyebrow-light">Our Mission</p>
-          <h2>Capability Should Scale as Fast as the Threat.</h2>
-          <p>
-            Theron was founded on a simple premise: modern defense requires systems that
-            can be designed, manufactured, and deployed at scale — without the overhead
-            of legacy programs. We build from first principles, with domestic supply chains
-            and architectures ready for rapid iteration.
-          </p>
-          <p class="placeholder-note">[ Mission details — placeholder for expanded company narrative ]</p>
-        </div>
-        <div class="mission-stats">
-          <div class="stat">
-            <span class="stat-value">Scale</span>
-            <span class="stat-label">Production-ready architectures</span>
-          </div>
-          <div class="stat">
-            <span class="stat-value">Speed</span>
-            <span class="stat-label">Accelerated development cycles</span>
-          </div>
-          <div class="stat">
-            <span class="stat-value">Modularity</span>
-            <span class="stat-label">Platform-agnostic subsystems</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="systems">
-      <div class="container">
-        <div class="section-header">
-          <p class="eyebrow">Systems</p>
-          <h2>What We're Building</h2>
-          <p class="section-lead">
-            Product lines and programs under active development. Details forthcoming.
-          </p>
-        </div>
-        <div class="systems-grid">
-          <article class="system-card">
-            <div class="system-meta">
-              <span class="system-status">In Development</span>
-            </div>
-            <h3>Program Alpha</h3>
-            <p>[ System description placeholder — long-endurance platform for distributed ISR. ]</p>
-          </article>
-          <article class="system-card">
-            <div class="system-meta">
-              <span class="system-status">In Development</span>
-            </div>
-            <h3>Program Bravo</h3>
-            <p>[ System description placeholder — scalable counter-threat architecture. ]</p>
-          </article>
-          <article class="system-card system-card-muted">
-            <div class="system-meta">
-              <span class="system-status">Classified</span>
-            </div>
-            <h3>Additional Programs</h3>
-            <p>[ Additional systems under development — details available under appropriate clearance. ]</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section section-muted" id="about">
-      <div class="container about-layout">
-        <div class="section-header section-header-left">
-          <p class="eyebrow">About Us</p>
-          <h2>Engineering the Next Generation of Defense</h2>
-        </div>
-        <div class="about-content">
-          <p>
-            [ Company overview placeholder — Theron is a defense technology company focused on
-            building scalable, mission-ready systems for the modern battlespace. ]
-          </p>
-          <p>
-            [ Leadership placeholder — brief bios and backgrounds of founding team members. ]
-          </p>
-          <p>
-            [ Values placeholder — commitment to domestic manufacturing, rigorous engineering,
-            and delivering capability at the speed of need. ]
+    <section class="bg-navy-dark py-[clamp(4rem,10vw,7rem)]" id="mission">
+      <div class="mx-auto w-[min(100%-2.5rem,1180px)]">
+        <div class="max-w-[720px]">
+          <p class="mb-5 text-xs font-semibold uppercase tracking-[0.2em] text-white/60">Mission</p>
+          <h2 class="mb-4 text-[clamp(2rem,4vw,2.75rem)] font-semibold leading-[1.15] tracking-[-0.02em] text-white">Close the Gap</h2>
+          <p class="text-[1.05rem] leading-[1.75] text-white/80">
+            Modern threats outpace legacy acquisition. We build fieldable,
+            affordable systems for today&rsquo;s operational realities —
+            in close partnership with end users, on short cycles, held to
+            one standard: performance where it matters.
           </p>
         </div>
       </div>
     </section>
 
-    <section class="section cta-section" id="contact">
-      <div class="container cta-layout">
+    <section class="bg-paper py-[clamp(4rem,10vw,7rem)]" id="vision">
+      <div class="mx-auto grid w-[min(100%-2.5rem,1180px)] items-start gap-[clamp(2rem,5vw,5rem)] md:grid-cols-[1fr_1.2fr]">
         <div>
-          <p class="eyebrow">Work With Us</p>
-          <h2>Open for Conversation</h2>
-          <p class="section-lead">
-            Partners, customers, and future teammates — if scalable defense matters to you,
-            we'd like to hear from you.
+          <p class="mb-5 text-xs font-semibold uppercase tracking-[0.2em] text-navy-light">Vision</p>
+          <h2 class="text-[clamp(2rem,4vw,2.75rem)] font-semibold leading-[1.15] tracking-[-0.02em] text-navy-dark">Beyond Legacy Command</h2>
+        </div>
+        <div>
+          <p class="mb-5 text-[1.05rem] leading-[1.75]">
+            The defense industry optimizes for the fight in front of it.
+            Programs are scoped to a battlespace, a budget cycle, an
+            integration slot in someone else&rsquo;s command stack. Theron
+            takes a longer view.
+          </p>
+          <p class="mb-5 text-[1.05rem] leading-[1.75]">
+            Every physical system we field is built to operate fully
+            autonomously and to connect. Deployed at volume, these platforms form a
+            networked awareness of the operational environment — not as
+            inputs to legacy command software, but as the substrate from
+            which command itself can be reconceived.
+          </p>
+          <p class="text-[1.05rem] leading-[1.75]">
+            Conflict is moving toward a pace and complexity that
+            human-mediated control cannot match. We are building the
+            infrastructure for what comes after: autonomous coordination
+            across the full depth of the battlespace, giving allied nations
+            defensive capability that operates at the speed the threat demands.
           </p>
         </div>
-        <div class="cta-actions">
-          <a href="mailto:contact@therondefense.com" class="btn btn-primary btn-large">Get in Touch</a>
-          <a href="#about" class="btn btn-ghost btn-large">Learn More</a>
+      </div>
+    </section>
+
+    <section class="py-[clamp(4rem,10vw,7rem)]" id="about">
+      <div class="mx-auto grid w-[min(100%-2.5rem,1180px)] items-start gap-[clamp(2rem,5vw,5rem)] md:grid-cols-[1fr_1.2fr]">
+        <div>
+          <p class="mb-5 text-xs font-semibold uppercase tracking-[0.2em] text-navy-light">About</p>
+          <h2 class="text-[clamp(2rem,4vw,2.75rem)] font-semibold leading-[1.15] tracking-[-0.02em] text-navy-dark">Real Hardware, Built Today</h2>
+        </div>
+        <div>
+          <p class="mb-5 text-[1.05rem] leading-[1.75]">
+            Theron is a San Francisco&ndash;based defense technology company,
+            founded in 2026. We are focused on building real physical
+            products — systems that exist in the field, not on a slide
+            deck.
+          </p>
+          <p class="text-[1.05rem] leading-[1.75]">
+            Our roots are in hard tech: mechanical design, electronics,
+            and production engineering. We pair that with deep expertise
+            in controls software and AI — from real-time system control
+            through perception and autonomous decision-making. We stay
+            close to operators, move fast, and measure success by what
+            ships.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-[linear-gradient(135deg,#0B3D6B_0%,#072A4A_100%)] py-[clamp(4rem,10vw,7rem)] text-white/85" id="contact">
+      <div class="mx-auto w-[min(100%-2.5rem,1180px)]">
+        <div>
+          <p class="mb-5 text-xs font-semibold uppercase tracking-[0.2em] text-white/55">Contact</p>
+          <h2 class="mb-4 text-[clamp(2rem,4vw,2.75rem)] font-semibold leading-[1.15] tracking-[-0.02em] text-white">Work With Us</h2>
+          <p class="max-w-[56ch] text-[clamp(1.05rem,2vw,1.2rem)] leading-[1.7] text-white/70">
+            For partnerships and inquiries, reach us at
+            <a href="mailto:contact@therondefense.com" class="text-white underline underline-offset-[3px] transition-opacity hover:opacity-80">contact@therondefense.com</a>.
+          </p>
         </div>
       </div>
     </section>
   </main>
 
-  <footer class="site-footer">
-    <div class="container footer-inner">
-      <img src="assets/logo-white.svg" alt="Theron" class="footer-logo" width="127" height="56">
-      <p class="footer-tagline">Defense at Scale</p>
-      <p class="footer-copy">&copy; <span id="year"></span> Theron. All rights reserved.</p>
+  <footer class="bg-navy-dark py-12">
+    <div class="mx-auto flex w-[min(100%-2.5rem,1180px)] flex-col items-center gap-3">
+      <img src="assets/logo-white.svg" alt="Theron" class="h-7 w-auto opacity-90" width="127" height="56">
+      <p class="mt-2 text-[0.8125rem] text-white/30">&copy; <span id="year"></span> Theron. All rights reserved.</p>
     </div>
   </footer>
 

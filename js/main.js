@@ -4,19 +4,19 @@
   const nav = document.querySelector('.site-nav');
   const navLinks = nav.querySelectorAll('a');
   const year = document.getElementById('year');
+  const scrolledShadow = 'shadow-[0_1px_24px_rgba(7,42,74,0.06)]';
 
   if (year) {
     year.textContent = new Date().getFullYear();
   }
 
   function onScroll() {
-    header.classList.toggle('scrolled', window.scrollY > 10);
+    header.classList.toggle(scrolledShadow, window.scrollY > 10);
   }
 
   function closeNav() {
     toggle.setAttribute('aria-expanded', 'false');
     toggle.setAttribute('aria-label', 'Open menu');
-    nav.classList.remove('open');
     document.body.style.overflow = '';
   }
 
@@ -24,7 +24,6 @@
     const isOpen = toggle.getAttribute('aria-expanded') === 'true';
     toggle.setAttribute('aria-expanded', String(!isOpen));
     toggle.setAttribute('aria-label', isOpen ? 'Open menu' : 'Close menu');
-    nav.classList.toggle('open', !isOpen);
     document.body.style.overflow = isOpen ? '' : 'hidden';
   });
 

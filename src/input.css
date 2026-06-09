@@ -1,0 +1,34 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --color-navy: #0B3D6B;
+  --color-navy-dark: #072A4A;
+  --color-navy-light: #134B82;
+  --color-ink: #5C5E62;
+  --color-ink-light: #8A8D93;
+  --color-paper: #F7F8FA;
+  --color-line: #E2E5EA;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* Blueprint grid backdrop for the hero — gradients + mask are cleaner here than as utilities */
+.hero-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgb(11 61 107 / 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(11 61 107 / 0.04) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: linear-gradient(to bottom, black 30%, transparent 90%);
+  -webkit-mask-image: linear-gradient(to bottom, black 30%, transparent 90%);
+}
