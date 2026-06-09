@@ -34,6 +34,10 @@ chmod +x .tools/tailwindcss
 Design tokens (brand colors, font) live in the `@theme` block of
 `src/input.css`, along with the hero grid backdrop.
 
+Dark mode uses Tailwind's `dark:` variant (class on `<html>`). A header
+selector offers **Auto** (system), **Light**, and **Dark**; preference is
+saved in `localStorage`.
+
 ## GitHub Pages
 
 1. Push this repo to GitHub.

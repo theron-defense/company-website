@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@variant dark (&:where(.dark, .dark *));
+
 @theme {
   --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --color-navy: #0B3D6B;
@@ -9,6 +11,9 @@
   --color-ink-light: #8A8D93;
   --color-paper: #F7F8FA;
   --color-line: #E2E5EA;
+  --color-surface: #0A1018;
+  --color-surface-raised: #111B27;
+  --color-surface-muted: #0D1520;
 }
 
 html {
@@ -21,7 +26,7 @@ html {
   }
 }
 
-/* Blueprint grid backdrop for the hero — gradients + mask are cleaner here than as utilities */
+/* Blueprint grid backdrop for the hero */
 .hero-grid {
   position: absolute;
   inset: 0;
@@ -31,4 +36,22 @@ html {
   background-size: 64px 64px;
   mask-image: linear-gradient(to bottom, black 30%, transparent 90%);
   -webkit-mask-image: linear-gradient(to bottom, black 30%, transparent 90%);
+}
+
+.dark .hero-grid {
+  background-image:
+    linear-gradient(rgb(148 163 184 / 0.14) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(148 163 184 / 0.14) 1px, transparent 1px);
+  mask-image: linear-gradient(to bottom, black 20%, transparent 92%);
+  -webkit-mask-image: linear-gradient(to bottom, black 20%, transparent 92%);
+}
+
+/* Navy gradient bands — mission & contact */
+.section-gradient {
+  background: linear-gradient(135deg, #0b3d6b 0%, #072a4a 100%);
+  color: rgb(255 255 255 / 0.85);
+}
+
+.dark .section-gradient {
+  background: linear-gradient(135deg, #0b3d6b 0%, #041018 100%);
 }
