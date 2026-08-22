@@ -26,6 +26,168 @@ html {
   }
 }
 
+/* Hero field photo — humvee anchored right, text fades in from left */
+.hero-photo {
+  position: absolute;
+  inset: 0;
+  background-image: url("../assets/hero-field.jpg");
+  background-size: cover;
+  background-position: 78% center;
+  background-repeat: no-repeat;
+}
+
+.hero-photo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      to right,
+      rgb(247 248 250 / 0.97) 0%,
+      rgb(247 248 250 / 0.9) 30%,
+      rgb(247 248 250 / 0.55) 50%,
+      rgb(247 248 250 / 0.15) 68%,
+      transparent 82%
+    ),
+    radial-gradient(
+      ellipse 85% 65% at 8% 100%,
+      rgb(247 248 250) 0%,
+      rgb(247 248 250 / 0.75) 38%,
+      transparent 72%
+    ),
+    linear-gradient(
+      to top,
+      rgb(247 248 250) 0%,
+      rgb(247 248 250 / 0.94) 6%,
+      rgb(247 248 250 / 0.8) 14%,
+      rgb(247 248 250 / 0.58) 26%,
+      rgb(247 248 250 / 0.32) 40%,
+      rgb(247 248 250 / 0.12) 52%,
+      transparent 64%
+    ),
+    linear-gradient(
+      to bottom,
+      rgb(247 248 250 / 0.3) 0%,
+      transparent 35%
+    );
+}
+
+.dark .hero-photo::after {
+  background:
+    linear-gradient(
+      to right,
+      rgb(10 16 24 / 0.96) 0%,
+      rgb(10 16 24 / 0.88) 30%,
+      rgb(10 16 24 / 0.6) 50%,
+      rgb(10 16 24 / 0.2) 68%,
+      transparent 82%
+    ),
+    radial-gradient(
+      ellipse 85% 65% at 8% 100%,
+      rgb(10 16 24) 0%,
+      rgb(10 16 24 / 0.75) 38%,
+      transparent 72%
+    ),
+    linear-gradient(
+      to top,
+      rgb(10 16 24) 0%,
+      rgb(10 16 24 / 0.94) 6%,
+      rgb(10 16 24 / 0.8) 14%,
+      rgb(10 16 24 / 0.58) 26%,
+      rgb(10 16 24 / 0.32) 40%,
+      rgb(10 16 24 / 0.12) 52%,
+      transparent 64%
+    ),
+    linear-gradient(
+      to bottom,
+      rgb(10 16 24 / 0.4) 0%,
+      transparent 35%
+    );
+}
+
+.hero-photo-mobile {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .hero {
+    display: block;
+    min-height: auto;
+    padding-bottom: min(34vh, 255px);
+  }
+
+  .hero-photo {
+    display: none;
+  }
+
+  .hero-grid {
+    display: none;
+  }
+
+  .hero-photo-mobile {
+    display: block;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    top: auto;
+    height: min(42vh, 320px);
+    width: 100%;
+    background-image: url("../assets/hero-field.jpg");
+    background-size: cover;
+    background-position: 68% 62%;
+    background-repeat: no-repeat;
+    z-index: 0;
+  }
+
+  .hero-photo-mobile::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(
+        to bottom,
+        rgb(247 248 250) 0%,
+        rgb(247 248 250 / 0.98) 6%,
+        rgb(247 248 250 / 0.92) 14%,
+        rgb(247 248 250 / 0.78) 24%,
+        rgb(247 248 250 / 0.55) 36%,
+        rgb(247 248 250 / 0.28) 50%,
+        rgb(247 248 250 / 0.08) 62%,
+        transparent 72%
+      ),
+      linear-gradient(
+        to top,
+        rgb(255 255 255) 0%,
+        rgb(255 255 255 / 0.9) 10%,
+        rgb(255 255 255 / 0.5) 24%,
+        transparent 44%
+      );
+  }
+
+  .dark .hero-photo-mobile::before {
+    background:
+      linear-gradient(
+        to bottom,
+        rgb(10 16 24) 0%,
+        rgb(10 16 24 / 0.98) 6%,
+        rgb(10 16 24 / 0.92) 14%,
+        rgb(10 16 24 / 0.78) 24%,
+        rgb(10 16 24 / 0.55) 36%,
+        rgb(10 16 24 / 0.28) 50%,
+        rgb(10 16 24 / 0.08) 62%,
+        transparent 72%
+      ),
+      linear-gradient(
+        to top,
+        rgb(10 16 24) 0%,
+        rgb(10 16 24 / 0.9) 10%,
+        rgb(10 16 24 / 0.5) 24%,
+        transparent 44%
+      );
+  }
+}
+
 /* Blueprint grid backdrop for the hero */
 .hero-grid {
   position: absolute;
@@ -34,16 +196,16 @@ html {
     linear-gradient(rgb(11 61 107 / 0.04) 1px, transparent 1px),
     linear-gradient(90deg, rgb(11 61 107 / 0.04) 1px, transparent 1px);
   background-size: 64px 64px;
-  mask-image: linear-gradient(to bottom, black 30%, transparent 90%);
-  -webkit-mask-image: linear-gradient(to bottom, black 30%, transparent 90%);
+  mask-image: linear-gradient(to right, black 0%, black 45%, transparent 70%);
+  -webkit-mask-image: linear-gradient(to right, black 0%, black 45%, transparent 70%);
 }
 
 .dark .hero-grid {
   background-image:
     linear-gradient(rgb(148 163 184 / 0.14) 1px, transparent 1px),
     linear-gradient(90deg, rgb(148 163 184 / 0.14) 1px, transparent 1px);
-  mask-image: linear-gradient(to bottom, black 20%, transparent 92%);
-  -webkit-mask-image: linear-gradient(to bottom, black 20%, transparent 92%);
+  mask-image: linear-gradient(to right, black 0%, black 40%, transparent 65%);
+  -webkit-mask-image: linear-gradient(to right, black 0%, black 40%, transparent 65%);
 }
 
 /* Navy gradient bands — mission & contact */
