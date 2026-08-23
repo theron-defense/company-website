@@ -37,6 +37,7 @@
           <a href="#mission" class="text-[0.8125rem] font-medium uppercase tracking-[0.04em] transition-colors hover:text-navy dark:text-slate-400 dark:hover:text-white max-md:border-b max-md:border-line max-md:py-3.5 dark:max-md:border-white/10">Mission</a>
           <a href="#vision" class="text-[0.8125rem] font-medium uppercase tracking-[0.04em] transition-colors hover:text-navy dark:text-slate-400 dark:hover:text-white max-md:border-b max-md:border-line max-md:py-3.5 dark:max-md:border-white/10">Vision</a>
           <a href="#about" class="text-[0.8125rem] font-medium uppercase tracking-[0.04em] transition-colors hover:text-navy dark:text-slate-400 dark:hover:text-white max-md:border-b max-md:border-line max-md:py-3.5 dark:max-md:border-white/10">About</a>
+          <a href="#team" class="text-[0.8125rem] font-medium uppercase tracking-[0.04em] transition-colors hover:text-navy dark:text-slate-400 dark:hover:text-white max-md:border-b max-md:border-line max-md:py-3.5 dark:max-md:border-white/10">Team</a>
           <a href="#contact" class="rounded-[2px] bg-navy px-5 py-2.5 text-[0.8125rem] font-medium uppercase tracking-[0.04em] text-white transition-colors hover:bg-navy-light dark:bg-navy-light dark:hover:bg-navy max-md:mt-3 max-md:text-center">Contact</a>
         </nav>
         <div class="theme-selector order-1 flex items-center gap-2 border-l border-line pl-4 md:order-none md:gap-3 md:pl-5 dark:border-white/10 max-md:border-0 max-md:pl-0" role="group" aria-label="Color scheme">
@@ -49,20 +50,19 @@
   </header>
 
   <main>
-    <section class="relative flex min-h-svh items-center overflow-hidden bg-[linear-gradient(165deg,#F7F8FA_0%,#FFFFFF_45%,#EEF2F7_100%)] pt-[72px] dark:bg-[linear-gradient(165deg,#0A1018_0%,#0D1520_45%,#071018_100%)]">
+    <section class="hero relative flex min-h-svh items-center overflow-hidden bg-paper pt-[72px] dark:bg-surface max-md:min-h-0 max-md:items-start">
+      <div class="hero-photo" aria-hidden="true"></div>
       <div class="hero-grid" aria-hidden="true"></div>
-      <div class="relative mx-auto w-[min(100%-2.5rem,1180px)]">
-        <div class="max-w-[720px] pt-24 pb-32 max-md:pt-16 max-md:pb-24">
+      <div class="hero-photo-mobile" aria-hidden="true"></div>
+      <div class="relative z-10 mx-auto w-[min(100%-2.5rem,1180px)]">
+        <div class="max-w-[720px] pt-24 pb-32 max-md:pt-10 max-md:pb-0">
           <h1 class="mb-6 text-[clamp(2.75rem,6vw,4.5rem)] font-semibold leading-[1.15] tracking-[-0.02em] text-navy-dark dark:text-white">Defense at Scale</h1>
-          <p class="max-w-[56ch] text-[clamp(1.05rem,2vw,1.2rem)] leading-[1.7] dark:text-slate-300">
+          <p class="max-w-[56ch] text-[clamp(1.05rem,2vw,1.2rem)] leading-[1.7] text-ink dark:text-slate-300">
             An AI-first hard tech company building real physical defense
             systems at scale. Our ultimate aim is the final iteration of
             warfare: a fully autonomous supersystem for defending the West.
           </p>
         </div>
-      </div>
-      <div class="pointer-events-none absolute right-[clamp(1rem,8vw,8rem)] bottom-[clamp(2rem,12vh,8rem)] w-[clamp(120px,18vw,240px)] opacity-10 dark:opacity-[0.18] max-md:hidden" aria-hidden="true">
-        <img src="assets/mark.png" alt="" class="h-auto w-full dark:invert" width="339" height="231">
       </div>
     </section>
 
@@ -181,6 +181,29 @@
             close to operators, move fast, and measure success by what
             ships.
           </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-paper py-[clamp(4rem,10vw,7rem)] dark:bg-surface-muted" id="team">
+      <div class="mx-auto w-[min(100%-2.5rem,1180px)]">
+        <div class="mb-[clamp(2.5rem,5vw,4rem)]">
+          <p class="mb-5 text-xs font-semibold uppercase tracking-[0.2em] text-navy-light dark:text-slate-400">Team</p>
+          <h2 class="text-[clamp(2rem,4vw,2.75rem)] font-semibold leading-[1.15] tracking-[-0.02em] text-navy-dark dark:text-white">Founders</h2>
+        </div>
+        <div class="grid gap-10 sm:grid-cols-2 sm:gap-12 md:max-w-[640px]">
+          <article>
+            <img src="assets/team/hagen.png" alt="Hagen O&rsquo;Neill" width="480" height="480" class="mb-5 aspect-square w-full max-w-[240px] rounded-full object-cover">
+            <h3 class="text-xl font-semibold leading-snug text-navy-dark dark:text-white">Hagen O&rsquo;Neill</h3>
+            <p class="mt-1 text-[0.9375rem] text-ink dark:text-slate-400">CEO</p>
+            <a href="https://www.linkedin.com/in/hagen-o-neill-5105b7207/" target="_blank" rel="noopener noreferrer" class="mt-3 inline-block text-[0.8125rem] font-medium uppercase tracking-[0.04em] text-navy transition-colors hover:text-navy-light dark:text-slate-300 dark:hover:text-white">LinkedIn</a>
+          </article>
+          <article>
+            <img src="assets/team/chandler.png" alt="Chandler Johnson" width="480" height="480" class="mb-5 aspect-square w-full max-w-[240px] rounded-full object-cover">
+            <h3 class="text-xl font-semibold leading-snug text-navy-dark dark:text-white">Chandler Johnson</h3>
+            <p class="mt-1 text-[0.9375rem] text-ink dark:text-slate-400">CTO</p>
+            <a href="https://www.linkedin.com/in/cyberpunkcoder/" target="_blank" rel="noopener noreferrer" class="mt-3 inline-block text-[0.8125rem] font-medium uppercase tracking-[0.04em] text-navy transition-colors hover:text-navy-light dark:text-slate-300 dark:hover:text-white">LinkedIn</a>
+          </article>
         </div>
       </div>
     </section>
