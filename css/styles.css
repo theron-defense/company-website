@@ -75,7 +75,7 @@ main {
 
 .site-header.on-hero .logo-on-dark {
   display: block;
-  filter: drop-shadow(0 1px 10px rgb(3 8 14 / 0.45));
+  filter: brightness(1.55) contrast(1.12) drop-shadow(0 1px 10px rgb(3 8 14 / 0.45));
 }
 
 .site-header.on-hero .nav-bar {
@@ -116,12 +116,14 @@ main {
 .hero-scrim {
   position: absolute;
   inset: 0;
-  background: radial-gradient(
-    ellipse at center,
-    transparent 42%,
-    rgb(3 8 14 / 0.22) 78%,
-    rgb(3 8 14 / 0.42) 100%
-  );
+  background:
+    linear-gradient(rgb(3 8 14 / 0.14), rgb(3 8 14 / 0.14)),
+    radial-gradient(
+      ellipse at center,
+      transparent 42%,
+      rgb(3 8 14 / 0.22) 78%,
+      rgb(3 8 14 / 0.42) 100%
+    );
 }
 
 .hero-content {
@@ -135,7 +137,7 @@ main {
 
 .hero-copy {
   max-width: 40rem;
-  text-shadow: 0 1px 18px rgb(3 8 14 / 0.45);
+  text-shadow: 0 1px 14px rgb(3 8 14 / 0.35);
 }
 
 .hero-copy h1 {
@@ -145,7 +147,7 @@ main {
   font-weight: 500;
   line-height: 1.15;
   letter-spacing: -0.025em;
-  color: #fff;
+  color: rgb(255 255 255 / 0.82);
 }
 
 .hero-lede {
@@ -156,7 +158,7 @@ main {
   font-weight: 400;
   line-height: 1.7;
   letter-spacing: -0.01em;
-  color: rgb(255 255 255 / 0.94);
+  color: rgb(255 255 255 / 0.68);
 }
 
 /* —— Scroll reveals —— */
@@ -297,14 +299,13 @@ main p {
 
 .cap-index {
   flex: 0 0 auto;
-  min-width: 2.4rem;
+  min-width: 2.15rem;
   font-family: var(--font-display);
-  font-size: 1.45rem;
+  font-size: 1.2rem;
   font-weight: 500;
-  line-height: 1;
-  letter-spacing: -0.04em;
+  line-height: 1.3;
+  letter-spacing: -0.03em;
   color: #c45e28;
-  padding-top: 0.12rem;
 }
 
 .cap-item-body {
@@ -312,8 +313,8 @@ main p {
 }
 
 .cap-item h3 {
-  margin: 0 0 0.7rem;
-  font-size: 1.25rem;
+  margin: 0 0 0.55rem;
+  font-size: 1.2rem;
   font-weight: 500;
   line-height: 1.3;
   color: var(--color-navy-dark);
@@ -322,8 +323,8 @@ main p {
 .cap-item p {
   margin: 0;
   max-width: 36ch;
-  font-size: 0.9375rem;
-  line-height: 1.65;
+  font-size: 1.05rem;
+  line-height: 1.7;
 }
 
 @media (min-width: 768px) {
