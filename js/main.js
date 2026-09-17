@@ -6,7 +6,10 @@
   const year = document.getElementById('year');
   const video = document.querySelector('.hero-video');
   const mediaSections = document.querySelectorAll('.hero, .photo-chapter, .founder-split');
+  const photoChapter = document.querySelector('.photo-chapter');
+  const photoChapterImage = document.querySelector('.photo-chapter-image');
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  var parallaxQueued = false;
 
   if (year) {
     year.textContent = new Date().getFullYear();
@@ -53,6 +56,29 @@
     if (revealsReady) updateReveals();
   }
 
+  function updateParallax() {
+    if (!photoChapter || !photoChapterImage) return;
+    if (reduceMotion.matches) {
+      photoChapterImage.style.transform = '';
+      return;
+    }
+    var rect = photoChapter.getBoundingClientRect();
+    var vh = window.innerHeight;
+    var mid = rect.top + rect.height / 2;
+    var offset = (mid - vh / 2) / vh;
+    var y = offset * vh * 0.14;
+    photoChapterImage.style.transform = 'translate3d(0, ' + y.toFixed(1) + 'px, 0)';
+  }
+
+  function startParallax() {
+    if (parallaxQueued) return;
+    parallaxQueued = true;
+    requestAnimationFrame(function () {
+      parallaxQueued = false;
+      updateParallax();
+    });
+  }
+
   function closeNav() {
     toggle.setAttribute('aria-expanded', 'false');
     toggle.setAttribute('aria-label', 'Open menu');
@@ -88,8 +114,11 @@
 
   window.addEventListener('scroll', onScroll, { passive: true });
   window.addEventListener('resize', onScroll);
+  window.addEventListener('scroll', startParallax, { passive: true });
+  window.addEventListener('resize', startParallax);
   reduceMotion.addEventListener('change', function () {
     syncVideo();
+    updateParallax();
     if (reduceMotion.matches) {
       document.querySelectorAll('.reveal-group').forEach(function (group) {
         group.classList.add('is-in');
@@ -151,6 +180,7 @@
   }
 
   onScroll();
+  startParallax();
   syncVideo();
   revealGroups();
   initSlideshows();

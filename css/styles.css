@@ -16,6 +16,7 @@ html {
 }
 
 #capabilities,
+#mission,
 #vision,
 #about,
 #team,
@@ -25,7 +26,7 @@ html {
 
 .heading-section {
   font-family: var(--font-display);
-  font-weight: 400;
+  font-weight: 500;
   letter-spacing: -0.025em;
 }
 
@@ -116,15 +117,15 @@ main {
   background:
     linear-gradient(
       to right,
-      rgb(3 8 14 / 0.78) 0%,
-      rgb(3 8 14 / 0.45) 42%,
-      rgb(3 8 14 / 0.18) 70%,
-      rgb(3 8 14 / 0.28) 100%
+      rgb(3 8 14 / 0.52) 0%,
+      rgb(3 8 14 / 0.28) 42%,
+      rgb(3 8 14 / 0.08) 70%,
+      rgb(3 8 14 / 0.14) 100%
     ),
     linear-gradient(
       to top,
-      rgb(3 8 14 / 0.72) 0%,
-      rgb(3 8 14 / 0.2) 38%,
+      rgb(3 8 14 / 0.48) 0%,
+      rgb(3 8 14 / 0.12) 38%,
       transparent 62%
     );
 }
@@ -146,7 +147,7 @@ main {
   margin: 0 0 1rem;
   font-family: var(--font-display);
   font-size: clamp(1.85rem, 3vw, 2.5rem);
-  font-weight: 400;
+  font-weight: 500;
   line-height: 1.15;
   letter-spacing: -0.025em;
   color: #fff;
@@ -201,11 +202,24 @@ main {
 
 .photo-chapter-image {
   position: absolute;
-  inset: 0;
+  left: 0;
+  right: 0;
+  top: -18%;
+  height: 136%;
   background-image: url("../assets/hero-field.jpg");
   background-size: cover;
   background-position: 72% center;
   background-repeat: no-repeat;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .photo-chapter-image {
+    top: 0;
+    height: 100%;
+    will-change: auto;
+    transform: none;
+  }
 }
 
 .photo-chapter-scrim {
@@ -214,13 +228,13 @@ main {
   background:
     linear-gradient(
       to right,
-      rgb(3 8 14 / 0.82) 0%,
-      rgb(3 8 14 / 0.5) 48%,
-      rgb(3 8 14 / 0.15) 100%
+      rgb(3 8 14 / 0.48) 0%,
+      rgb(3 8 14 / 0.26) 48%,
+      rgb(3 8 14 / 0.06) 100%
     ),
     linear-gradient(
       to top,
-      rgb(3 8 14 / 0.55) 0%,
+      rgb(3 8 14 / 0.32) 0%,
       transparent 45%
     );
 }
@@ -262,7 +276,7 @@ main {
 }
 
 main h3 {
-  font-weight: 400;
+  font-weight: 500;
 }
 
 main p {
@@ -274,26 +288,26 @@ main p {
 /* â€”â€” Rest of page â€”â€” */
 .cap-grid {
   display: grid;
-  border-top: 1px solid var(--color-line);
+  gap: 0.75rem;
 }
 
 .cap-item {
-  padding: 2.25rem 0 2.5rem;
-  border-bottom: 1px solid var(--color-line);
+  padding: 2rem 1.75rem 2.15rem;
+  background: var(--color-paper);
+}
+
+.cap-item h3 {
+  font-weight: 500;
+}
+
+.cap-index {
+  color: #c45e28;
 }
 
 @media (min-width: 768px) {
   .cap-grid {
     grid-template-columns: 1fr 1fr;
-  }
-
-  .cap-item:nth-child(odd) {
-    padding-right: 2.5rem;
-    border-right: 1px solid var(--color-line);
-  }
-
-  .cap-item:nth-child(even) {
-    padding-left: 2.5rem;
+    gap: 1rem;
   }
 }
 
