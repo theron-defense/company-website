@@ -361,15 +361,19 @@ main p {
   position: relative;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  height: 100svh;
-  height: 100dvh;
+  height: auto;
   background: #03080e;
 }
 
 .founder-pane {
   position: relative;
   min-height: 0;
+  height: auto;
+  aspect-ratio: 3 / 4;
   overflow: hidden;
+}
+
+.founder-pane[data-slideshow] {
   cursor: pointer;
 }
 
@@ -395,6 +399,10 @@ main p {
 .founder-pane-media img.is-portrait {
   object-position: center 30%;
   transform: scale(1.38);
+}
+
+.founder-pane-media img.is-wide {
+  object-position: center 28%;
 }
 
 .founder-pane::before,
@@ -476,11 +484,6 @@ main p {
 @media (max-width: 768px) {
   .founder-split {
     grid-template-columns: 1fr;
-    height: auto;
-  }
-
-  .founder-pane {
-    min-height: 70svh;
   }
 }
 
