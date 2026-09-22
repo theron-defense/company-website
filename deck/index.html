@@ -32,8 +32,8 @@ a{color:var(--brand-blue)}a:hover{color:var(--brand-blue-hover)}
 .gate-note{font:400 12px/1.5 var(--font-mono);color:var(--white-3);letter-spacing:.04em}
 
 /* ---- Deck ---- */
-#deck{position:fixed;inset:0;display:none;align-items:center;justify-content:center;user-select:none;-webkit-user-select:none;cursor:pointer}
-#stage{position:relative;width:1920px;height:1080px;transform-origin:center center;overflow:hidden;background:var(--near-black)}
+#deck{position:fixed;inset:0;display:none;user-select:none;-webkit-user-select:none;cursor:pointer}
+#stage{position:absolute;left:50%;top:50%;width:1920px;height:1080px;transform-origin:center center;overflow:hidden;background:var(--near-black)}
 #stage section{position:absolute;top:0;left:0;width:1920px;height:1080px;box-sizing:border-box}
 #stage section:not(.active){display:none !important}
 #hud{position:fixed;left:0;right:0;bottom:0;display:flex;align-items:center;justify-content:space-between;padding:14px 20px;z-index:50;pointer-events:none;opacity:.85}
@@ -452,7 +452,7 @@ a{color:var(--brand-blue)}a:hover{color:var(--brand-blue-hover)}
 
   function fit() {
     var s = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
-    stage.style.transform = 'scale(' + s + ')';
+    stage.style.transform = 'translate(-50%, -50%) scale(' + s + ')';
   }
   window.addEventListener('resize', fit);
 
