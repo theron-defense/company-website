@@ -1,0 +1,57 @@
+:root{
+/* Base palette — verbatim from Theron Pitch Deck System v1.2 */
+--near-black:#011121;
+--brand-blue:#1F5B99;
+--signal-orange:#D96826;
+--slate-blue:#243F5B;
+--warm-light:#F2F0ED;
+--warm-mid:#E8DFDA;
+--white:#FFFFFF;
+/* Logo file colours — fixed by the brand kit, never used for UI */
+--logo-navy:#083466;
+--logo-grey:#5D5D5D;
+--logo-grey-on-dark:#CAD5E2;
+/* Derived tints/shades (oklch-adjacent to the base palette; used only for states and hairlines) */
+--brand-blue-hover:#1A4F86;
+--brand-blue-active:#164472;
+--brand-blue-tint:#E4ECF5;
+--signal-orange-hover:#C55C1F;
+--signal-orange-active:#AE5019;
+--signal-orange-tint:#FBEADF;
+--slate-blue-tint:#D9DFE6;
+--warm-dark:#D8CEC7;
+--ink-2:rgba(1,17,33,.72);
+--ink-3:rgba(1,17,33,.52);
+--ink-4:rgba(1,17,33,.32);
+--line:rgba(1,17,33,.12);
+--line-strong:rgba(1,17,33,.24);
+--line-on-dark:rgba(255,255,255,.14);
+--white-2:rgba(255,255,255,.78);
+--white-3:rgba(255,255,255,.56);
+/* Semantic */
+--surface-canvas:var(--warm-light);
+--surface-card:var(--white);
+--surface-card-warm:var(--warm-mid);
+--surface-dark:var(--near-black);
+--surface-dark-2:var(--slate-blue);
+--surface-brand:var(--brand-blue);
+--text-body:var(--near-black);
+--text-secondary:var(--ink-2);
+--text-muted:var(--ink-3);
+--text-on-dark:var(--white);
+--text-on-dark-secondary:var(--white-2);
+--text-on-brand:var(--white);
+--accent:var(--brand-blue);
+--accent-hover:var(--brand-blue-hover);
+--accent-active:var(--brand-blue-active);
+--highlight:var(--signal-orange);
+--highlight-hover:var(--signal-orange-hover);
+--border:var(--line);
+--border-strong:var(--line-strong);
+--focus-ring:var(--brand-blue);
+/* Status (functional UI only — never on slides) */
+--status-ok:#2E7D4F;
+--status-warn:var(--signal-orange);
+--status-error:#B3261E;
+--status-info:var(--brand-blue);
+}

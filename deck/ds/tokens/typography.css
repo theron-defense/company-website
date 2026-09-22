@@ -1,0 +1,26 @@
+:root{
+--font-sans:"Schibsted Grotesk",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;
+--font-mono:"IBM Plex Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+--font-display:var(--font-sans);
+--font-body:var(--font-sans);
+--font-technical:var(--font-mono);
+/* Weights */
+--weight-regular:400;--weight-medium:500;--weight-semibold:600;--weight-bold:700;
+/* Deck scale — verbatim from the style guide (designed for a 1x deck artboard) */
+--deck-display:28px;--deck-heading:22px;--deck-subheading:16px;--deck-body:13px;--deck-caption:11px;--deck-callout:18px;
+/* Product / web scale */
+--text-xs:11px;--text-sm:13px;--text-md:15px;--text-lg:18px;--text-xl:22px;--text-2xl:28px;--text-3xl:40px;--text-4xl:56px;--text-5xl:80px;
+/* Line heights */
+--leading-tight:1.05;--leading-snug:1.2;--leading-normal:1.5;--leading-relaxed:1.6;
+/* Tracking */
+--tracking-display:-0.02em;--tracking-heading:-0.01em;--tracking-normal:0;--tracking-label:0.06em;--tracking-mono:0.02em;
+/* Roles */
+--type-display:var(--weight-bold) var(--text-4xl)/var(--leading-tight) var(--font-sans);
+--type-heading:var(--weight-semibold) var(--text-2xl)/var(--leading-snug) var(--font-sans);
+--type-subheading:var(--weight-medium) var(--text-md)/var(--leading-snug) var(--font-sans);
+--type-body:var(--weight-regular) var(--text-md)/var(--leading-normal) var(--font-sans);
+--type-body-sm:var(--weight-regular) var(--text-sm)/var(--leading-normal) var(--font-sans);
+--type-caption:var(--weight-regular) var(--text-xs)/var(--leading-normal) var(--font-mono);
+--type-callout:var(--weight-medium) var(--text-3xl)/var(--leading-tight) var(--font-mono);
+--type-label:var(--weight-medium) var(--text-xs)/1 var(--font-mono);
+}

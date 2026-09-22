@@ -1,0 +1,3 @@
+body{margin:0;font:var(--type-body);color:var(--text-body);background:var(--surface-canvas);-webkit-font-smoothing:antialiased;text-rendering:geometricPrecision}
+a{color:var(--brand-blue);text-decoration:none}a:hover{color:var(--brand-blue-hover);text-decoration:underline;text-underline-offset:2px}
+::selection{background:var(--brand-blue);color:var(--white)}
