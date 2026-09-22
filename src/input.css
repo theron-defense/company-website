@@ -94,7 +94,7 @@ main {
 
 .site-header.on-hero .logo-on-dark {
   display: block;
-  filter: brightness(1.55) contrast(1.12) drop-shadow(0 1px 10px rgb(3 8 14 / 0.45));
+  filter: drop-shadow(0 1px 10px rgb(3 8 14 / 0.45));
 }
 
 .site-header.on-hero .nav-bar {
