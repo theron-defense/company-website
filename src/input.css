@@ -50,6 +50,13 @@ html {
   letter-spacing: -0.025em;
 }
 
+.eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
 main {
   font-family: var(--font-display);
 }
@@ -270,6 +277,8 @@ main {
 .photo-chapter-content .eyebrow {
   color: rgb(255 255 255 / 0.88);
   margin: 0 0 1.25rem;
+  font-size: 11px;
+  letter-spacing: 0.14em;
 }
 
 .photo-chapter-content h2 {
