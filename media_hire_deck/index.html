@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Theron — Hype Person</title>
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap">
+<style>
+html,body{margin:0;padding:0;background:#072A4A;height:100%;overflow:hidden;font-family:Inter,Helvetica,Arial,sans-serif}
+a{color:#4E9AE0}a:hover{color:#6FB1EC}
+
+/* ---- Email gate ---- */
+#gate{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#072A4A;z-index:100;padding:24px}
+.gate-card{width:100%;max-width:440px;display:flex;flex-direction:column;gap:28px}
+.gate-card img{width:220px;align-self:flex-start}
+.gate-card h1{margin:0;font-size:26px;font-weight:600;line-height:1.2;color:#fff;letter-spacing:-.01em}
+.gate-card p{margin:0;font-size:15px;font-weight:400;line-height:1.5;color:#CAD5E2}
+.gate-form{display:flex;flex-direction:column;gap:12px}
+.gate-form input{font:400 16px/1 Inter,Helvetica,Arial,sans-serif;padding:14px 16px;border-radius:4px;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.06);color:#fff;outline:none}
+.gate-form input::placeholder{color:#90A1B9}
+.gate-form input:focus{border-color:#4E9AE0}
+.gate-form button{font:600 16px/1 Inter,Helvetica,Arial,sans-serif;padding:14px 16px;border-radius:4px;border:none;background:#134B82;color:#fff;cursor:pointer}
+.gate-form button:hover{background:#1B5CA0}
+.gate-error{font-size:13px;line-height:1.4;color:#E8A13C;display:none}
+.gate-note{font-size:12px;line-height:1.5;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:#90A1B9;letter-spacing:.04em}
+
+/* ---- Deck ---- */
+#deck{position:fixed;inset:0;display:none;user-select:none;-webkit-user-select:none;cursor:pointer}
+#stage{position:absolute;left:50%;top:50%;width:1920px;height:1080px;transform-origin:center center;overflow:hidden;background:#072A4A}
+#stage section{position:absolute;top:0;left:0;width:1920px;height:1080px;box-sizing:border-box}
+#stage section:not(.active){display:none !important}
+#stage h1,#stage h2,#stage p{margin:0}
+#hud{position:fixed;left:0;right:0;bottom:0;display:flex;align-items:center;justify-content:space-between;padding:14px 20px;z-index:50;pointer-events:none;opacity:.85}
+#hud .counter{font:500 12px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.08em;color:rgba(255,255,255,.55)}
+#hud .hint{font:500 11px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.08em;color:rgba(255,255,255,.35);text-transform:uppercase}
+#progress{position:fixed;top:0;left:0;height:2px;background:#4E9AE0;z-index:60;transition:width .25s ease}
+</style>
+</head>
+<body>
+
+<div id="gate">
+  <div class="gate-card">
+    <img src="assets/theron-lockup-white.svg" alt="Theron">
+    <h1>Hype Person — hiring deck</h1>
+    <p>Enter your email to view the deck.</p>
+    <form class="gate-form" id="gateForm">
+      <input type="email" id="gateEmail" name="email" placeholder="you@example.com" required autocomplete="email" autofocus>
+      <button type="submit" id="gateBtn">View deck</button>
+      <div class="gate-error" id="gateError">Please enter a valid email address.</div>
+    </form>
+    <div class="gate-note">THERON &middot; WE'RE HIRING</div>
+  </div>
+</div>
+
+<div id="progress"></div>
+<div id="deck">
+  <div id="stage">
+<section data-label="Cover" style="background:#072A4A;color:#FFFFFF;font-family:Inter, Helvetica, Arial, sans-serif;padding:96px 128px 96px;display:flex;flex-direction:column;justify-content:space-between;gap:32px">
+<img src="assets/theron-lockup-white.svg" alt="Theron" style="width:220px;height:96px;object-fit:contain;object-position:left center">
+<div style="display:flex;flex-direction:column;gap:20px">
+<p style="font-size:24px;font-weight:600;letter-spacing:3px;color:#90A1B9">WE'RE HIRING</p>
+<h1 style="font-size:96px;font-weight:600;line-height:1.05;letter-spacing:-2px;width:1500px">Come work with Theron as our Hype Person!</h1>
+<p style="font-size:32px;font-weight:400;line-height:1.4;color:#CAD5E2;width:1300px">A short pitch for someone who wants to make a defense startup look as cool as it actually is.</p>
+</div>
+<div style="display:flex;gap:24px">
+<img src="assets/humvee-sunset.jpg" alt="Humvee with the roof-mounted turret on open rangeland at sunset" style="width:539px;height:340px;object-fit:cover;object-position:center 45%;border-radius:12px">
+<img src="assets/atv-ridge.jpg" alt="Team member on a ridge at golden hour with an ATV" style="width:539px;height:340px;object-fit:cover;object-position:center 28%;border-radius:12px">
+<img src="assets/turret-silhouette.jpg" alt="The turret silhouetted against an orange sunset sky" style="width:538px;height:340px;object-fit:cover;border-radius:12px">
+</div>
+</section>
+
+<section data-label="The job" style="background:#F7F8FA;color:#072A4A;font-family:Inter, Helvetica, Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:40px">
+<div style="display:flex;flex-direction:column;gap:16px">
+<p style="font-size:24px;font-weight:600;letter-spacing:3px;color:#134B82">THE JOB, IN ONE LINE</p>
+<h2 style="font-size:72px;font-weight:600;line-height:1.1;letter-spacing:-1px;width:1600px">Come make us and our product look cool.</h2>
+</div>
+<div style="display:flex;gap:32px">
+<div style="flex:1;display:flex;flex-direction:column;gap:16px">
+<img src="assets/team-selfie.jpg" alt="Four-person team selfie at dusk under pines" style="width:816px;height:480px;object-fit:cover;object-position:center 36%;border-radius:12px">
+<p style="font-size:28px;font-weight:600">The team</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:16px">
+<img src="assets/turret-closeup.jpg" alt="Theron turret head on a vehicle roof, pines behind" style="width:816px;height:480px;object-fit:cover;object-position:72% center;border-radius:12px">
+<p style="font-size:28px;font-weight:600">The turret</p>
+</div>
+</div>
+<div style="position:absolute;left:128px;bottom:64px;width:1664px;display:flex;justify-content:space-between">
+<p style="font-size:24px;color:#62748E">Theron · Hype Person</p>
+<p style="font-size:24px;color:#62748E">2</p>
+</div>
+</section>
+
+<section data-label="Join us if" style="background:#072A4A;color:#FFFFFF;font-family:Inter, Helvetica, Arial, sans-serif;padding:128px 128px 160px;display:flex;gap:64px">
+<div style="width:760px;display:flex;flex-direction:column;gap:40px">
+<h2 style="font-size:72px;font-weight:600;line-height:1.1;letter-spacing:-1px">Join us if you…</h2>
+<div style="display:flex;flex-direction:column;gap:28px">
+<p style="font-size:36px;font-weight:500;line-height:1.3;width:760px">enjoy travel</p>
+<p style="font-size:36px;font-weight:500;line-height:1.3;width:760px">enjoy being out in nature</p>
+<p style="font-size:36px;font-weight:500;line-height:1.3;width:760px">think any part of autonomous turrets shooting down autonomous drones is cool</p>
+<p style="font-size:36px;font-weight:500;line-height:1.3;width:760px">hate 2D products <span style="color:#90A1B9">(snooze)</span></p>
+</div>
+</div>
+<div style="width:840px;display:flex;flex-direction:column;gap:24px">
+<img src="assets/sunset-walk.jpg" alt="Walking toward the Humvee across open rangeland at sunset" style="width:840px;height:370px;object-fit:cover;border-radius:12px">
+<img src="assets/rooftop-valley.jpg" alt="Standing on the Humvee roof beside the turret, looking out over the valley" style="width:840px;height:370px;object-fit:cover;object-position:center 40%;border-radius:12px">
+</div>
+<div style="position:absolute;left:128px;bottom:64px;width:1664px;display:flex;justify-content:space-between">
+<p style="font-size:24px;color:#90A1B9">Theron · Hype Person</p>
+<p style="font-size:24px;color:#90A1B9">3</p>
+</div>
+</section>
+
+<section data-label="The problem" style="background:#F7F8FA;color:#072A4A;font-family:Inter, Helvetica, Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:40px">
+<div style="display:flex;flex-direction:column;gap:16px">
+<p style="font-size:24px;font-weight:600;letter-spacing:3px;color:#134B82">THE CORE PROBLEM YOU'D BE SOLVING</p>
+<h2 style="font-size:60px;font-weight:600;line-height:1.1;letter-spacing:-1px;width:1664px">We think we're working on something very exciting and very visually appealing.</h2>
+</div>
+<div style="display:flex;gap:48px;align-items:flex-start">
+<div style="width:900px;display:flex;flex-direction:column;gap:28px">
+<p style="font-size:32px;font-weight:400;line-height:1.45;color:#45556C">Your goal would be to design a plan for us to leverage these aspects of our product to build as much hype and excitement around us as possible.</p>
+<p style="font-size:32px;font-weight:400;line-height:1.45;color:#45556C">You'd then be responsible for working with the rest of the team to execute on that plan, however you see fit.</p>
+<p style="font-size:32px;font-weight:600;line-height:1.45;color:#072A4A">Plan it. Run it. Own it.</p>
+</div>
+<div style="width:716px;display:flex;flex-direction:column;gap:12px">
+<img src="assets/ir-tracking.gif" alt="Thermal camera feed: the turret's tracker locked on an airborne drone, then the gun mount slewing into frame" style="width:716px;height:520px;object-fit:cover;border-radius:12px;background:#0A1018">
+<p style="font-size:24px;color:#62748E">Thermal feed from the turret tracking a drone.</p>
+</div>
+</div>
+<div style="position:absolute;left:128px;bottom:64px;width:1664px;display:flex;justify-content:space-between">
+<p style="font-size:24px;color:#62748E">Theron · Hype Person</p>
+<p style="font-size:24px;color:#62748E">4</p>
+</div>
+</section>
+
+<section data-label="Comp" style="background:#134B82;color:#FFFFFF;font-family:Inter, Helvetica, Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;justify-content:space-between">
+<div style="display:flex;flex-direction:column;gap:16px">
+<p style="font-size:24px;font-weight:600;letter-spacing:3px;color:#CAD5E2">COMP</p>
+<h2 style="font-size:72px;font-weight:600;line-height:1.1;letter-spacing:-1px">What it pays</h2>
+</div>
+<div style="display:flex;gap:48px">
+<div style="flex:1;display:flex;flex-direction:column;gap:12px;padding:48px;border:1px solid #CAD5E2;border-radius:16px">
+<p style="font-size:24px;font-weight:600;letter-spacing:3px;color:#CAD5E2">SALARY</p>
+<p style="font-size:96px;font-weight:600;line-height:1.05;letter-spacing:-2px">$150k–$250k</p>
+<p style="font-size:32px;color:#CAD5E2">per year</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:12px;padding:48px;border:1px solid #CAD5E2;border-radius:16px">
+<p style="font-size:24px;font-weight:600;letter-spacing:3px;color:#CAD5E2">EQUITY</p>
+<p style="font-size:96px;font-weight:600;line-height:1.05;letter-spacing:-2px">0.1%–1.5%</p>
+<p style="font-size:32px;color:#CAD5E2">of the company</p>
+</div>
+</div>
+<p style="font-size:40px;font-weight:500;line-height:1.3">Where you land in those ranges depends on you. Let's see how things go!</p>
+<div style="position:absolute;left:128px;bottom:64px;width:1664px;display:flex;justify-content:space-between">
+<p style="font-size:24px;color:#CAD5E2">Theron · Hype Person</p>
+<p style="font-size:24px;color:#CAD5E2">5</p>
+</div>
+</section>
+
+<section data-label="Contact" style="background:#F7F8FA;color:#072A4A;font-family:Inter, Helvetica, Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;justify-content:space-between">
+<img src="assets/theron-lockup-primary.svg" alt="Theron" style="width:260px;height:120px;object-fit:contain;object-position:left center">
+<div style="display:flex;flex-direction:column;gap:32px">
+<p style="font-size:24px;font-weight:600;letter-spacing:3px;color:#134B82">SOUND LIKE YOU?</p>
+<h1 style="font-size:96px;font-weight:600;line-height:1.05;letter-spacing:-2px;width:1500px">Email me and let's chat!</h1>
+<p style="font-size:48px;font-weight:500;line-height:1.3"><a href="mailto:hagen@therondefense.com" style="color:#134B82">hagen@therondefense.com</a></p>
+<p style="font-size:32px;color:#45556C">Hagen · Theron Defense</p>
+</div>
+<div style="position:absolute;left:128px;bottom:64px;width:1664px;display:flex;justify-content:space-between">
+<p style="font-size:24px;color:#62748E">Theron · Hype Person</p>
+<p style="font-size:24px;color:#62748E">6</p>
+</div>
+</section>
+  </div>
+</div>
+<div id="hud" style="display:none">
+  <div class="counter" id="counter">01 / 06</div>
+  <div class="hint">&larr; &rarr; &middot; space &middot; click to advance</div>
+</div>
+
+<script>
+(function () {
+  var gate = document.getElementById('gate');
+  var form = document.getElementById('gateForm');
+  var emailInput = document.getElementById('gateEmail');
+  var errEl = document.getElementById('gateError');
+  var deck = document.getElementById('deck');
+  var hud = document.getElementById('hud');
+  var stage = document.getElementById('stage');
+  var counter = document.getElementById('counter');
+  var progress = document.getElementById('progress');
+  var slides = Array.prototype.slice.call(stage.querySelectorAll(':scope > section'));
+  var current = 0;
+  var unlocked = false;
+
+  var CAPTURE_ENDPOINT = 'https://formsubmit.co/ajax/contact@therondefense.com';
+
+  function validEmail(v) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
+  }
+
+  function captureEmail(email) {
+    try {
+      fetch(CAPTURE_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({ email: email, _subject: 'Hype deck view: ' + email, page: location.href, when: new Date().toISOString() })
+      }).catch(function () {});
+    } catch (e) {}
+  }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var email = emailInput.value.trim();
+    if (!validEmail(email)) { errEl.style.display = 'block'; return; }
+    errEl.style.display = 'none';
+    try { sessionStorage.setItem('hype_deck_email', email); } catch (err) {}
+    captureEmail(email);
+    unlock();
+  });
+
+  function unlock() {
+    unlocked = true;
+    gate.style.display = 'none';
+    deck.style.display = 'flex';
+    hud.style.display = 'flex';
+    fit();
+    show(0);
+  }
+
+  function fit() {
+    var s = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+    stage.style.transform = 'translate(-50%, -50%) scale(' + s + ')';
+  }
+  window.addEventListener('resize', fit);
+
+  function show(i) {
+    current = Math.max(0, Math.min(slides.length - 1, i));
+    slides.forEach(function (sl, idx) { sl.classList.toggle('active', idx === current); });
+    var n = current + 1;
+    counter.textContent = (n < 10 ? '0' + n : n) + ' / ' + (slides.length < 10 ? '0' + slides.length : slides.length);
+    progress.style.width = ((n / slides.length) * 100) + '%';
+  }
+  function next() { show(current + 1); }
+  function prev() { show(current - 1); }
+
+  document.addEventListener('keydown', function (e) {
+    if (!unlocked) return;
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'Spacebar' || e.key === 'PageDown') { e.preventDefault(); next(); }
+    else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); prev(); }
+    else if (e.key === 'Home') { e.preventDefault(); show(0); }
+    else if (e.key === 'End') { e.preventDefault(); show(slides.length - 1); }
+  });
+
+  deck.addEventListener('click', function () { if (unlocked) next(); });
+
+  // touch swipe
+  var touchX = null;
+  deck.addEventListener('touchstart', function (e) { touchX = e.changedTouches[0].clientX; }, { passive: true });
+  deck.addEventListener('touchend', function (e) {
+    if (touchX === null || !unlocked) return;
+    var dx = e.changedTouches[0].clientX - touchX;
+    if (dx < -40) next();
+    else if (dx > 40) prev();
+    touchX = null;
+  }, { passive: true });
+})();
+</script>
+</body>
+</html>
