@@ -14,21 +14,18 @@
   --text-base: 1rem;
   --text-small: 0.833rem;
   --text-xsmall: 0.694rem;
-  --color-navy: #0B3D6B;
-  --color-navy-800: #083466;
-  --color-navy-dark: #072A4A;
-  --color-navy-light: #134B82;
-  --color-ink: #45556C;
-  --color-ink-light: #62748E;
-  --color-white: #FBF9F6;
-  --color-paper: #F6F4F0;
-  --color-line: #E3E4E0;
-  --color-surface: #0A1018;
-  --color-surface-raised: #111B27;
-  --color-surface-muted: #0D1520;
-  --color-slate-300: #CAD5E2;
-  --color-slate-400: #90A1B9;
-  --color-slate-500: #62748E;
+  /* Theron Pitch Deck System v1.2 palette (deck/ds/tokens/colors.css). */
+  --color-near-black: #011121;
+  --color-brand-blue: #1F5B99;
+  --color-brand-blue-hover: #1A4F86;
+  --color-brand-blue-active: #164472;
+  --color-signal-orange: #D96826;
+  --color-slate-blue: #243F5B;
+  --color-warm-light: #F2F0ED;
+  --color-white: #FFFFFF;
+  --color-ink: rgb(1 17 33 / 0.72);
+  --color-ink-muted: rgb(1 17 33 / 0.52);
+  --color-line: rgb(1 17 33 / 0.12);
 }
 
 html {
@@ -47,7 +44,6 @@ html {
 }
 
 #capabilities,
-#mission,
 #vision,
 #about,
 #team,
@@ -94,7 +90,7 @@ main {
 
 .site-header.on-hero.is-scrolled {
   border-color: rgb(255 255 255 / 0.08);
-  background: rgb(10 16 24 / 0.55);
+  background: rgb(1 17 33 / 0.55);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
 }
@@ -105,7 +101,7 @@ main {
 
 .site-header.on-hero .nav-link {
   color: #fff;
-  text-shadow: 0 1px 12px rgb(3 8 14 / 0.55);
+  text-shadow: 0 1px 12px rgb(1 17 33 / 0.55);
 }
 
 .site-header.on-hero .nav-link:hover {
@@ -114,7 +110,7 @@ main {
 
 .site-header.on-hero .logo-on-dark {
   display: block;
-  filter: drop-shadow(0 1px 10px rgb(3 8 14 / 0.45));
+  filter: drop-shadow(0 1px 10px rgb(1 17 33 / 0.45));
 }
 
 .site-header.on-hero .nav-bar {
@@ -127,7 +123,7 @@ main {
 
 @media (max-width: 767px) {
   .site-header.on-hero .site-nav {
-    background: rgb(10 16 24 / 0.96);
+    background: rgb(1 17 33 / 0.96);
   }
 }
 
@@ -138,7 +134,7 @@ main {
   align-items: flex-end;
   min-height: 100svh;
   overflow: hidden;
-  background: #03080e;
+  background: var(--color-near-black);
   color: #fff;
 }
 
@@ -156,12 +152,12 @@ main {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(rgb(3 8 14 / 0.14), rgb(3 8 14 / 0.14)),
+    linear-gradient(rgb(1 17 33 / 0.14), rgb(1 17 33 / 0.14)),
     radial-gradient(
       ellipse at center,
       transparent 42%,
-      rgb(3 8 14 / 0.22) 78%,
-      rgb(3 8 14 / 0.42) 100%
+      rgb(1 17 33 / 0.22) 78%,
+      rgb(1 17 33 / 0.42) 100%
     );
 }
 
@@ -177,7 +173,7 @@ main {
 }
 
 .hero-copy {
-  text-shadow: 0 1px 14px rgb(3 8 14 / 0.35);
+  text-shadow: 0 1px 14px rgb(1 17 33 / 0.35);
 }
 
 /* Hero eyebrow keeps the shared .eyebrow face, set at body size. */
@@ -232,95 +228,6 @@ main {
 .js .reveal-group .reveal:nth-child(3) { --reveal-delay: 80ms; }
 .js .reveal-group .reveal:nth-child(4) { --reveal-delay: 110ms; }
 
-/* —— Field photo chapter —— */
-.photo-chapter {
-  position: relative;
-  display: flex;
-  align-items: flex-end;
-  min-height: 100svh;
-  overflow: hidden;
-  background: #0a1018;
-  color: #fff;
-}
-
-.photo-chapter-image {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: -18%;
-  height: 136%;
-  background-image: url("../assets/hero-field.jpg");
-  background-size: cover;
-  background-position: 72% center;
-  background-repeat: no-repeat;
-  will-change: transform;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .photo-chapter-image {
-    top: 0;
-    height: 100%;
-    will-change: auto;
-    transform: none;
-  }
-}
-
-.photo-chapter-scrim {
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(
-      to right,
-      rgb(3 8 14 / 0.48) 0%,
-      rgb(3 8 14 / 0.26) 48%,
-      rgb(3 8 14 / 0.06) 100%
-    ),
-    linear-gradient(
-      to top,
-      rgb(3 8 14 / 0.32) 0%,
-      transparent 45%
-    );
-}
-
-.photo-chapter-content {
-  position: relative;
-  z-index: 1;
-  width: min(100% - 2.5rem, 1180px);
-  margin: 0 auto;
-  padding: 8rem 0 6rem;
-  max-width: 40rem;
-  margin-left: max(1.25rem, calc((100% - 1180px) / 2));
-  text-shadow: 0 1px 18px rgb(3 8 14 / 0.45);
-}
-
-.photo-chapter-content .eyebrow {
-  color: rgb(255 255 255 / 0.88);
-  margin: 0 0 1.25rem;
-  font-size: var(--text-small);
-  letter-spacing: 0.06em;
-}
-
-.photo-chapter-content h2 {
-  margin: 0 0 1rem;
-  font-family: var(--font-display);
-  font-size: var(--text-h2);
-  font-weight: 700;
-  line-height: 1.15;
-  letter-spacing: -0.02em;
-  color: #fff;
-}
-
-.photo-chapter-content p {
-  margin: 0;
-  max-width: 36ch;
-  font-family: var(--font-display);
-  font-size: var(--text-base);
-  font-weight: 400;
-  line-height: 1.7;
-  letter-spacing: -0.01em;
-  color: rgb(255 255 255 / 0.94);
-}
-
 main h3 {
   font-weight: 600;
 }
@@ -342,7 +249,7 @@ main p {
   align-items: flex-start;
   gap: 1.15rem 1.35rem;
   padding: 2rem 1.75rem 2.15rem;
-  background: var(--color-paper);
+  background: var(--color-white);
 }
 
 .cap-index {
@@ -353,7 +260,7 @@ main p {
   font-weight: 500;
   line-height: 1.3;
   letter-spacing: 0;
-  color: #c45e28;
+  color: var(--color-signal-orange);
 }
 
 .cap-item-body {
@@ -365,7 +272,7 @@ main p {
   font-size: var(--text-h6);
   font-weight: 600;
   line-height: 1.3;
-  color: var(--color-navy-dark);
+  color: var(--color-near-black);
 }
 
 .cap-item p {
@@ -391,7 +298,7 @@ main p {
   display: grid;
   grid-template-columns: 1fr 1fr;
   height: auto;
-  background: #03080e;
+  background: var(--color-near-black);
 }
 
 .founder-pane {
@@ -447,13 +354,13 @@ main p {
 .founder-pane::before {
   top: 0;
   height: 28%;
-  background: linear-gradient(to bottom, rgb(3 8 14 / 0.58), transparent);
+  background: linear-gradient(to bottom, rgb(1 17 33 / 0.58), transparent);
 }
 
 .founder-pane::after {
   bottom: 0;
   height: 42%;
-  background: linear-gradient(to top, rgb(3 8 14 / 0.72), transparent);
+  background: linear-gradient(to top, rgb(1 17 33 / 0.72), transparent);
 }
 
 .founder-mark {
@@ -523,7 +430,7 @@ main p {
   position: relative;
   overflow: hidden;
   isolation: isolate;
-  background: linear-gradient(135deg, #134b82 0%, #0b3d6b 100%);
+  background: linear-gradient(135deg, var(--color-brand-blue) 0%, var(--color-brand-blue-active) 100%);
   color: rgb(255 255 255 / 0.85);
 }
 
@@ -614,16 +521,6 @@ main p {
 }
 
 @media (max-width: 768px) {
-  .photo-chapter {
-    min-height: 85svh;
-  }
-
-  .photo-chapter-content {
-    padding: 6rem 0 4rem;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
   .site-logo {
     width: min(120px, 34vw);
   }
