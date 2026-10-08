@@ -9,8 +9,8 @@
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css?v=25">
+  <link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css?v=53">
   <script>
     document.documentElement.classList.add('js');
   </script>
@@ -28,7 +28,7 @@
           <span class="nav-bar block h-0.5 w-6 bg-near-black transition-transform duration-300"></span>
         </button>
         <nav class="site-nav flex items-center gap-8 max-md:pointer-events-none max-md:fixed max-md:inset-x-0 max-md:top-[72px] max-md:-translate-y-[110%] max-md:flex-col max-md:items-stretch max-md:gap-0 max-md:border-b max-md:border-line max-md:bg-warm-light max-md:px-5 max-md:pt-2 max-md:pb-6 max-md:opacity-0 max-md:transition-all max-md:duration-300 max-md:peer-aria-expanded:pointer-events-auto max-md:peer-aria-expanded:translate-y-0 max-md:peer-aria-expanded:opacity-100" id="site-nav">
-          <a href="#capabilities" class="nav-link font-mono text-small font-medium uppercase tracking-[0.06em] transition-colors hover:text-brand-blue max-md:border-b max-md:border-line max-md:py-3.5">Capabilities</a>
+          <a href="#capabilities" class="nav-link font-mono text-small font-medium uppercase tracking-[0.06em] transition-colors hover:text-brand-blue max-md:border-b max-md:border-line max-md:py-3.5">What we build</a>
           <a href="#vision" class="nav-link font-mono text-small font-medium uppercase tracking-[0.06em] transition-colors hover:text-brand-blue max-md:border-b max-md:border-line max-md:py-3.5">Vision</a>
           <a href="#about" class="nav-link font-mono text-small font-medium uppercase tracking-[0.06em] transition-colors hover:text-brand-blue max-md:border-b max-md:border-line max-md:py-3.5">About</a>
           <a href="#team" class="nav-link font-mono text-small font-medium uppercase tracking-[0.06em] transition-colors hover:text-brand-blue max-md:border-b max-md:border-line max-md:py-3.5">Team</a>
@@ -55,66 +55,104 @@
 
     <section class="py-[clamp(4rem,10vw,7rem)]" id="capabilities">
       <div class="mx-auto w-[min(100%-2.5rem,1180px)]">
-        <div class="mb-[clamp(2.5rem,5vw,4rem)] max-w-[36rem] reveal-group">
-          <p class="eyebrow mb-5 text-brand-blue reveal">Capabilities</p>
-          <h2 class="heading-section mb-4 text-h2 leading-[1.15] text-near-black reveal">What We Build Today</h2>
-          <p class="text-base leading-[1.7] reveal">
-            Put our hardware on your vehicle today, or work closely
-            with us to develop the future of warfare.
-          </p>
+        <div class="cap-sticky-scope">
+          <div class="cap-header reveal-group">
+            <div>
+              <p class="eyebrow mb-5 text-brand-blue reveal">What we&rsquo;ve built today</p>
+              <h2 class="heading-section text-h2 leading-[1.15] text-near-black reveal">Built for the Field, Proven in It</h2>
+            </div>
+            <svg class="cap-ndaa-logo reveal" viewBox="0 0 80 80" aria-hidden="true">
+              <circle cx="40" cy="40" r="38" fill="#fff" stroke="#1F5B99" stroke-width="2.5"/>
+              <circle cx="40" cy="40" r="25.5" fill="none" stroke="#1F5B99" stroke-width="1"/>
+              <path id="ndaa-seal-top" d="M11.58 40 A28.42 28.42 0 0 1 68.42 40" fill="none"/>
+              <path id="ndaa-seal-bottom" d="M5.67 40 A34.33 34.33 0 0 0 74.33 40" fill="none"/>
+              <g font-family="Schibsted Grotesk, sans-serif" font-size="8.4" font-weight="700" letter-spacing="1.2" fill="#1F5B99">
+                <text><textPath href="#ndaa-seal-top" startOffset="45.25" text-anchor="middle">NDAA</textPath></text>
+                <text><textPath href="#ndaa-seal-bottom" startOffset="54.52" text-anchor="middle">COMPLIANT</textPath></text>
+              </g>
+              <polygon points="8.62,37.92 9.14,39.51 10.81,39.51 9.46,40.49 9.98,42.08 8.62,41.10 7.27,42.08 7.79,40.49 6.44,39.51 8.11,39.51" fill="#1F5B99"/>
+              <polygon points="71.38,37.92 71.89,39.51 73.56,39.51 72.21,40.49 72.73,42.08 71.38,41.10 70.02,42.08 70.54,40.49 69.19,39.51 70.86,39.51" fill="#1F5B99"/>
+              <path d="M40 23 L54 28 Q55 28.4 55 29.5 V38 C55 48 47 54 40 57 C33 54 25 48 25 38 V29.5 Q25 28.4 26 28 Z" fill="#1F5B99"/>
+              <path d="M31.5 40 L37.5 44.8 L47.5 32.5" fill="none" stroke="#fff" stroke-width="4.2" stroke-linejoin="miter"/>
+            </svg>
+          </div>
+          <div class="cap-grid mt-[clamp(2.5rem,5vw,4rem)] reveal-group">
+            <article class="cap-item reveal">
+              <span class="cap-index">01</span>
+              <div class="cap-item-body">
+                <h3>Autonomous Turret</h3>
+                <p>
+                  A fully autonomous defense system that is highly
+                  portable and counter UAS capable.
+                </p>
+                <ul class="cap-specs">
+                  <li>[spec]</li>
+                  <li>[spec]</li>
+                  <li>[spec]</li>
+                </ul>
+              </div>
+              <div class="cap-media">
+                <img src="assets/capabilities/turret.jpg" alt="Theron Aimbot MK2 turret head mounted on a vehicle roof, pine trees behind" width="1600" height="1314" loading="lazy" decoding="async">
+              </div>
+            </article>
+            <article class="cap-item reveal">
+              <span class="cap-index">02</span>
+              <div class="cap-item-body">
+                <h3>Proprietary AI Models</h3>
+                <p>
+                  Models we train here for acquisition, targeting,
+                  and control.
+                </p>
+                <ul class="cap-specs">
+                  <li>[spec]</li>
+                  <li>[spec]</li>
+                  <li>[spec]</li>
+                </ul>
+              </div>
+              <div class="cap-media cap-media-placeholder" aria-hidden="true"><span>Image placeholder</span></div>
+            </article>
+          </div>
         </div>
         <div class="cap-grid reveal-group">
           <article class="cap-item reveal">
-            <span class="cap-index">01</span>
-            <div class="cap-item-body">
-              <h3>Autonomous Turret</h3>
-              <p>
-                A fully autonomous defense system that is highly
-                portable and counter UAS capable.
-              </p>
-            </div>
-          </article>
-          <article class="cap-item reveal">
-            <span class="cap-index">02</span>
+            <span class="cap-index">03</span>
             <div class="cap-item-body">
               <h3>cUAS Proximity Munitions</h3>
               <p>
                 Proximity fused munitions that defeat incoming drones
                 at close range.
               </p>
+              <ul class="cap-specs">
+                <li>[spec]</li>
+                <li>[spec]</li>
+                <li>[spec]</li>
+              </ul>
             </div>
+            <div class="cap-media cap-media-placeholder" aria-hidden="true"><span>Image placeholder</span></div>
           </article>
-          <article class="cap-item reveal">
-            <span class="cap-index">03</span>
-            <div class="cap-item-body">
-              <h3>Our Own AI Models</h3>
-              <p>
-                Models we train here for acquisition, targeting,
-                and control.
-              </p>
-            </div>
-          </article>
-          <article class="cap-item reveal">
-            <span class="cap-index">04</span>
-            <div class="cap-item-body">
-              <h3>NDAA Compliant Hardware</h3>
-              <p>
-                Hardware that closes the supply chain gap left
-                by offshoring.
-              </p>
-            </div>
-          </article>
+        </div>
+        <div class="cap-ndaa reveal-group">
+          <p class="cap-ndaa-text reveal">*All products are NDAA-compliant</p>
+        </div>
+        <div class="mt-[clamp(2.5rem,5vw,4rem)] text-center reveal-group">
+          <div class="mx-auto mb-6 h-[0.3125rem] w-10 bg-signal-orange reveal" aria-hidden="true"></div>
+          <p class="cap-closing mx-auto max-w-[36rem] text-h5 reveal">
+            Put our hardware on your vehicle today, or work closely
+            with us to develop the future of warfare.
+          </p>
+          <a href="#contact" class="mt-6 inline-block rounded-[2px] bg-brand-blue px-5 py-2.5 font-mono text-small font-medium uppercase tracking-[0.06em] text-white transition-colors hover:bg-brand-blue-hover reveal">Contact</a>
         </div>
       </div>
     </section>
 
-    <section class="bg-white py-[clamp(4rem,10vw,7rem)]" id="vision">
-      <div class="mx-auto w-[min(100%-2.5rem,1180px)] text-center">
+    <section class="relative isolate overflow-hidden bg-brand-blue py-[clamp(4rem,10vw,7rem)]" id="vision">
+      <div class="vision-network" aria-hidden="true"></div>
+      <div class="relative mx-auto w-[min(100%-2.5rem,1180px)] text-center">
         <div class="reveal-group">
-          <h2 class="heading-section mx-auto max-w-[13em] text-[min(var(--text-h2),calc((100vw_-_2.5rem)/12.6))] leading-[1.15] text-near-black text-balance reveal">Our products are stepping stones to a larger vision</h2>
+          <h2 class="heading-section mx-auto max-w-[13em] text-[min(var(--text-h2),calc((100vw_-_2.5rem)/12.6))] leading-[1.15] text-white text-balance reveal">Our products are stepping stones to a larger vision</h2>
           <div class="mx-auto mt-6 h-[0.3125rem] w-10 bg-signal-orange reveal" aria-hidden="true"></div>
         </div>
-        <div class="prose-col mx-auto mt-8 max-w-[40rem] text-left text-base leading-[1.75] reveal-group">
+        <div class="prose-col mx-auto mt-8 max-w-[40rem] text-left text-body text-white/78 leading-[1.75] reveal-group">
           <p class="reveal">
             We start closing/bridging the gap in modern defense by building
             autonomous systems operators can use on day one: simple,
@@ -142,7 +180,7 @@
           <p class="eyebrow mb-5 text-brand-blue reveal">About</p>
           <h2 class="heading-section text-h2 leading-[1.15] text-near-black reveal">Real Hardware, Not Renderings</h2>
         </div>
-        <div class="prose-col text-base leading-[1.75] reveal-group">
+        <div class="prose-col text-body leading-[1.75] reveal-group">
           <p class="reveal">
             Theron is a San Francisco based defense technology company,
             founded in 2026. We build products that exist in the field
@@ -221,6 +259,6 @@
     </div>
   </footer>
 
-  <script src="js/main.js?v=5"></script>
+  <script src="js/main.js?v=9"></script>
 </body>
 </html>
