@@ -5,7 +5,7 @@
   const navLinks = nav.querySelectorAll('a');
   const year = document.getElementById('year');
   const video = document.querySelector('.hero-video');
-  const mediaSections = document.querySelectorAll('.hero, .founder-split');
+  const mediaSections = document.querySelectorAll('.hero');
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
   if (year) {
@@ -198,6 +198,19 @@
     layer.style.backgroundImage = 'url("data:image/svg+xml,' + encodeURIComponent(buildNetworkSvg(Math.random)) + '")';
   }
 
+  // Team cards with a LinkedIn link open it in a new tab when clicked anywhere.
+  function initTeamLinks() {
+    document.querySelectorAll('.founder-pane').forEach(function (pane) {
+      var link = pane.querySelector('.founder-social');
+      if (!link) return;
+      pane.classList.add('has-link');
+      pane.addEventListener('click', function (event) {
+        if (event.target.closest('a')) return;
+        window.open(link.href, '_blank', 'noopener,noreferrer');
+      });
+    });
+  }
+
   function initSlideshows() {
     var panes = document.querySelectorAll('[data-slideshow]');
     panes.forEach(function (pane) {
@@ -242,7 +255,8 @@
       });
 
       pane.addEventListener('click', function (event) {
-        if (event.target.closest('a')) return;
+        // Cards with a LinkedIn link open it on click instead (initTeamLinks).
+        if (event.target.closest('a') || pane.querySelector('.founder-social')) return;
         show(index + 1);
         if (hovering) resting = index;
         play();
@@ -256,6 +270,7 @@
   syncVideo();
   revealGroups();
   initSlideshows();
+  initTeamLinks();
   drawVisionNetwork();
   updateParallax();
 })();

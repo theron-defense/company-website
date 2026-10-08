@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css?v=53">
+  <link rel="stylesheet" href="css/styles.css?v=68">
   <script>
     document.documentElement.classList.add('js');
   </script>
@@ -31,7 +31,6 @@
           <a href="#capabilities" class="nav-link font-mono text-small font-medium uppercase tracking-[0.06em] transition-colors hover:text-brand-blue max-md:border-b max-md:border-line max-md:py-3.5">What we build</a>
           <a href="#vision" class="nav-link font-mono text-small font-medium uppercase tracking-[0.06em] transition-colors hover:text-brand-blue max-md:border-b max-md:border-line max-md:py-3.5">Vision</a>
           <a href="#about" class="nav-link font-mono text-small font-medium uppercase tracking-[0.06em] transition-colors hover:text-brand-blue max-md:border-b max-md:border-line max-md:py-3.5">About</a>
-          <a href="#team" class="nav-link font-mono text-small font-medium uppercase tracking-[0.06em] transition-colors hover:text-brand-blue max-md:border-b max-md:border-line max-md:py-3.5">Team</a>
           <a href="#contact" class="rounded-[2px] bg-brand-blue px-5 py-2.5 font-mono text-small font-medium uppercase tracking-[0.06em] text-white transition-colors hover:bg-brand-blue-hover max-md:mt-3 max-md:text-center">Contact</a>
         </nav>
       </div>
@@ -175,69 +174,76 @@
     </section>
 
     <section class="py-[clamp(4rem,10vw,7rem)]" id="about">
-      <div class="mx-auto grid w-[min(100%-2.5rem,1180px)] items-start gap-[clamp(2rem,5vw,5rem)] md:grid-cols-[1fr_1.2fr]">
+      <div class="mx-auto w-[min(100%-2.5rem,1180px)]">
         <div class="reveal-group">
           <p class="eyebrow mb-5 text-brand-blue reveal">About</p>
-          <h2 class="heading-section text-h2 leading-[1.15] text-near-black reveal">Real Hardware, Not Renderings</h2>
+          <h2 class="heading-section text-h2 leading-[1.15] text-near-black reveal"><span class="inline-block">Defense hardware,</span> <span class="inline-block">built at the speed of software</span></h2>
+          <div class="prose-col mt-6 max-w-[52rem] text-body leading-[1.75]">
+            <p class="reveal">
+              Theron is a San Francisco based defense technology company,
+              founded in 2026. We build products that exist in the field
+              today. Every person on our team has real world skill:
+              Mechanical design, electronics, production engineering,
+              software, operations, and sales. We live where we work, we
+              work extremely hard, and we measure success by what ships.
+            </p>
+          </div>
         </div>
-        <div class="prose-col text-body leading-[1.75] reveal-group">
-          <p class="reveal">
-            Theron is a San Francisco based defense technology company,
-            founded in 2026. We build products that exist in the field
-            today. Every person on our team has real world skill.
-            Mechanical design, electronics, production engineering,
-            software, operations, and sales. We live where we work, we
-            work extremely hard, and we measure success by what ships.
-          </p>
+        <div class="founder-split" id="team">
+          <article class="founder-pane" data-slideshow>
+            <div class="founder-pane-media">
+              <img src="assets/team/hagen/01.jpg" alt="Hagen O&rsquo;Neill" class="is-active" width="1600" height="1200" loading="lazy" decoding="async">
+              <img src="assets/team/hagen/02.jpg" alt="Hagen O&rsquo;Neill" width="1182" height="666" loading="lazy" decoding="async">
+            </div>
+            <p class="founder-mark">Founder</p>
+            <div class="founder-pane-copy">
+              <div class="founder-id">
+                <p class="founder-name">Hagen</p>
+                <p class="founder-role">CEO</p>
+              </div>
+              <a class="founder-social" href="https://www.linkedin.com/in/hagen-o-neill-5105b7207/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            </div>
+          </article>
+          <article class="founder-pane" data-slideshow>
+            <div class="founder-pane-media">
+              <img src="assets/team/chandler/03.jpg" alt="Chandler Johnson" class="is-active" width="768" height="1024" loading="lazy" decoding="async">
+              <img src="assets/team/chandler/01.jpg" alt="Chandler Johnson" width="1200" height="1600" loading="lazy" decoding="async">
+              <img src="assets/team/chandler/02.jpg" alt="Chandler Johnson" width="1600" height="1200" loading="lazy" decoding="async">
+            </div>
+            <p class="founder-mark">Founder</p>
+            <div class="founder-pane-copy">
+              <div class="founder-id">
+                <p class="founder-name">Chandler</p>
+                <p class="founder-role">CTO</p>
+              </div>
+              <a class="founder-social" href="https://www.linkedin.com/in/cyberpunkcoder/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            </div>
+          </article>
+          <article class="founder-pane">
+            <div class="founder-pane-media">
+              <img src="assets/team/george/01.jpg?v=2" alt="George Stratch" class="is-active is-wide" width="1024" height="814" loading="lazy" decoding="async">
+            </div>
+            <div class="founder-pane-copy">
+              <div class="founder-id">
+                <p class="founder-name">George</p>
+                <p class="founder-role">COO</p>
+              </div>
+              <a class="founder-social" href="https://www.linkedin.com/in/gstratch/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            </div>
+          </article>
+          <article class="founder-pane">
+            <div class="founder-pane-media">
+              <img src="assets/team/skylar/01.jpg" alt="Skylar" class="is-active" width="768" height="1024" loading="lazy" decoding="async">
+            </div>
+            <div class="founder-pane-copy">
+              <div class="founder-id">
+                <p class="founder-name">Skylar</p>
+                <p class="founder-role">COS</p>
+              </div>
+            </div>
+          </article>
         </div>
       </div>
-    </section>
-
-    <section class="founder-split" id="team">
-      <article class="founder-pane" data-slideshow>
-        <div class="founder-pane-media">
-          <img src="assets/team/hagen/01.jpg" alt="Hagen O&rsquo;Neill" class="is-active" width="1600" height="1200" loading="lazy" decoding="async">
-          <img src="assets/team/hagen/02.jpg" alt="Hagen O&rsquo;Neill" width="1182" height="666" loading="lazy" decoding="async">
-        </div>
-        <p class="founder-mark">Founder</p>
-        <div class="founder-pane-copy">
-          <p class="founder-name">Hagen</p>
-          <p class="founder-role">CEO</p>
-          <a class="founder-social" href="https://www.linkedin.com/in/hagen-o-neill-5105b7207/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-        </div>
-      </article>
-      <article class="founder-pane" data-slideshow>
-        <div class="founder-pane-media">
-          <img src="assets/team/chandler/03.jpg" alt="Chandler Johnson" class="is-active" width="768" height="1024" loading="lazy" decoding="async">
-          <img src="assets/team/chandler/01.jpg" alt="Chandler Johnson" width="1200" height="1600" loading="lazy" decoding="async">
-          <img src="assets/team/chandler/02.jpg" alt="Chandler Johnson" width="1600" height="1200" loading="lazy" decoding="async">
-        </div>
-        <p class="founder-mark">Founder</p>
-        <div class="founder-pane-copy">
-          <p class="founder-name">Chandler</p>
-          <p class="founder-role">CTO</p>
-          <a class="founder-social" href="https://www.linkedin.com/in/cyberpunkcoder/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-        </div>
-      </article>
-      <article class="founder-pane">
-        <div class="founder-pane-media">
-          <img src="assets/team/george/01.jpg?v=2" alt="George Stratch" class="is-active is-wide" width="1024" height="814" loading="lazy" decoding="async">
-        </div>
-        <div class="founder-pane-copy">
-          <p class="founder-name">George</p>
-          <p class="founder-role">COO</p>
-          <a class="founder-social" href="https://www.linkedin.com/in/gstratch/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-        </div>
-      </article>
-      <article class="founder-pane">
-        <div class="founder-pane-media">
-          <img src="assets/team/skylar/01.jpg" alt="Skylar" class="is-active" width="768" height="1024" loading="lazy" decoding="async">
-        </div>
-        <div class="founder-pane-copy">
-          <p class="founder-name">Skylar</p>
-          <p class="founder-role">COS</p>
-        </div>
-      </article>
     </section>
 
   </main>
@@ -259,6 +265,6 @@
     </div>
   </footer>
 
-  <script src="js/main.js?v=9"></script>
+  <script src="js/main.js?v=11"></script>
 </body>
 </html>
