@@ -1,8 +1,19 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --font-display: "Schibsted Grotesk", "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-sans: "Schibsted Grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-display: "Schibsted Grotesk", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  /* Minor third type scale (1.2) */
+  --text-h1: 2.986rem;
+  --text-h2: 2.488rem;
+  --text-h3: 2.074rem;
+  --text-h4: 1.728rem;
+  --text-h5: 1.44rem;
+  --text-h6: 1.2rem;
+  --text-base: 1rem;
+  --text-small: 0.833rem;
+  --text-xsmall: 0.694rem;
   --color-navy: #0B3D6B;
   --color-navy-800: #083466;
   --color-navy-dark: #072A4A;
@@ -26,7 +37,7 @@ html {
 }
 
 :root {
-  --font-display: "Schibsted Grotesk", "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: "Schibsted Grotesk", -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -46,14 +57,15 @@ html {
 
 .heading-section {
   font-family: var(--font-display);
-  font-weight: 500;
-  letter-spacing: -0.025em;
+  font-weight: 700;
+  letter-spacing: -0.02em;
 }
 
 .eyebrow {
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.14em;
+  font-family: var(--font-mono);
+  font-size: var(--text-small);
+  font-weight: 500;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
 }
 
@@ -156,36 +168,43 @@ main {
 .hero-content {
   position: relative;
   z-index: 1;
-  width: min(100% - 2.5rem, 1180px);
-  margin: 0 auto;
-  padding: 0 0 4.25rem;
-  max-width: min(100% - 2.5rem, 1180px);
+  width: 100%;
+  margin: 0;
+  /* Hero copy breaks out of the 1180px column to span the screen. */
+  padding: 0 max(1.25rem, 4.5vw);
+  /* Sit a little further off the bottom than the side gutters. */
+  padding-bottom: max(2.5rem, 7vw);
 }
 
 .hero-copy {
-  max-width: 40rem;
   text-shadow: 0 1px 14px rgb(3 8 14 / 0.35);
 }
 
-.hero-copy h1 {
-  margin: 0 0 1rem;
-  font-family: var(--font-display);
-  font-size: clamp(1.85rem, 3vw, 2.5rem);
-  font-weight: 500;
-  line-height: 1.15;
-  letter-spacing: -0.025em;
-  color: rgb(255 255 255 / 0.82);
+/* Hero eyebrow keeps the shared .eyebrow face, set at body size. */
+.hero-eyebrow {
+  margin: 0 0 1.25rem;
+  font-size: var(--text-base);
+  color: #fff;
 }
 
-.hero-lede {
+/* Hero headline fills the screen width on one line: the copy sets at ~17.33em
+   in Schibsted Grotesk Bold, so 5.22vw spans the 91vw between the gutters. Phones wrap at h2. */
+.hero-copy h1 {
   margin: 0;
-  max-width: 36ch;
   font-family: var(--font-display);
-  font-size: 1rem;
-  font-weight: 400;
-  line-height: 1.7;
-  letter-spacing: -0.01em;
-  color: rgb(255 255 255 / 0.68);
+  font-size: var(--text-h2);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: #fff;
+  text-wrap: balance;
+}
+
+@media (min-width: 768px) {
+  .hero-copy h1 {
+    font-size: 5.22vw;
+    white-space: nowrap;
+  }
 }
 
 /* —— Scroll reveals —— */
@@ -277,17 +296,17 @@ main {
 .photo-chapter-content .eyebrow {
   color: rgb(255 255 255 / 0.88);
   margin: 0 0 1.25rem;
-  font-size: 11px;
-  letter-spacing: 0.14em;
+  font-size: var(--text-small);
+  letter-spacing: 0.06em;
 }
 
 .photo-chapter-content h2 {
   margin: 0 0 1rem;
   font-family: var(--font-display);
-  font-size: clamp(1.85rem, 3vw, 2.5rem);
-  font-weight: 500;
+  font-size: var(--text-h2);
+  font-weight: 700;
   line-height: 1.15;
-  letter-spacing: -0.025em;
+  letter-spacing: -0.02em;
   color: #fff;
 }
 
@@ -295,7 +314,7 @@ main {
   margin: 0;
   max-width: 36ch;
   font-family: var(--font-display);
-  font-size: 1rem;
+  font-size: var(--text-base);
   font-weight: 400;
   line-height: 1.7;
   letter-spacing: -0.01em;
@@ -303,7 +322,7 @@ main {
 }
 
 main h3 {
-  font-weight: 500;
+  font-weight: 600;
 }
 
 main p {
@@ -329,11 +348,11 @@ main p {
 .cap-index {
   flex: 0 0 auto;
   min-width: 2.15rem;
-  font-family: var(--font-display);
-  font-size: 1.2rem;
+  font-family: var(--font-mono);
+  font-size: var(--text-h6);
   font-weight: 500;
   line-height: 1.3;
-  letter-spacing: -0.03em;
+  letter-spacing: 0;
   color: #c45e28;
 }
 
@@ -343,8 +362,8 @@ main p {
 
 .cap-item h3 {
   margin: 0 0 0.55rem;
-  font-size: 1.2rem;
-  font-weight: 500;
+  font-size: var(--text-h6);
+  font-weight: 600;
   line-height: 1.3;
   color: var(--color-navy-dark);
 }
@@ -352,7 +371,7 @@ main p {
 .cap-item p {
   margin: 0;
   max-width: 36ch;
-  font-size: 1.05rem;
+  font-size: var(--text-base);
   line-height: 1.7;
 }
 
@@ -438,14 +457,15 @@ main p {
 }
 
 .founder-mark {
+  font-family: var(--font-mono);
   position: absolute;
   top: 2.25rem;
   left: 1.5rem;
   z-index: 2;
   margin: 0;
-  font-size: 0.875rem;
-  font-weight: 400;
-  letter-spacing: 0.14em;
+  font-size: var(--text-small);
+  font-weight: 500;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   color: rgb(255 255 255 / 0.55);
 }
@@ -461,27 +481,29 @@ main p {
 .founder-name {
   margin: 0;
   font-family: var(--font-display);
-  font-size: 1rem;
-  font-weight: 400;
+  font-size: var(--text-base);
+  font-weight: 600;
   letter-spacing: -0.02em;
   line-height: 1.2;
 }
 
 .founder-role {
+  font-family: var(--font-mono);
   margin: 0.2rem 0 0;
-  font-size: 0.6875rem;
-  font-weight: 600;
-  letter-spacing: 0.14em;
+  font-size: var(--text-small);
+  font-weight: 500;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   color: rgb(255 255 255 / 0.55);
 }
 
 .founder-social {
+  font-family: var(--font-mono);
   display: inline-block;
   margin-top: 0.65rem;
-  font-size: 0.6875rem;
-  font-weight: 600;
-  letter-spacing: 0.14em;
+  font-size: var(--text-small);
+  font-weight: 500;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   color: rgb(255 255 255 / 0.72);
   text-decoration: none;
@@ -526,17 +548,17 @@ main p {
 .section-band h2 {
   margin: 0 0 0.85rem;
   font-family: var(--font-display);
-  font-size: clamp(1.65rem, 2.6vw, 2.15rem);
-  font-weight: 400;
+  font-size: var(--text-h2);
+  font-weight: 700;
   line-height: 1.15;
-  letter-spacing: -0.025em;
+  letter-spacing: -0.02em;
   color: #fff;
 }
 
 .section-band-lede {
   margin: 0;
   max-width: 36ch;
-  font-size: 0.98rem;
+  font-size: var(--text-base);
   font-weight: 400;
   line-height: 1.65;
   letter-spacing: -0.01em;
@@ -554,9 +576,10 @@ main p {
 }
 
 .section-band-legal {
+  font-family: var(--font-mono);
   margin: 0;
-  font-size: 0.75rem;
-  letter-spacing: 0.01em;
+  font-size: var(--text-small);
+  letter-spacing: 0.02em;
   color: rgb(255 255 255 / 0.34);
 }
 
@@ -591,14 +614,6 @@ main p {
 }
 
 @media (max-width: 768px) {
-  .hero-content {
-    padding-bottom: 3.5rem;
-  }
-
-  .hero-copy {
-    max-width: 40rem;
-  }
-
   .photo-chapter {
     min-height: 85svh;
   }

@@ -9,8 +9,8 @@
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Schibsted+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css?v=10">
+  <link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css?v=18">
   <script>
     document.documentElement.classList.add('js');
   </script>
@@ -28,12 +28,12 @@
           <span class="nav-bar block h-0.5 w-6 bg-navy transition-transform duration-300"></span>
         </button>
         <nav class="site-nav flex items-center gap-8 max-md:pointer-events-none max-md:fixed max-md:inset-x-0 max-md:top-[72px] max-md:-translate-y-[110%] max-md:flex-col max-md:items-stretch max-md:gap-0 max-md:border-b max-md:border-line max-md:bg-white max-md:px-5 max-md:pt-2 max-md:pb-6 max-md:opacity-0 max-md:transition-all max-md:duration-300 max-md:peer-aria-expanded:pointer-events-auto max-md:peer-aria-expanded:translate-y-0 max-md:peer-aria-expanded:opacity-100" id="site-nav">
-          <a href="#capabilities" class="nav-link text-[0.8125rem] font-medium uppercase tracking-[0.04em] transition-colors hover:text-navy-light max-md:border-b max-md:border-line max-md:py-3.5">Capabilities</a>
-          <a href="#mission" class="nav-link text-[0.8125rem] font-medium uppercase tracking-[0.04em] transition-colors hover:text-navy-light max-md:border-b max-md:border-line max-md:py-3.5">Mission</a>
-          <a href="#vision" class="nav-link text-[0.8125rem] font-medium uppercase tracking-[0.04em] transition-colors hover:text-navy-light max-md:border-b max-md:border-line max-md:py-3.5">Vision</a>
-          <a href="#about" class="nav-link text-[0.8125rem] font-medium uppercase tracking-[0.04em] transition-colors hover:text-navy-light max-md:border-b max-md:border-line max-md:py-3.5">About</a>
-          <a href="#team" class="nav-link text-[0.8125rem] font-medium uppercase tracking-[0.04em] transition-colors hover:text-navy-light max-md:border-b max-md:border-line max-md:py-3.5">Team</a>
-          <a href="#contact" class="rounded-[2px] bg-navy-light px-5 py-2.5 text-[0.8125rem] font-medium uppercase tracking-[0.04em] text-white transition-colors hover:bg-navy max-md:mt-3 max-md:text-center">Contact</a>
+          <a href="#capabilities" class="nav-link font-mono text-small font-medium uppercase tracking-[0.06em] transition-colors hover:text-navy-light max-md:border-b max-md:border-line max-md:py-3.5">Capabilities</a>
+          <a href="#mission" class="nav-link font-mono text-small font-medium uppercase tracking-[0.06em] transition-colors hover:text-navy-light max-md:border-b max-md:border-line max-md:py-3.5">Mission</a>
+          <a href="#vision" class="nav-link font-mono text-small font-medium uppercase tracking-[0.06em] transition-colors hover:text-navy-light max-md:border-b max-md:border-line max-md:py-3.5">Vision</a>
+          <a href="#about" class="nav-link font-mono text-small font-medium uppercase tracking-[0.06em] transition-colors hover:text-navy-light max-md:border-b max-md:border-line max-md:py-3.5">About</a>
+          <a href="#team" class="nav-link font-mono text-small font-medium uppercase tracking-[0.06em] transition-colors hover:text-navy-light max-md:border-b max-md:border-line max-md:py-3.5">Team</a>
+          <a href="#contact" class="rounded-[2px] bg-navy-light px-5 py-2.5 font-mono text-small font-medium uppercase tracking-[0.06em] text-white transition-colors hover:bg-navy max-md:mt-3 max-md:text-center">Contact</a>
         </nav>
       </div>
     </div>
@@ -47,12 +47,8 @@
       <div class="hero-scrim" aria-hidden="true"></div>
       <div class="hero-content">
         <div class="hero-copy reveal-group">
-          <h1 class="reveal">Defense at Scale</h1>
-          <p class="hero-lede reveal">
-            Fully autonomous hardware, usable in the field today. We
-            work towards the final weapon, embodied AI protecting
-            the West.
-          </p>
+          <p class="eyebrow hero-eyebrow reveal">Defense at Scale</p>
+          <h1 class="reveal">Ready-to-use autonomous hardware</h1>
         </div>
       </div>
     </section>
@@ -61,8 +57,8 @@
       <div class="mx-auto w-[min(100%-2.5rem,1180px)]">
         <div class="mb-[clamp(2.5rem,5vw,4rem)] max-w-[36rem] reveal-group">
           <p class="eyebrow mb-5 text-navy-light reveal">Capabilities</p>
-          <h2 class="heading-section mb-4 text-[clamp(2rem,4vw,2.75rem)] leading-[1.15] text-navy-dark reveal">What We Build Today</h2>
-          <p class="text-[1.05rem] leading-[1.7] reveal">
+          <h2 class="heading-section mb-4 text-h2 leading-[1.15] text-navy-dark reveal">What We Build Today</h2>
+          <p class="text-base leading-[1.7] reveal">
             Put our hardware on your vehicle today, or work closely
             with us to develop the future of warfare.
           </p>
@@ -130,9 +126,9 @@
       <div class="mx-auto grid w-[min(100%-2.5rem,1180px)] items-start gap-[clamp(2rem,5vw,5rem)] md:grid-cols-[1fr_1.2fr]">
         <div class="reveal-group">
           <p class="eyebrow mb-5 text-navy-light reveal">Vision</p>
-          <h2 class="heading-section text-[clamp(2rem,4vw,2.75rem)] leading-[1.15] text-navy-dark reveal">The Final Weapon</h2>
+          <h2 class="heading-section text-h2 leading-[1.15] text-navy-dark reveal">The Final Weapon</h2>
         </div>
-        <div class="prose-col text-[1.05rem] leading-[1.75] reveal-group">
+        <div class="prose-col text-base leading-[1.75] reveal-group">
           <p class="reveal">
             Our plan starts with products in the field today.
             Hardware and software that operators can actually use.
@@ -155,9 +151,9 @@
       <div class="mx-auto grid w-[min(100%-2.5rem,1180px)] items-start gap-[clamp(2rem,5vw,5rem)] md:grid-cols-[1fr_1.2fr]">
         <div class="reveal-group">
           <p class="eyebrow mb-5 text-navy-light reveal">About</p>
-          <h2 class="heading-section text-[clamp(2rem,4vw,2.75rem)] leading-[1.15] text-navy-dark reveal">Real Hardware, Not Renderings</h2>
+          <h2 class="heading-section text-h2 leading-[1.15] text-navy-dark reveal">Real Hardware, Not Renderings</h2>
         </div>
-        <div class="prose-col text-[1.05rem] leading-[1.75] reveal-group">
+        <div class="prose-col text-base leading-[1.75] reveal-group">
           <p class="reveal">
             Theron is a San Francisco based defense technology company,
             founded in 2026. We build products that exist in the field
