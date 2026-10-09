@@ -198,6 +198,176 @@
     layer.style.backgroundImage = 'url("data:image/svg+xml,' + encodeURIComponent(buildNetworkSvg(Math.random)) + '")';
   }
 
+  // Contact band: the Vision network grown live. The band loads with the left
+  // half already grown (behind the "Work With Us" copy). Once it scrolls into
+  // view the network pans slowly left and new nodes pop in at random spots
+  // across the right half, each then drawing a link to the nearest existing
+  // node (tree links only, so no closed polygons). Static when reduced motion
+  // is on; paused offscreen.
+  function initContactNetwork() {
+    var field = document.querySelector('.section-band-field');
+    var canvas = field && field.querySelector('.section-band-network');
+    if (!canvas || !canvas.getContext) return;
+    var ctx = canvas.getContext('2d');
+    field.classList.add('is-live');
+
+    var CELL = 110;          // grid spacing between candidate nodes (px)
+    var PAN_SPEED = 18;      // pan speed (px/s)
+    var ZONE_START = 0.5;    // new nodes appear across the right half
+    var POP = 0.35;          // seconds for a dot to pop in
+    var LINK_DELAY = 0.25;   // pause between the pop and its link starting
+    var LINK = 0.7;          // seconds for a link to draw
+    var W = 0, H = 0, camX = 0, nextCol = 0, clock = 0, last = 0;
+    var nodes = [], pending = [], running = false, visible = false;
+
+    function measure() {
+      var dpr = window.devicePixelRatio || 1;
+      W = field.clientWidth;
+      H = field.clientHeight;
+      canvas.width = Math.round(W * dpr);
+      canvas.height = Math.round(H * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+
+    function queueColumn(col, at) {
+      var rows = Math.ceil(H / CELL);
+      // Without a fixed time, each node pops at a random moment while its
+      // column is still inside the right half.
+      var span = Math.max(0.5, (col * CELL - camX - W * ZONE_START) / PAN_SPEED);
+      for (var r = 0; r <= rows; r++) {
+        if (Math.random() < 0.4) continue;
+        pending.push({
+          x: col * CELL + (Math.random() * 2 - 1) * CELL * 0.35,
+          y: r * CELL + (Math.random() * 2 - 1) * CELL * 0.35,
+          at: at !== undefined ? at : clock + Math.random() * span,
+          hub: Math.random() < 0.12
+        });
+      }
+    }
+
+    function spawn(n) {
+      var best = null, bestD = CELL * 2.2;
+      nodes.forEach(function (m) {
+        var d = Math.hypot(m.x - n.x, m.y - n.y);
+        if (d < bestD) { bestD = d; best = m; }
+      });
+      n.born = n.at;
+      if (best) { n.px = best.x; n.py = best.y; }
+      nodes.push(n);
+    }
+
+    function grow(upTo) {
+      // Fully grown network from the left edge up to the given x.
+      nodes = []; pending = []; clock = 0; camX = 0;
+      nextCol = -1;
+      while (nextCol * CELL <= upTo) queueColumn(nextCol++, -10);
+      pending.sort(function (a, b) { return a.x - b.x; });
+      pending.forEach(spawn);
+      pending = [];
+    }
+
+    function release() {
+      while (nextCol * CELL <= camX + W) queueColumn(nextCol++);
+      pending.sort(function (a, b) { return a.at - b.at; });
+      while (pending.length && pending[0].at <= clock) spawn(pending.shift());
+      nodes = nodes.filter(function (n) { return n.x - camX > -CELL * 2; });
+    }
+
+    // Ease with a slight overshoot, for the pop.
+    function popEase(p) {
+      var k = 2.2;
+      p -= 1;
+      return 1 + (k + 1) * p * p * p + k * p * p;
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+      ctx.save();
+      ctx.translate(-camX, 0);
+      ctx.lineWidth = 1;
+      ctx.strokeStyle = 'rgba(255,255,255,0.18)';
+      nodes.forEach(function (n) {
+        if (n.px === undefined) return;
+        var p = Math.min(1, Math.max(0, (clock - n.born - POP - LINK_DELAY) / LINK));
+        if (p <= 0) return;
+        // The link reaches out from the new dot to the network.
+        ctx.beginPath();
+        ctx.moveTo(n.x, n.y);
+        ctx.lineTo(n.x + (n.px - n.x) * p, n.y + (n.py - n.y) * p);
+        ctx.stroke();
+      });
+      nodes.forEach(function (n) {
+        var p = Math.min(1, Math.max(0, (clock - n.born) / POP));
+        if (p <= 0) return;
+        var s = popEase(p);
+        var a = Math.min(1, p * 2);
+        ctx.fillStyle = 'rgba(255,255,255,' + (0.5 * a) + ')';
+        if (n.hub) {
+          ctx.strokeStyle = 'rgba(255,255,255,' + (0.45 * a) + ')';
+          ctx.lineWidth = 1.25;
+          ctx.beginPath();
+          ctx.arc(n.x, n.y, 6 * s, 0, Math.PI * 2);
+          ctx.stroke();
+          ctx.lineWidth = 1;
+          ctx.strokeStyle = 'rgba(255,255,255,0.18)';
+        }
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, (n.hub ? 2.5 : 2.25) * s, 0, Math.PI * 2);
+        ctx.fill();
+      });
+      ctx.restore();
+    }
+
+    function frame(now) {
+      if (!running) return;
+      var dt = last ? Math.min((now - last) / 1000, 0.1) : 0;
+      last = now;
+      clock += dt;
+      camX += PAN_SPEED * dt;
+      release();
+      draw();
+      requestAnimationFrame(frame);
+    }
+
+    function sync() {
+      if (reduceMotion.matches) {
+        running = false;
+        grow(W);
+        draw();
+        return;
+      }
+      if (visible && !running) {
+        running = true;
+        last = 0;
+        requestAnimationFrame(frame);
+      } else if (!visible) {
+        running = false;
+      }
+    }
+
+    measure();
+    grow(W * ZONE_START);
+    draw();
+    window.addEventListener('resize', function () {
+      // Phones fire resize as the address bar shows/hides; only rebuild the
+      // network when the width really changes.
+      var oldW = W;
+      measure();
+      if (W !== oldW) grow(W * ZONE_START);
+      draw();
+    });
+    reduceMotion.addEventListener('change', sync);
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (entries) {
+        visible = entries[0].isIntersecting;
+        sync();
+      }).observe(field);
+    } else {
+      visible = true;
+      sync();
+    }
+  }
+
   // Team cards with a LinkedIn link open it in a new tab when clicked anywhere.
   function initTeamLinks() {
     document.querySelectorAll('.founder-pane').forEach(function (pane) {
@@ -271,6 +441,7 @@
   revealGroups();
   initSlideshows();
   initTeamLinks();
+  initContactNetwork();
   drawVisionNetwork();
   updateParallax();
 })();

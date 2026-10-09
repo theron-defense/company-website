@@ -687,27 +687,19 @@ main p {
   opacity: 0.82;
   pointer-events: none;
   mask-image: linear-gradient(90deg, rgb(0 0 0 / 0.4) 0%, rgb(0 0 0 / 0.75) 24%, #000 50%, #000 100%);
-  -webkit-mask-image: linear-gradient(90deg, rgb(0 0 0 / 0.4) 0%, rgb(0 0 0 / 0.75) 24%, #000 50%, #000 100%);
 }
 
-.section-band-stream {
+/* Live network drawn by initContactNetwork() in js/main.js. Without JS the
+   field shows the static Vision network instead. */
+.section-band-field:not(.is-live) {
+  background: url("../assets/vision-network.svg?v=4") center / cover no-repeat;
+}
+
+.section-band-network {
   position: absolute;
-  top: 0;
-  left: 0;
+  inset: 0;
+  width: 100%;
   height: 100%;
-  width: auto;
-  aspect-ratio: 16000 / 520;
-  overflow: hidden;
-  background-image: url("../assets/contact-dots.svg");
-  background-repeat: repeat-x;
-  background-position: 0 50%;
-  background-size: 12.5% 100%;
-  animation: point-stream 80s linear infinite;
-}
-
-@keyframes point-stream {
-  from { transform: translate3d(0, 0, 0); }
-  to { transform: translate3d(-12.5%, 0, 0); }
 }
 
 @media (max-width: 768px) {
@@ -740,7 +732,4 @@ main p {
     background-position: 72% center;
   }
 
-  .section-band-stream {
-    animation: none;
-  }
 }
