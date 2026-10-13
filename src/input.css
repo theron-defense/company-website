@@ -185,8 +185,9 @@ main {
   color: #fff;
 }
 
-/* Hero headline fills the screen width on one line: the copy sets at ~17.33em
-   in Schibsted Grotesk Bold, so 5.22vw spans the 91vw between the gutters. Phones wrap at h2. */
+/* Hero headline fills the screen width on one line: the copy (with its period)
+   sets at ~17.6em in Schibsted Grotesk Bold, so 5.14vw spans the 91vw between
+   the gutters. Phones wrap at h2. */
 .hero-copy h1 {
   margin: 0;
   font-family: var(--font-display);
@@ -200,7 +201,7 @@ main {
 
 @media (min-width: 768px) {
   .hero-copy h1 {
-    font-size: 5.22vw;
+    font-size: 5.14vw;
     white-space: nowrap;
   }
 }
@@ -241,42 +242,21 @@ main p {
 }
 
 /* —— Rest of page —— */
-/* "What we build" header pins under the fixed nav while the cards scroll
-   beneath it, and releases once the section's content runs out. */
+/* "What we build" header: eyebrow and heading on the left, NDAA seal right. */
 .cap-header {
-  position: sticky;
-  top: 72px;
-  z-index: 10;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 1.5rem;
-  padding: 1.5rem 0;
-  /* Same frosted background as the fixed nav bar above it. */
-  background: rgb(242 240 237 / 0.9);
-  backdrop-filter: blur(12px);
-}
-
-/* The header stays pinned only within this wrapper (header + cards 1–2).
-   The inner grid's bottom padding equals the card gap, so the wrapper ends
-   exactly at the top of card 3 and the header releases there. */
-.cap-sticky-scope > .cap-grid {
-  padding-bottom: 0.75rem;
-}
-
-@media (min-width: 768px) {
-  .cap-sticky-scope > .cap-grid {
-    padding-bottom: 1rem;
-  }
 }
 
 .cap-grid {
   display: grid;
-  gap: 0.75rem;
+  gap: 1.25rem;
 }
 
-/* Cards follow the pitch deck: white, 1px line outline, 4px radius, the deck
-   system's small shadow, and imagery that runs flush to the card edges. */
+/* Cards follow the pitch deck: white, 4px radius, the deck system's medium
+   shadow, and imagery that runs flush to the card edges. */
 .cap-item {
   --card-pad-y: 1.75rem;
   --card-pad-x: 2rem;
@@ -286,9 +266,8 @@ main p {
   padding: var(--card-pad-y) 0 var(--card-pad-y) var(--card-pad-x);
   overflow: hidden;
   background: var(--color-white);
-  border: 1px solid var(--color-line);
   border-radius: 4px;
-  box-shadow: 0 1px 2px rgb(1 17 33 / 0.06);
+  box-shadow: 0 2px 8px rgb(1 17 33 / 0.08), 0 1px 2px rgb(1 17 33 / 0.06);
 }
 
 .cap-index {
@@ -405,7 +384,7 @@ main p {
 
 @media (min-width: 768px) {
   .cap-grid {
-    gap: 1rem;
+    gap: 2rem;
   }
 }
 
