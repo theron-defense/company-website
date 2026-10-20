@@ -9,31 +9,27 @@
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Schibsted+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css?v=10">
+  <link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css?v=169">
   <script>
     document.documentElement.classList.add('js');
   </script>
 </head>
-<body class="bg-white font-sans text-base leading-[1.6] text-ink antialiased">
-  <header class="site-header on-hero fixed inset-x-0 top-0 z-50 h-[72px] border-b border-line bg-white/90 backdrop-blur-md">
+<body class="bg-warm-light font-sans text-base leading-[1.6] text-ink antialiased">
+  <header class="site-header on-hero fixed inset-x-0 top-0 z-50 h-[72px] border-b border-line bg-warm-light/90 backdrop-blur-md">
     <div class="mx-auto flex h-full w-[min(100%-2.5rem,1180px)] items-center justify-between gap-4">
       <a href="#top" class="shrink-0" aria-label="Theron home">
-        <img src="assets/logo.svg" alt="Theron" class="site-logo logo-on-light" width="158" height="73">
+        <img src="assets/logo.svg?v=2" alt="Theron" class="site-logo logo-on-light" width="158" height="73">
         <img src="assets/logo-white.svg" alt="Theron" class="site-logo logo-on-dark hidden" width="158" height="73">
       </a>
       <div class="flex items-center gap-5 md:gap-8">
         <button class="nav-toggle peer -mr-1 flex shrink-0 cursor-pointer flex-col justify-center gap-1.5 border-0 bg-transparent p-2 md:hidden" aria-expanded="false" aria-controls="site-nav" aria-label="Open menu">
-          <span class="nav-bar block h-0.5 w-6 bg-navy transition-transform duration-300"></span>
-          <span class="nav-bar block h-0.5 w-6 bg-navy transition-transform duration-300"></span>
+          <span class="nav-bar block h-0.5 w-6 bg-near-black transition-transform duration-300"></span>
+          <span class="nav-bar block h-0.5 w-6 bg-near-black transition-transform duration-300"></span>
         </button>
-        <nav class="site-nav flex items-center gap-8 max-md:pointer-events-none max-md:fixed max-md:inset-x-0 max-md:top-[72px] max-md:-translate-y-[110%] max-md:flex-col max-md:items-stretch max-md:gap-0 max-md:border-b max-md:border-line max-md:bg-white max-md:px-5 max-md:pt-2 max-md:pb-6 max-md:opacity-0 max-md:transition-all max-md:duration-300 max-md:peer-aria-expanded:pointer-events-auto max-md:peer-aria-expanded:translate-y-0 max-md:peer-aria-expanded:opacity-100" id="site-nav">
-          <a href="#capabilities" class="nav-link text-[0.8125rem] font-medium uppercase tracking-[0.04em] transition-colors hover:text-navy-light max-md:border-b max-md:border-line max-md:py-3.5">Capabilities</a>
-          <a href="#mission" class="nav-link text-[0.8125rem] font-medium uppercase tracking-[0.04em] transition-colors hover:text-navy-light max-md:border-b max-md:border-line max-md:py-3.5">Mission</a>
-          <a href="#vision" class="nav-link text-[0.8125rem] font-medium uppercase tracking-[0.04em] transition-colors hover:text-navy-light max-md:border-b max-md:border-line max-md:py-3.5">Vision</a>
-          <a href="#about" class="nav-link text-[0.8125rem] font-medium uppercase tracking-[0.04em] transition-colors hover:text-navy-light max-md:border-b max-md:border-line max-md:py-3.5">About</a>
-          <a href="#team" class="nav-link text-[0.8125rem] font-medium uppercase tracking-[0.04em] transition-colors hover:text-navy-light max-md:border-b max-md:border-line max-md:py-3.5">Team</a>
-          <a href="#contact" class="rounded-[2px] bg-navy-light px-5 py-2.5 text-[0.8125rem] font-medium uppercase tracking-[0.04em] text-white transition-colors hover:bg-navy max-md:mt-3 max-md:text-center">Contact</a>
+        <nav class="site-nav flex items-center gap-8 max-md:pointer-events-none max-md:fixed max-md:inset-x-0 max-md:top-[72px] max-md:-translate-y-[110%] max-md:flex-col max-md:items-stretch max-md:gap-0 max-md:border-b max-md:border-line max-md:bg-warm-light max-md:px-5 max-md:pt-2 max-md:pb-6 max-md:opacity-0 max-md:transition-all max-md:duration-300 max-md:peer-aria-expanded:pointer-events-auto max-md:peer-aria-expanded:translate-y-0 max-md:peer-aria-expanded:opacity-100" id="site-nav">
+          <a href="#aimbot" class="nav-link font-mono text-small font-medium uppercase tracking-[0.06em] transition-colors hover:text-brand-blue max-md:border-b max-md:border-line max-md:py-3.5">What we build</a>
+          <a href="#contact" class="rounded-[2px] bg-brand-blue px-5 py-2.5 font-mono text-small font-medium uppercase tracking-[0.06em] text-white transition-colors hover:bg-brand-blue-hover max-md:mt-3 max-md:text-center">Contact</a>
         </nav>
       </div>
     </div>
@@ -47,195 +43,195 @@
       <div class="hero-scrim" aria-hidden="true"></div>
       <div class="hero-content">
         <div class="hero-copy reveal-group">
-          <h1 class="reveal">Defense at Scale</h1>
-          <p class="hero-lede reveal">
-            Fully autonomous hardware, usable in the field today. We
-            work towards the final weapon, embodied AI protecting
-            the West.
-          </p>
+          <div class="mb-6 h-[0.3125rem] w-10 bg-signal-orange reveal" aria-hidden="true"></div>
+          <p class="eyebrow hero-eyebrow reveal">Defense at Scale</p>
+          <h1 class="reveal">Real hardware, not renderings.</h1>
         </div>
       </div>
     </section>
 
-    <section class="py-[clamp(4rem,10vw,7rem)]" id="capabilities">
-      <div class="mx-auto w-[min(100%-2.5rem,1180px)]">
-        <div class="mb-[clamp(2.5rem,5vw,4rem)] max-w-[36rem] reveal-group">
-          <p class="eyebrow mb-5 text-navy-light reveal">Capabilities</p>
-          <h2 class="heading-section mb-4 text-[clamp(2rem,4vw,2.75rem)] leading-[1.15] text-navy-dark reveal">What We Build Today</h2>
-          <p class="text-[1.05rem] leading-[1.7] reveal">
-            Put our hardware on your vehicle today, or work closely
-            with us to develop the future of warfare.
-          </p>
-        </div>
-        <div class="cap-grid reveal-group">
-          <article class="cap-item reveal">
-            <span class="cap-index">01</span>
-            <div class="cap-item-body">
-              <h3>Autonomous Turret</h3>
-              <p>
-                A fully autonomous defense system that is highly
-                portable and counter UAS capable.
+    <section id="capabilities">
+      <div class="product-stack">
+        <article class="product-panel product-panel--end" tabindex="0" aria-label="Aimbot, fully autonomous turret">
+          <div class="product-panel-media product-panel-media--collage">
+            <video class="product-collage-dawn" muted loop playsinline preload="metadata" aria-hidden="true">
+              <source src="assets/capabilities/dawn-demo.mp4?v=3" type="video/mp4">
+            </video>
+            <div class="product-panel-copy reveal-group" id="aimbot">
+              <p class="product-index reveal">Aimbot</p>
+              <h3 class="reveal">Fully autonomous turret.</h3>
+              <div class="product-panel-detail">
+                <p class="reveal">
+                  Aimbot finds, tracks, and destroys drone threats on
+                  its own, with or without an operator in the loop.
+                  Unlike other systems, targeting and acquisition are
+                  built into a single, highly portable unit.
+                </p>
+                <p class="reveal">
+                  Transportable by a single person. Quickly mounted to
+                  any vehicle or equipment for an instant cUAS solution.
+                  Plug it into existing C2 systems, or let it run
+                  standalone.
+                </p>
+                <ul class="product-panel-facts reveal">
+                  <li><span>Weapon</span><span>12 gauge shotgun</span></li>
+                  <li><span>Capacity</span><span>25 rounds</span></li>
+                  <li><span>Weight</span><span>45 lbs</span></li>
+                </ul>
+              </div>
+            </div>
+            <video class="product-collage-loop" muted loop playsinline preload="metadata" aria-hidden="true">
+              <source src="assets/capabilities/blue-moving-demo.mp4?v=4" type="video/mp4">
+            </video>
+          </div>
+        </article>
+
+        <article class="product-panel product-panel--end product-panel--mirror" tabindex="0" aria-label="The drones we shoot">
+          <div class="product-panel-media product-panel-media--collage">
+            <video class="product-collage-loop" muted loop playsinline preload="metadata" aria-hidden="true">
+              <source src="assets/capabilities/drone-demo.mp4?v=1" type="video/mp4">
+            </video>
+            <div class="product-panel-copy reveal-group">
+              <p class="product-index reveal">Test targets</p>
+              <h3 class="reveal">The drones we shoot.</h3>
+              <div class="product-panel-detail">
+                <p class="reveal">
+                  We don't test against cheap, plastic drones off a
+                  store shelf. In modern combat, drones are purpose-built
+                  for strike missions. These drones are extremely tough
+                  to kill, as their carbon fiber frames shrug off all
+                  but the most powerful shotgun ammunition.
+                </p>
+                <p class="reveal">
+                  Therefore, we build our own custom 10 inch
+                  quadcopters in house. This practice gets at our core
+                  philosophy: test with real hardware in realistic
+                  environments. Sometimes, though, just for fun, we
+                  strap an RPG shell to the bottom for some fireworks.
+                </p>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="product-panel product-panel--ai" tabindex="0" aria-label="Proprietary AI models">
+          <div class="product-ai">
+            <div class="product-ai-copy reveal-group">
+              <p class="product-index reveal">Proprietary AI</p>
+              <h3 class="reveal">We train our own models.</h3>
+              <p class="reveal">
+                Every Theron system runs on models we train in house,
+                on real data we collect in the field. They learn to
+                tell non-threats, such as birds or distant aircraft,
+                from imminent UAS threats. Every range day makes the
+                next engagement faster and more accurate.
+              </p>
+              <p class="reveal">
+                Detection, acquisition, tracking, and fire control all
+                run on the device itself. No cloud connection required.
               </p>
             </div>
-          </article>
-          <article class="cap-item reveal">
-            <span class="cap-index">02</span>
-            <div class="cap-item-body">
-              <h3>cUAS Proximity Munitions</h3>
-              <p>
-                Proximity fused munitions that defeat incoming drones
-                at close range.
+            <video class="product-ai-loop" muted loop playsinline preload="metadata" aria-hidden="true">
+              <source src="assets/capabilities/rotating-drone-loop.mp4?v=1" type="video/mp4">
+            </video>
+          </div>
+        </article>
+
+        <article class="product-panel product-panel--ai product-panel--hw" tabindex="0" aria-label="NDAA compliant hardware, built in house">
+          <div class="product-ai product-hw">
+            <canvas class="product-hw-canvas" data-model="assets/capabilities/actuator-exploded.glb?v=1" aria-hidden="true"></canvas>
+            <div class="product-ai-copy reveal-group">
+              <p class="product-index reveal">Built in house</p>
+              <h3 class="reveal">NDAA compliant hardware.</h3>
+              <p class="reveal">
+                We are developing our own NDAA compliant hardware in
+                house, from actuators to sensors. One of our goals as a
+                company is to put America back on track as a producer
+                of critical hardware, not just a buyer of it.
+              </p>
+              <p class="reveal">
+                The designs use materials and components made
+                domestically, so a conflict cannot cut off the parts we
+                need. Building these systems ourselves keeps the supply
+                chain short, the iteration cycle fast, and every part
+                under our control. Our component designs are also
+                intended to be dual use, meaning they have both
+                military and civilian applications.
               </p>
             </div>
-          </article>
-          <article class="cap-item reveal">
-            <span class="cap-index">03</span>
-            <div class="cap-item-body">
-              <h3>Our Own AI Models</h3>
-              <p>
-                Models we train here for acquisition, targeting,
-                and control.
-              </p>
-            </div>
-          </article>
-          <article class="cap-item reveal">
-            <span class="cap-index">04</span>
-            <div class="cap-item-body">
-              <h3>NDAA Compliant Hardware</h3>
-              <p>
-                Hardware that closes the supply chain gap left
-                by offshoring.
-              </p>
-            </div>
-          </article>
-        </div>
+          </div>
+        </article>
       </div>
     </section>
 
-    <section class="photo-chapter" id="mission">
-      <div class="photo-chapter-image" aria-hidden="true"></div>
-      <div class="photo-chapter-scrim" aria-hidden="true"></div>
-      <div class="photo-chapter-content reveal-group">
-        <p class="eyebrow reveal">Mission</p>
-        <h2 class="heading-section reveal">Close the Gap</h2>
-        <p class="reveal">
-          First we ship what can fight now. Fieldable, affordable
-          systems with the people who use them, on short cycles,
-          judged by real world performance.
-        </p>
+    <section class="team-section" id="about">
+      <div class="founder-split" id="team">
+        <article class="founder-pane" data-slideshow>
+          <div class="founder-pane-media">
+            <img src="assets/team/hagen/01.jpg" alt="Hagen O&rsquo;Neill" class="is-active" width="1600" height="1200" loading="lazy" decoding="async">
+            <img src="assets/team/hagen/02.jpg" alt="Hagen O&rsquo;Neill" width="1182" height="666" loading="lazy" decoding="async">
+          </div>
+          <p class="founder-mark">Founder</p>
+          <div class="founder-pane-copy">
+            <p class="founder-name">Hagen</p>
+            <p class="founder-role">CEO</p>
+            <a class="founder-social" href="https://www.linkedin.com/in/hagen-o-neill-5105b7207/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+          </div>
+        </article>
+        <article class="founder-pane" data-slideshow>
+          <div class="founder-pane-media">
+            <img src="assets/team/chandler/03.jpg" alt="Chandler Johnson" class="is-active" width="768" height="1024" loading="lazy" decoding="async">
+            <img src="assets/team/chandler/01.jpg" alt="Chandler Johnson" width="1200" height="1600" loading="lazy" decoding="async">
+            <img src="assets/team/chandler/02.jpg" alt="Chandler Johnson" width="1600" height="1200" loading="lazy" decoding="async">
+          </div>
+          <p class="founder-mark">Founder</p>
+          <div class="founder-pane-copy">
+            <p class="founder-name">Chandler</p>
+            <p class="founder-role">CTO</p>
+            <a class="founder-social" href="https://www.linkedin.com/in/cyberpunkcoder/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+          </div>
+        </article>
+        <article class="founder-pane">
+          <div class="founder-pane-media">
+            <img src="assets/team/george/01.jpg?v=2" alt="George Stratch" class="is-active is-wide" width="1024" height="814" loading="lazy" decoding="async">
+          </div>
+          <div class="founder-pane-copy">
+            <p class="founder-name">George</p>
+            <p class="founder-role">COO</p>
+            <a class="founder-social" href="https://www.linkedin.com/in/gstratch/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+          </div>
+        </article>
+        <article class="founder-pane">
+          <div class="founder-pane-media">
+            <img src="assets/team/skylar/01.jpg" alt="Skylar" class="is-active" width="768" height="1024" loading="lazy" decoding="async">
+          </div>
+          <div class="founder-pane-copy">
+            <p class="founder-name">Skylar</p>
+            <p class="founder-role">COS</p>
+          </div>
+        </article>
       </div>
-    </section>
-
-    <section class="bg-paper py-[clamp(4rem,10vw,7rem)]" id="vision">
-      <div class="mx-auto grid w-[min(100%-2.5rem,1180px)] items-start gap-[clamp(2rem,5vw,5rem)] md:grid-cols-[1fr_1.2fr]">
-        <div class="reveal-group">
-          <p class="eyebrow mb-5 text-navy-light reveal">Vision</p>
-          <h2 class="heading-section text-[clamp(2rem,4vw,2.75rem)] leading-[1.15] text-navy-dark reveal">The Final Weapon</h2>
-        </div>
-        <div class="prose-col text-[1.05rem] leading-[1.75] reveal-group">
-          <p class="reveal">
-            Our plan starts with products in the field today.
-            Hardware and software that operators can actually use.
-            These systems are simple and practical for today&rsquo;s
-            command and control.
-          </p>
-          <p class="reveal">
-            However, our individual products are really just stepping
-            stones for a much larger master plan. A fully autonomous
-            distributed system for defending the West, the final
-            weapon. Achieving our vision means becoming a much larger
-            company, growing at high speed, and staying aggressive.
-            We are only at the beginning of this story.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <section class="py-[clamp(4rem,10vw,7rem)]" id="about">
-      <div class="mx-auto grid w-[min(100%-2.5rem,1180px)] items-start gap-[clamp(2rem,5vw,5rem)] md:grid-cols-[1fr_1.2fr]">
-        <div class="reveal-group">
-          <p class="eyebrow mb-5 text-navy-light reveal">About</p>
-          <h2 class="heading-section text-[clamp(2rem,4vw,2.75rem)] leading-[1.15] text-navy-dark reveal">Real Hardware, Not Renderings</h2>
-        </div>
-        <div class="prose-col text-[1.05rem] leading-[1.75] reveal-group">
-          <p class="reveal">
-            Theron is a San Francisco based defense technology company,
-            founded in 2026. We build products that exist in the field
-            today. Every person on our team has real world skill.
-            Mechanical design, electronics, production engineering,
-            software, operations, and sales. We live where we work, we
-            work extremely hard, and we measure success by what ships.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <section class="founder-split" id="team">
-      <article class="founder-pane" data-slideshow>
-        <div class="founder-pane-media">
-          <img src="assets/team/hagen/01.jpg" alt="Hagen O&rsquo;Neill" class="is-active" width="1600" height="1200" loading="lazy" decoding="async">
-          <img src="assets/team/hagen/02.jpg" alt="Hagen O&rsquo;Neill" width="1182" height="666" loading="lazy" decoding="async">
-        </div>
-        <p class="founder-mark">Founder</p>
-        <div class="founder-pane-copy">
-          <p class="founder-name">Hagen</p>
-          <p class="founder-role">CEO</p>
-          <a class="founder-social" href="https://www.linkedin.com/in/hagen-o-neill-5105b7207/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-        </div>
-      </article>
-      <article class="founder-pane" data-slideshow>
-        <div class="founder-pane-media">
-          <img src="assets/team/chandler/03.jpg" alt="Chandler Johnson" class="is-active" width="768" height="1024" loading="lazy" decoding="async">
-          <img src="assets/team/chandler/01.jpg" alt="Chandler Johnson" width="1200" height="1600" loading="lazy" decoding="async">
-          <img src="assets/team/chandler/02.jpg" alt="Chandler Johnson" width="1600" height="1200" loading="lazy" decoding="async">
-        </div>
-        <p class="founder-mark">Founder</p>
-        <div class="founder-pane-copy">
-          <p class="founder-name">Chandler</p>
-          <p class="founder-role">CTO</p>
-          <a class="founder-social" href="https://www.linkedin.com/in/cyberpunkcoder/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-        </div>
-      </article>
-      <article class="founder-pane">
-        <div class="founder-pane-media">
-          <img src="assets/team/george/01.jpg?v=2" alt="George Stratch" class="is-active is-wide" width="1024" height="814" loading="lazy" decoding="async">
-        </div>
-        <div class="founder-pane-copy">
-          <p class="founder-name">George</p>
-          <p class="founder-role">COO</p>
-          <a class="founder-social" href="https://www.linkedin.com/in/gstratch/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-        </div>
-      </article>
-      <article class="founder-pane">
-        <div class="founder-pane-media">
-          <img src="assets/team/skylar/01.jpg" alt="Skylar" class="is-active" width="768" height="1024" loading="lazy" decoding="async">
-        </div>
-        <div class="founder-pane-copy">
-          <p class="founder-name">Skylar</p>
-          <p class="founder-role">COS</p>
-        </div>
-      </article>
     </section>
 
   </main>
 
-  <footer class="section-band" id="contact">
+  <footer class="site-foot" id="contact">
     <div class="section-band-field" aria-hidden="true">
-      <div class="section-band-stream"></div>
+      <canvas class="section-band-network"></canvas>
     </div>
-    <div class="section-band-inner">
-      <div class="reveal-group">
-        <p class="eyebrow section-band-eyebrow reveal">Contact</p>
-        <h2 class="heading-section reveal">Work With Us</h2>
-        <p class="section-band-lede reveal">
-          For partnerships and inquiries, reach us at
-          <a href="mailto:contact@therondefense.com">contact@therondefense.com</a>.
-        </p>
-      </div>
-      <p class="section-band-legal">&copy; <span id="year"></span> Theron. All rights reserved.</p>
+    <div class="site-foot-copy reveal-group">
+      <p class="product-index reveal">Contact</p>
+      <h2 class="reveal">Work with us.</h2>
+      <p class="reveal">
+        For partnerships and inquiries, reach us at
+        <a href="mailto:contact@therondefense.com">contact@therondefense.com</a>.
+      </p>
     </div>
+    <p class="site-foot-legal">&copy; <span id="year"></span> Theron. All rights reserved.</p>
   </footer>
 
-  <script src="js/main.js?v=4"></script>
+  <script src="js/main.js?v=25"></script>
+  <script type="importmap">{"imports":{"three":"https://unpkg.com/three@0.160.0/build/three.module.js","three/addons/":"https://unpkg.com/three@0.160.0/examples/jsm/"}}</script>
+  <script type="module" src="js/wireframe.js?v=3"></script>
 </body>
 </html>
