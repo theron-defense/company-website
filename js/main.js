@@ -5,7 +5,7 @@
   const navLinks = nav.querySelectorAll('a');
   const year = document.getElementById('year');
   const video = document.querySelector('.hero-video');
-  const mediaSections = document.querySelectorAll('.hero');
+  const mediaSections = document.querySelectorAll('.hero, .product-panel, .founder-pane, .site-foot');
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
   if (year) {
@@ -436,6 +436,49 @@
     });
   }
 
+  function initProductPanels() {
+    var panels = document.querySelectorAll('.product-panel');
+    if (!panels.length) return;
+    var collages = document.querySelectorAll('.product-panel-media--collage, .product-ai');
+
+    function syncProductVideos(collage, on) {
+      collage.querySelectorAll('video').forEach(function (clip) {
+        if (!on || reduceMotion.matches) {
+          clip.pause();
+          return;
+        }
+        var play = clip.play();
+        if (play && typeof play.catch === 'function') play.catch(function () {});
+      });
+    }
+
+    function update() {
+      var vh = window.innerHeight;
+      panels.forEach(function (panel) {
+        var box = panel.getBoundingClientRect();
+        var mid = box.top + box.height * 0.42;
+        panel.classList.toggle('is-active', mid > vh * 0.16 && mid < vh * 0.78);
+      });
+      collages.forEach(function (collage) {
+        var mediaBox = collage.getBoundingClientRect();
+        syncProductVideos(collage, mediaBox.bottom > 0 && mediaBox.top < vh);
+      });
+    }
+
+    document.addEventListener('visibilitychange', function () {
+      if (document.hidden) {
+        collages.forEach(function (collage) {
+          syncProductVideos(collage, false);
+        });
+      } else {
+        update();
+      }
+    });
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  }
+
   onScroll();
   syncVideo();
   revealGroups();
@@ -444,4 +487,5 @@
   initContactNetwork();
   drawVisionNetwork();
   updateParallax();
+  initProductPanels();
 })();
