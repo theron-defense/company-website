@@ -1,19 +1,31 @@
 const canvas = document.querySelector('.product-hw-canvas');
 
 if (canvas) {
+  const modelUrl = canvas.dataset.model;
+  const modelBuf = fetch(modelUrl).then((res) => {
+    if (!res.ok) throw new Error(res.statusText);
+    return res.arrayBuffer();
+  });
+  const threeMod = import('three');
+  const loaderMod = import('three/addons/loaders/GLTFLoader.js');
+  const utilsMod = import('three/addons/utils/BufferGeometryUtils.js');
+
   const lazy = new IntersectionObserver((entries) => {
     if (entries.some((e) => e.isIntersecting)) {
       lazy.disconnect();
-      init();
+      init(modelBuf, threeMod, loaderMod, utilsMod);
     }
-  }, { rootMargin: '600px 0px' });
+  }, { rootMargin: '100% 0px' });
   lazy.observe(canvas);
 }
 
-async function init() {
-  const THREE = await import('three');
-  const { GLTFLoader } = await import('three/addons/loaders/GLTFLoader.js');
-  const { mergeVertices } = await import('three/addons/utils/BufferGeometryUtils.js');
+async function init(modelBuf, threeMod, loaderMod, utilsMod) {
+  const [THREE, { GLTFLoader }, { mergeVertices }, data] = await Promise.all([
+    threeMod,
+    loaderMod,
+    utilsMod,
+    modelBuf,
+  ]);
 
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
@@ -38,12 +50,19 @@ async function init() {
   let model = null;
   let smooth = null;
   let silhouette = null;
+  const pane = canvas.closest('.snap-pane') || canvas;
+  const CRUISE = (Math.PI * 2) / 60;
+  const FAST = CRUISE * 9;
   let ready = false;
   let inView = true;
   let last = 0;
+  let lastTop = null;
 
   function frame() {
-    camera.position.copy(cameraHome).multiplyScalar(Math.max(1, 1.3 / camera.aspect));
+    const pull = camera.aspect >= 1
+      ? Math.max(1, 1.3 / camera.aspect)
+      : Math.max(1, Math.min(1.32, 0.9 / camera.aspect));
+    camera.position.copy(cameraHome).multiplyScalar(pull);
     camera.lookAt(0, 0, 0);
   }
 
@@ -153,11 +172,20 @@ async function init() {
   function loop(now) {
     if (!inView || document.hidden || reduceMotion) {
       last = 0;
+      lastTop = null;
       return;
     }
-    const dt = last ? Math.min((now - last) / 1000, 0.1) : 0;
+    const vh = window.innerHeight || 1;
+    const top = pane.getBoundingClientRect().top;
+    const lock = 1 - Math.min(1, Math.abs(top) / vh);
+    const settled = lock * lock;
+    const dTop = lastTop === null ? 0 : lastTop - top;
+    lastTop = top;
+    const dt = last ? Math.min((now - last) / 1000, 0.08) : 0;
     last = now;
-    pivot.rotation.y += dt * (Math.PI * 2) / 60;
+    const idleSpeed = FAST + (CRUISE - FAST) * settled;
+    const scrollSpin = (dTop / vh) * Math.PI * 2 * 0.75 * (1 - settled);
+    pivot.rotation.y += dt * idleSpeed + scrollSpin;
     render();
     requestAnimationFrame(loop);
   }
@@ -170,7 +198,7 @@ async function init() {
     const was = inView;
     inView = entries[entries.length - 1].isIntersecting;
     if (inView && !was) start();
-  }).observe(canvas);
+  }, { rootMargin: '100% 0px' }).observe(pane);
 
   document.addEventListener('visibilitychange', () => {
     if (!document.hidden) start();
@@ -180,7 +208,7 @@ async function init() {
     if (ready && reduceMotion) render();
   });
 
-  new GLTFLoader().load(canvas.dataset.model, (gltf) => {
+  new GLTFLoader().parse(data, '', (gltf) => {
     const root = gltf.scene;
     const group = new THREE.Group();
     const ends = [];

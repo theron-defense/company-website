@@ -9,8 +9,9 @@
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css?v=169">
+  <link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css?v=216">
+  <link rel="preload" href="assets/capabilities/actuator-exploded.glb" as="fetch" crossorigin>
   <script>
     document.documentElement.classList.add('js');
   </script>
@@ -36,7 +37,7 @@
   </header>
 
   <main>
-    <section class="hero" id="top">
+    <section class="hero snap-pane" id="top">
       <video class="hero-video" autoplay muted loop playsinline preload="auto" aria-hidden="true">
         <source src="assets/hero-loop.mp4?v=2" type="video/mp4">
       </video>
@@ -52,120 +53,74 @@
 
     <section id="capabilities">
       <div class="product-stack">
-        <article class="product-panel product-panel--end" tabindex="0" aria-label="Aimbot, fully autonomous turret">
-          <div class="product-panel-media product-panel-media--collage">
-            <video class="product-collage-dawn" muted loop playsinline preload="metadata" aria-hidden="true">
+        <article class="product-panel product-panel--pair" tabindex="0" aria-label="Aimbot, fully autonomous turrets">
+          <div class="product-panel-media product-panel-media--lead snap-pane" id="aimbot">
+            <video class="product-panel-video" muted loop playsinline preload="metadata" aria-hidden="true">
               <source src="assets/capabilities/dawn-demo.mp4?v=3" type="video/mp4">
             </video>
-            <div class="product-panel-copy reveal-group" id="aimbot">
+            <div class="product-panel-scrim" aria-hidden="true"></div>
+            <div class="product-panel-copy product-panel-copy--intro reveal-group">
               <p class="product-index reveal">Aimbot</p>
-              <h3 class="reveal">Fully autonomous turret.</h3>
-              <div class="product-panel-detail">
-                <p class="reveal">
-                  Aimbot finds, tracks, and destroys drone threats on
-                  its own, with or without an operator in the loop.
-                  Unlike other systems, targeting and acquisition are
-                  built into a single, highly portable unit.
-                </p>
-                <p class="reveal">
-                  Transportable by a single person. Quickly mounted to
-                  any vehicle or equipment for an instant cUAS solution.
-                  Plug it into existing C2 systems, or let it run
-                  standalone.
-                </p>
-                <ul class="product-panel-facts reveal">
-                  <li><span>Weapon</span><span>12 gauge shotgun</span></li>
-                  <li><span>Capacity</span><span>25 rounds</span></li>
-                  <li><span>Weight</span><span>45 lbs</span></li>
-                </ul>
-              </div>
+              <h3 class="reveal">Fully autonomous turrets.</h3>
+              <p class="product-panel-kicker reveal">Inexpensive and highly portable.</p>
             </div>
-            <video class="product-collage-loop" muted loop playsinline preload="metadata" aria-hidden="true">
+          </div>
+          <div class="product-panel-media product-panel-media--demo snap-pane">
+            <video class="product-panel-video" muted loop playsinline preload="metadata" aria-hidden="true">
               <source src="assets/capabilities/blue-moving-demo.mp4?v=4" type="video/mp4">
             </video>
+            <div class="product-panel-scrim" aria-hidden="true"></div>
+            <div class="product-panel-copy product-panel-copy--philosophy reveal-group">
+              <p class="product-index reveal">Philosophy</p>
+              <h3 class="reveal">Test often, learn fast.</h3>
+              <p class="product-panel-kicker reveal">We have a unique playbook and it's our creed for high speed engineering.</p>
+            </div>
           </div>
         </article>
 
-        <article class="product-panel product-panel--end product-panel--mirror" tabindex="0" aria-label="The drones we shoot">
-          <div class="product-panel-media product-panel-media--collage">
-            <video class="product-collage-loop" muted loop playsinline preload="metadata" aria-hidden="true">
+        <article class="product-panel product-panel--film snap-pane" tabindex="0" aria-label="The drones we shoot">
+          <div class="product-panel-media">
+            <video class="product-panel-video" muted loop playsinline preload="metadata" aria-hidden="true">
               <source src="assets/capabilities/drone-demo.mp4?v=1" type="video/mp4">
             </video>
-            <div class="product-panel-copy reveal-group">
-              <p class="product-index reveal">Test targets</p>
-              <h3 class="reveal">The drones we shoot.</h3>
-              <div class="product-panel-detail">
-                <p class="reveal">
-                  We don't test against cheap, plastic drones off a
-                  store shelf. In modern combat, drones are purpose-built
-                  for strike missions. These drones are extremely tough
-                  to kill, as their carbon fiber frames shrug off all
-                  but the most powerful shotgun ammunition.
-                </p>
-                <p class="reveal">
-                  Therefore, we test against the same kind of drones
-                  actually seen in modern combat. This practice gets
-                  at our core philosophy: test with real hardware in
-                  realistic environments. Sometimes, though, just for
-                  fun, we strap an RPG shell to the bottom for some
-                  fireworks.
-                </p>
-              </div>
-            </div>
+          </div>
+          <div class="product-panel-scrim" aria-hidden="true"></div>
+          <div class="product-panel-copy reveal-group">
+            <p class="product-index reveal">Targets</p>
+            <h3 class="reveal">The drones we shoot.</h3>
+            <p class="product-panel-kicker reveal">Combat drones. Not plastic. Not easy.</p>
           </div>
         </article>
 
-        <article class="product-panel product-panel--ai" tabindex="0" aria-label="Proprietary AI models">
-          <div class="product-ai">
-            <div class="product-ai-copy reveal-group">
-              <p class="product-index reveal">Proprietary AI</p>
-              <h3 class="reveal">We train our own models.</h3>
-              <p class="reveal">
-                Every Theron system runs on models we train in house,
-                on real data we collect in the field. They learn to
-                tell non-threats, such as birds or distant aircraft,
-                from imminent UAS threats. Every range day makes the
-                next engagement faster and more accurate.
-              </p>
-              <p class="reveal">
-                Detection, acquisition, tracking, and fire control all
-                run on the device itself. No cloud connection required.
-              </p>
-            </div>
-            <video class="product-ai-loop" muted loop playsinline preload="metadata" aria-hidden="true">
+        <article class="product-panel product-panel--film product-panel--ai-viz snap-pane" tabindex="0" aria-label="Proprietary AI models">
+          <div class="product-panel-media">
+            <video class="product-panel-video" muted loop playsinline preload="metadata" aria-hidden="true">
               <source src="assets/capabilities/rotating-drone-loop.mp4?v=1" type="video/mp4">
             </video>
           </div>
+          <div class="product-panel-scrim" aria-hidden="true"></div>
+          <div class="product-panel-copy product-panel-copy--ai reveal-group">
+            <p class="product-index reveal">Proprietary AI</p>
+            <h3 class="reveal">We train our own models.</h3>
+            <p class="product-panel-kicker reveal">Field data. Onboard inference. No cloud.</p>
+          </div>
         </article>
 
-        <article class="product-panel product-panel--ai product-panel--hw" tabindex="0" aria-label="NDAA compliant hardware, built in house">
-          <div class="product-ai product-hw">
-            <canvas class="product-hw-canvas" data-model="assets/capabilities/actuator-exploded.glb?v=1" aria-hidden="true"></canvas>
-            <div class="product-ai-copy reveal-group">
-              <p class="product-index reveal">Built in house</p>
-              <h3 class="reveal">NDAA compliant hardware.</h3>
-              <p class="reveal">
-                We are developing our own NDAA compliant hardware in
-                house, from actuators to sensors. One of our goals as a
-                company is to put America back on track as a producer
-                of critical hardware, not just a buyer of it.
-              </p>
-              <p class="reveal">
-                The designs use materials and components made
-                domestically, so a conflict cannot cut off the parts we
-                need. Building these systems ourselves keeps the supply
-                chain short, the iteration cycle fast, and every part
-                under our control. Our component designs are also
-                intended to be dual use, meaning they have both
-                military and civilian applications.
-              </p>
-            </div>
+        <article class="product-panel product-panel--film product-panel--ndaa snap-pane" tabindex="0" aria-label="NDAA compliant hardware, built in house">
+          <div class="product-panel-media">
+            <canvas class="product-hw-canvas" data-model="assets/capabilities/actuator-exploded.glb" aria-hidden="true"></canvas>
+          </div>
+          <div class="product-panel-scrim" aria-hidden="true"></div>
+          <div class="product-panel-copy reveal-group">
+            <p class="product-index reveal">Built in house</p>
+            <h3 class="reveal">NDAA compliant hardware.</h3>
+            <p class="product-panel-kicker reveal">Actuators and sensors, developed by us, made in the USA.</p>
           </div>
         </article>
       </div>
     </section>
 
-    <section class="team-section" id="about">
+    <section class="team-section snap-pane" id="about">
       <div class="founder-split" id="team">
         <article class="founder-pane" data-slideshow>
           <div class="founder-pane-media">
@@ -209,6 +164,7 @@
           <div class="founder-pane-copy">
             <p class="founder-name">Skylar</p>
             <p class="founder-role">COS</p>
+            <a class="founder-social" href="https://www.linkedin.com/in/skylar-kesselring/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
           </div>
         </article>
       </div>
@@ -216,7 +172,7 @@
 
   </main>
 
-  <footer class="site-foot" id="contact">
+  <footer class="site-foot snap-pane" id="contact">
     <div class="section-band-field" aria-hidden="true">
       <canvas class="section-band-network"></canvas>
     </div>
@@ -231,8 +187,8 @@
     <p class="site-foot-legal">&copy; <span id="year"></span> Theron. All rights reserved.</p>
   </footer>
 
-  <script src="js/main.js?v=25"></script>
+  <script src="js/main.js?v=31"></script>
   <script type="importmap">{"imports":{"three":"https://unpkg.com/three@0.160.0/build/three.module.js","three/addons/":"https://unpkg.com/three@0.160.0/examples/jsm/"}}</script>
-  <script type="module" src="js/wireframe.js?v=3"></script>
+  <script type="module" src="js/wireframe.js?v=7"></script>
 </body>
 </html>
