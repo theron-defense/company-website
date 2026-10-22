@@ -80,8 +80,35 @@
     document.body.style.overflow = isOpen ? '' : 'hidden';
   });
 
+  function goToId(id) {
+    var target = document.getElementById(id);
+    if (!target) return false;
+    var pane = target.classList.contains('snap-pane')
+      ? target
+      : (target.closest('.snap-pane') || target);
+    var y = pane.getBoundingClientRect().top + window.pageYOffset;
+    window.scrollTo({ top: y, left: 0, behavior: 'instant' });
+    return true;
+  }
+
   navLinks.forEach(function (link) {
     link.addEventListener('click', closeNav);
+  });
+
+  document.addEventListener('click', function (event) {
+    var link = event.target.closest('a');
+    if (!link || event.defaultPrevented) return;
+    var href = link.getAttribute('href') || '';
+    if (href.indexOf('mailto:') === 0) {
+      event.preventDefault();
+      window.location.href = href;
+      return;
+    }
+    if (href.charAt(0) !== '#' || href.length < 2) return;
+    if (!goToId(href.slice(1))) return;
+    event.preventDefault();
+    closeNav();
+    if (history.replaceState) history.replaceState(null, '', href);
   });
 
   function revealGroups() {
