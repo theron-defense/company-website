@@ -1,21 +1,21 @@
 const canvas = document.querySelector('.product-hw-canvas');
 
 if (canvas) {
-  const modelUrl = canvas.dataset.model;
-  const modelBuf = fetch(modelUrl).then((res) => {
-    if (!res.ok) throw new Error(res.statusText);
-    return res.arrayBuffer();
-  });
-  const threeMod = import('three');
-  const loaderMod = import('three/addons/loaders/GLTFLoader.js');
-  const utilsMod = import('three/addons/utils/BufferGeometryUtils.js');
-
   const lazy = new IntersectionObserver((entries) => {
-    if (entries.some((e) => e.isIntersecting)) {
-      lazy.disconnect();
-      init(modelBuf, threeMod, loaderMod, utilsMod);
-    }
-  }, { rootMargin: '100% 0px' });
+    if (!entries.some((e) => e.isIntersecting)) return;
+    lazy.disconnect();
+    const modelUrl = canvas.dataset.model;
+    const modelBuf = fetch(modelUrl).then((res) => {
+      if (!res.ok) throw new Error(res.statusText);
+      return res.arrayBuffer();
+    });
+    init(
+      modelBuf,
+      import('three'),
+      import('three/addons/loaders/GLTFLoader.js'),
+      import('three/addons/utils/BufferGeometryUtils.js')
+    );
+  }, { rootMargin: '80% 0px' });
   lazy.observe(canvas);
 }
 
@@ -198,7 +198,7 @@ async function init(modelBuf, threeMod, loaderMod, utilsMod) {
     const was = inView;
     inView = entries[entries.length - 1].isIntersecting;
     if (inView && !was) start();
-  }, { rootMargin: '100% 0px' }).observe(pane);
+  }, { rootMargin: '15% 0px' }).observe(pane);
 
   document.addEventListener('visibilitychange', () => {
     if (!document.hidden) start();

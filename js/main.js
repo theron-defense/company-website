@@ -27,6 +27,11 @@
       video.pause();
       return;
     }
+    var box = video.getBoundingClientRect();
+    if (box.bottom < 1 || box.top > window.innerHeight) {
+      video.pause();
+      return;
+    }
     var play = video.play();
     if (play && typeof play.catch === 'function') {
       play.catch(function () {});
@@ -168,8 +173,18 @@
     requestAnimationFrame(updateParallax);
   }
 
-  window.addEventListener('scroll', onScroll, { passive: true });
-  window.addEventListener('resize', onScroll);
+  var scrollQueued = false;
+  function queueScroll() {
+    if (scrollQueued) return;
+    scrollQueued = true;
+    requestAnimationFrame(function () {
+      scrollQueued = false;
+      onScroll();
+    });
+  }
+
+  window.addEventListener('scroll', queueScroll, { passive: true });
+  window.addEventListener('resize', queueScroll);
   window.addEventListener('scroll', queueParallax, { passive: true });
   window.addEventListener('resize', queueParallax);
   window.addEventListener('resize', syncPaneHeight);
@@ -177,6 +192,7 @@
   if (window.visualViewport) {
     window.visualViewport.addEventListener('resize', syncPaneHeight);
   }
+  document.addEventListener('visibilitychange', syncVideo);
   reduceMotion.addEventListener('change', function () {
     syncVideo();
     updateParallax();
@@ -493,50 +509,96 @@
         play();
       });
 
-      play();
+      if ('IntersectionObserver' in window && teamSection) {
+        new IntersectionObserver(function (entries) {
+          if (entries[0].isIntersecting) play();
+          else stop();
+        }, { rootMargin: '20% 0px' }).observe(pane);
+      } else {
+        play();
+      }
+    });
+  }
+
+  function initProductVideos() {
+    var clips = document.querySelectorAll('.product-panel-video');
+    if (!clips.length) return;
+
+    function warm(clip) {
+      if (clip.dataset.warmed) return;
+      clip.dataset.warmed = '1';
+      clip.preload = 'auto';
+      try { clip.load(); } catch (err) {}
+    }
+
+    function playClip(clip) {
+      if (reduceMotion.matches) {
+        clip.pause();
+        return;
+      }
+      var play = clip.play();
+      if (play && typeof play.catch === 'function') play.catch(function () {});
+    }
+
+    if (!('IntersectionObserver' in window)) {
+      clips.forEach(function (clip) {
+        warm(clip);
+        playClip(clip);
+      });
+      return;
+    }
+
+    var near = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) warm(entry.target);
+      });
+    }, { rootMargin: '45% 0px' });
+
+    var onScreen = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        var clip = entry.target;
+        clip._onScreen = entry.isIntersecting;
+        if (entry.isIntersecting) playClip(clip);
+        else clip.pause();
+      });
+    }, { threshold: 0.01 });
+
+    clips.forEach(function (clip) {
+      near.observe(clip);
+      onScreen.observe(clip);
+    });
+
+    document.addEventListener('visibilitychange', function () {
+      clips.forEach(function (clip) {
+        if (document.hidden) clip.pause();
+        else if (clip._onScreen) playClip(clip);
+      });
     });
   }
 
   function initProductPanels() {
     var panels = document.querySelectorAll('.product-panel');
     if (!panels.length) return;
-    var collages = document.querySelectorAll('.product-panel-media, .product-ai');
-
-    function syncProductVideos(collage, on) {
-      collage.querySelectorAll('video').forEach(function (clip) {
-        if (!on || reduceMotion.matches) {
-          clip.pause();
-          return;
-        }
-        var play = clip.play();
-        if (play && typeof play.catch === 'function') play.catch(function () {});
-      });
-    }
+    var queued = false;
 
     function update() {
+      queued = false;
       var vh = window.innerHeight;
       panels.forEach(function (panel) {
         var box = panel.getBoundingClientRect();
         var mid = box.top + box.height * 0.42;
         panel.classList.toggle('is-active', mid > vh * 0.16 && mid < vh * 0.78);
       });
-      collages.forEach(function (collage) {
-        var mediaBox = collage.getBoundingClientRect();
-        syncProductVideos(collage, mediaBox.bottom > 0 && mediaBox.top < vh);
-      });
     }
 
-    document.addEventListener('visibilitychange', function () {
-      if (document.hidden) {
-        collages.forEach(function (collage) {
-          syncProductVideos(collage, false);
-        });
-      } else {
-        update();
-      }
-    });
-    window.addEventListener('scroll', update, { passive: true });
-    window.addEventListener('resize', update);
+    function queue() {
+      if (queued) return;
+      queued = true;
+      requestAnimationFrame(update);
+    }
+
+    window.addEventListener('scroll', queue, { passive: true });
+    window.addEventListener('resize', queue);
     update();
   }
 
@@ -616,6 +678,9 @@
       var height = el.clientHeight;
       if (width < 2 || height < 2) return;
       var dpr = window.devicePixelRatio || 1;
+      var key = width + 'x' + height + '@' + dpr + ':' + span.textContent;
+      if (el._koKey === key) return;
+      el._koKey = key;
       var canvas = document.createElement('canvas');
       canvas.width = Math.max(1, Math.round(width * dpr));
       canvas.height = Math.max(1, Math.round(height * dpr));
@@ -649,16 +714,27 @@
   }
 
   function initKnockoutTags() {
+    var paintTimer = 0;
     var paint = function () { paintKnockoutTags(); };
+    var paintSoon = function () {
+      window.clearTimeout(paintTimer);
+      paintTimer = window.setTimeout(paint, 80);
+    };
     if (document.fonts && document.fonts.ready) {
       document.fonts.ready.then(paint).catch(paint);
     } else {
       paint();
     }
-    window.addEventListener('resize', paint);
+    window.addEventListener('resize', paintSoon);
     if (window.visualViewport) {
-      window.visualViewport.addEventListener('resize', paint);
+      window.visualViewport.addEventListener('resize', paintSoon);
     }
+  }
+
+  if (video && 'IntersectionObserver' in window) {
+    new IntersectionObserver(function () {
+      syncVideo();
+    }, { threshold: [0, 0.01] }).observe(video);
   }
 
   syncPaneHeight();
@@ -671,6 +747,7 @@
   drawVisionNetwork();
   updateParallax();
   initProductPanels();
+  initProductVideos();
   initSnapTicks();
   initKnockoutTags();
 })();
