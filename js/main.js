@@ -86,8 +86,16 @@
     var pane = target.classList.contains('snap-pane')
       ? target
       : (target.closest('.snap-pane') || target);
+    var root = document.documentElement;
     var y = pane.getBoundingClientRect().top + window.pageYOffset;
+    root.style.setProperty('scroll-snap-type', 'none', 'important');
     window.scrollTo({ top: y, left: 0, behavior: 'instant' });
+    requestAnimationFrame(function () {
+      window.scrollTo({ top: y, left: 0, behavior: 'instant' });
+      window.setTimeout(function () {
+        root.style.removeProperty('scroll-snap-type');
+      }, 80);
+    });
     return true;
   }
 

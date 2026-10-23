@@ -49,6 +49,12 @@ html {
   }
 }
 
+@media (max-width: 639px), (pointer: coarse) {
+  html {
+    scroll-snap-type: y mandatory;
+  }
+}
+
 #capabilities,
 #aimbot,
 #vision,
@@ -552,6 +558,10 @@ main p {
   opacity: 1;
 }
 
+.founder-pane-media img.hagen-field {
+  object-position: 28% 50%;
+}
+
 .founder-pane-media img.is-portrait,
 .founder-pane-media img.is-wide {
   object-position: center;
@@ -653,11 +663,16 @@ main p {
     min-height: min(72svh, 36rem);
   }
 
+  .team-section.snap-pane {
+    padding-top: 72px;
+  }
+
   .founder-mark {
+    top: 0;
     gap: 0.45rem;
     font-size: 0.68rem;
     letter-spacing: 0.16em;
-    padding: 0.7rem 0.75rem;
+    padding: 0.45rem 0.65rem;
   }
 
   .founder-mark::before {
