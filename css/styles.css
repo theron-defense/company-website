@@ -786,31 +786,28 @@
 }
 
 .site-foot-copy .product-index {
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  justify-content: center;
-  isolation: isolate;
-  margin: 0 0 clamp(1.25rem, 2vw, 1.85rem);
-  padding: 0.18rem 0.7rem 0.16rem;
-  font-size: clamp(1.15rem, 1.4vw, 1.65rem);
-  font-weight: 700;
+  gap: 0.85rem;
+  margin: 0 0 clamp(0.9rem, 1.4vw, 1.5rem);
+  padding: 0;
+  font-size: clamp(1.1rem, 1.35vw, 1.6rem);
+  font-weight: 600;
   line-height: 1;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.24em;
   text-transform: uppercase;
-  color: #000;
-  background: var(--color-signal-orange);
-  text-shadow: none;
+  color: var(--color-signal-orange);
+  background: none;
+  isolation: auto;
   mix-blend-mode: normal;
 }
 
-.site-foot-copy .product-index span {
-  color: #000;
-  mix-blend-mode: destination-out;
-  transform: translateY(0.08em);
-}
-
 .site-foot-copy .product-index::before {
-  content: none;
+  content: "";
+  flex: none;
+  width: 1.75rem;
+  height: 2px;
+  background: currentColor;
 }
 
 .site-foot h2 {
