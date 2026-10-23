@@ -14,20 +14,11 @@
     year.textContent = new Date().getFullYear();
   }
 
-  // Mobile chrome hides after scroll, so 100svh stays short and the next
-  // pane peeks in. Size snaps to the larger visible window and keep that
-  // height if the URL bar comes back.
-  function syncPaneHeight(force) {
+  function syncPaneHeight() {
     var vv = window.visualViewport;
-    var next = Math.round(Math.max(window.innerHeight || 0, vv ? vv.height : 0));
+    var next = Math.round((vv && vv.height) || window.innerHeight || 0);
     if (!next) return;
-    var prev = parseFloat(document.documentElement.style.getPropertyValue('--pane-h')) || 0;
-    var width = window.innerWidth;
-    var turned = Math.abs(width - (syncPaneHeight.w || width)) > 1;
-    syncPaneHeight.w = width;
-    if (force || turned || next > prev) {
-      document.documentElement.style.setProperty('--pane-h', next + 'px');
-    }
+    document.documentElement.style.setProperty('--pane-h', next + 'px');
   }
 
   function syncVideo() {
@@ -181,10 +172,10 @@
   window.addEventListener('resize', onScroll);
   window.addEventListener('scroll', queueParallax, { passive: true });
   window.addEventListener('resize', queueParallax);
-  window.addEventListener('resize', function () { syncPaneHeight(true); });
-  window.addEventListener('orientationchange', function () { syncPaneHeight(true); });
+  window.addEventListener('resize', syncPaneHeight);
+  window.addEventListener('orientationchange', syncPaneHeight);
   if (window.visualViewport) {
-    window.visualViewport.addEventListener('resize', function () { syncPaneHeight(false); });
+    window.visualViewport.addEventListener('resize', syncPaneHeight);
   }
   reduceMotion.addEventListener('change', function () {
     syncVideo();
@@ -577,7 +568,7 @@
       panes[next].scrollIntoView({ behavior: 'smooth', block: 'start' });
       unlockTimer = window.setTimeout(function () {
         locked = false;
-      }, 620);
+      }, 700);
     }
 
     window.addEventListener('wheel', function (event) {
@@ -603,7 +594,74 @@
     });
   }
 
-  syncPaneHeight(true);
+  function fillSpacedText(ctx, text, x, y, spacing) {
+    var chars = text.split('');
+    var widths = chars.map(function (ch) {
+      return ctx.measureText(ch).width;
+    });
+    var total = widths.reduce(function (sum, w) { return sum + w; }, 0);
+    total += Math.max(0, chars.length - 1) * spacing;
+    var cursor = x - total / 2;
+    chars.forEach(function (ch, i) {
+      ctx.fillText(ch, cursor + widths[i] / 2, y);
+      cursor += widths[i] + spacing;
+    });
+  }
+
+  function paintKnockoutTags() {
+    document.querySelectorAll('.product-index, .founder-mark').forEach(function (el) {
+      var span = el.querySelector('span');
+      if (!span) return;
+      var width = el.clientWidth;
+      var height = el.clientHeight;
+      if (width < 2 || height < 2) return;
+      var dpr = window.devicePixelRatio || 1;
+      var canvas = document.createElement('canvas');
+      canvas.width = Math.max(1, Math.round(width * dpr));
+      canvas.height = Math.max(1, Math.round(height * dpr));
+      var ctx = canvas.getContext('2d');
+      if (!ctx) return;
+      ctx.scale(dpr, dpr);
+      ctx.fillStyle = '#D96826';
+      ctx.fillRect(0, 0, width, height);
+      var cs = getComputedStyle(el);
+      ctx.font = cs.font;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'alphabetic';
+      var spacing = parseFloat(cs.letterSpacing) || 0;
+      var label = span.textContent.replace(/\s+/g, ' ').trim().toUpperCase();
+      var metrics = ctx.measureText(label);
+      var ascent = metrics.actualBoundingBoxAscent || parseFloat(cs.fontSize) * 0.72;
+      var descent = metrics.actualBoundingBoxDescent || 0;
+      var y = (height + ascent - descent) / 2;
+      ctx.globalCompositeOperation = 'destination-out';
+      ctx.fillStyle = '#000';
+      fillSpacedText(ctx, label, width / 2, y, spacing);
+      ctx.globalCompositeOperation = 'source-over';
+      ctx.fillStyle = 'rgba(1, 17, 33, 0.34)';
+      fillSpacedText(ctx, label, width / 2, y, spacing);
+      el.style.backgroundColor = 'transparent';
+      el.style.backgroundImage = 'url(' + canvas.toDataURL('image/png') + ')';
+      el.style.backgroundSize = '100% 100%';
+      el.style.backgroundRepeat = 'no-repeat';
+      span.style.color = 'transparent';
+    });
+  }
+
+  function initKnockoutTags() {
+    var paint = function () { paintKnockoutTags(); };
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(paint).catch(paint);
+    } else {
+      paint();
+    }
+    window.addEventListener('resize', paint);
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener('resize', paint);
+    }
+  }
+
+  syncPaneHeight();
   onScroll();
   syncVideo();
   revealGroups();
@@ -614,4 +672,5 @@
   updateParallax();
   initProductPanels();
   initSnapTicks();
+  initKnockoutTags();
 })();

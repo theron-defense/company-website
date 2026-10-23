@@ -52,7 +52,7 @@ async function init(modelBuf, threeMod, loaderMod, utilsMod) {
   let silhouette = null;
   const pane = canvas.closest('.snap-pane') || canvas;
   const CRUISE = (Math.PI * 2) / 60;
-  const FAST = CRUISE * 9;
+  const FAST = CRUISE * 2.4;
   let ready = false;
   let inView = true;
   let last = 0;
@@ -184,7 +184,7 @@ async function init(modelBuf, threeMod, loaderMod, utilsMod) {
     const dt = last ? Math.min((now - last) / 1000, 0.08) : 0;
     last = now;
     const idleSpeed = FAST + (CRUISE - FAST) * settled;
-    const scrollSpin = (dTop / vh) * Math.PI * 2 * 0.75 * (1 - settled);
+    const scrollSpin = (dTop / vh) * Math.PI * 2 * 0.18 * (1 - settled);
     pivot.rotation.y += dt * idleSpeed + scrollSpin;
     render();
     requestAnimationFrame(loop);

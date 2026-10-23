@@ -10,13 +10,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css?v=225">
+  <link rel="stylesheet" href="css/styles.css?v=238">
   <link rel="preload" href="assets/capabilities/actuator-exploded.glb" as="fetch" crossorigin>
   <script>
     document.documentElement.classList.add('js');
     (function () {
       var vv = window.visualViewport;
-      var h = Math.round(Math.max(window.innerHeight || 0, vv ? vv.height : 0));
+      var h = Math.round((vv && vv.height) || window.innerHeight || 0);
       if (h) document.documentElement.style.setProperty('--pane-h', h + 'px');
     })();
   </script>
@@ -182,7 +182,7 @@
       <canvas class="section-band-network"></canvas>
     </div>
     <div class="site-foot-copy reveal-group">
-      <p class="product-index reveal">Contact</p>
+      <p class="product-index reveal"><span>Contact</span></p>
       <h2 class="reveal">Work with us.</h2>
       <p class="reveal">
         For partnerships and inquiries, reach us at
@@ -192,8 +192,8 @@
     <p class="site-foot-legal">&copy; <span id="year"></span> Theron. All rights reserved.</p>
   </footer>
 
-  <script src="js/main.js?v=38"></script>
+  <script src="js/main.js?v=44"></script>
   <script type="importmap">{"imports":{"three":"https://unpkg.com/three@0.160.0/build/three.module.js","three/addons/":"https://unpkg.com/three@0.160.0/examples/jsm/"}}</script>
-  <script type="module" src="js/wireframe.js?v=7"></script>
+  <script type="module" src="js/wireframe.js?v=8"></script>
 </body>
 </html>
