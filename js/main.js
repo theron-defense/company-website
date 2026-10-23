@@ -14,6 +14,22 @@
     year.textContent = new Date().getFullYear();
   }
 
+  // Mobile chrome hides after scroll, so 100svh stays short and the next
+  // pane peeks in. Size snaps to the larger visible window and keep that
+  // height if the URL bar comes back.
+  function syncPaneHeight(force) {
+    var vv = window.visualViewport;
+    var next = Math.round(Math.max(window.innerHeight || 0, vv ? vv.height : 0));
+    if (!next) return;
+    var prev = parseFloat(document.documentElement.style.getPropertyValue('--pane-h')) || 0;
+    var width = window.innerWidth;
+    var turned = Math.abs(width - (syncPaneHeight.w || width)) > 1;
+    syncPaneHeight.w = width;
+    if (force || turned || next > prev) {
+      document.documentElement.style.setProperty('--pane-h', next + 'px');
+    }
+  }
+
   function syncVideo() {
     if (!video) return;
     if (reduceMotion.matches) {
@@ -165,6 +181,11 @@
   window.addEventListener('resize', onScroll);
   window.addEventListener('scroll', queueParallax, { passive: true });
   window.addEventListener('resize', queueParallax);
+  window.addEventListener('resize', function () { syncPaneHeight(true); });
+  window.addEventListener('orientationchange', function () { syncPaneHeight(true); });
+  if (window.visualViewport) {
+    window.visualViewport.addEventListener('resize', function () { syncPaneHeight(false); });
+  }
   reduceMotion.addEventListener('change', function () {
     syncVideo();
     updateParallax();
@@ -582,6 +603,7 @@
     });
   }
 
+  syncPaneHeight(true);
   onScroll();
   syncVideo();
   revealGroups();

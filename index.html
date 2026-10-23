@@ -10,10 +10,15 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css?v=221">
+  <link rel="stylesheet" href="css/styles.css?v=225">
   <link rel="preload" href="assets/capabilities/actuator-exploded.glb" as="fetch" crossorigin>
   <script>
     document.documentElement.classList.add('js');
+    (function () {
+      var vv = window.visualViewport;
+      var h = Math.round(Math.max(window.innerHeight || 0, vv ? vv.height : 0));
+      if (h) document.documentElement.style.setProperty('--pane-h', h + 'px');
+    })();
   </script>
 </head>
 <body class="bg-warm-light font-sans text-base leading-[1.6] text-ink antialiased">
@@ -38,8 +43,8 @@
 
   <main>
     <section class="hero snap-pane" id="top">
-      <video class="hero-video" autoplay muted loop playsinline preload="metadata" poster="assets/hero-poster.jpg" aria-hidden="true">
-        <source src="assets/hero-loop.mp4?v=3" type="video/mp4">
+      <video class="hero-video" autoplay muted loop playsinline preload="metadata" poster="assets/hero-poster.jpg?v=2" aria-hidden="true">
+        <source src="assets/hero-loop.mp4?v=4" type="video/mp4">
       </video>
       <div class="hero-scrim" aria-hidden="true"></div>
       <div class="hero-content">
@@ -60,7 +65,7 @@
             </video>
             <div class="product-panel-scrim" aria-hidden="true"></div>
             <div class="product-panel-copy product-panel-copy--intro reveal-group">
-              <p class="product-index reveal">Aimbot</p>
+              <p class="product-index reveal"><span>Aimbot</span></p>
               <h3 class="reveal">Fully autonomous turrets.</h3>
               <p class="product-panel-kicker reveal">Inexpensive and highly portable.</p>
             </div>
@@ -71,7 +76,7 @@
             </video>
             <div class="product-panel-scrim" aria-hidden="true"></div>
             <div class="product-panel-copy product-panel-copy--philosophy reveal-group">
-              <p class="product-index reveal">Philosophy</p>
+              <p class="product-index reveal"><span>Philosophy</span></p>
               <h3 class="reveal">Test often, learn fast.</h3>
               <p class="product-panel-kicker reveal">We have a unique playbook and it's our creed for high speed engineering.</p>
             </div>
@@ -86,7 +91,7 @@
           </div>
           <div class="product-panel-scrim" aria-hidden="true"></div>
           <div class="product-panel-copy reveal-group">
-            <p class="product-index reveal">Targets</p>
+            <p class="product-index reveal"><span>Targets</span></p>
             <h3 class="reveal">The drones we shoot.</h3>
             <p class="product-panel-kicker reveal">Combat drones. Not plastic. Not easy.</p>
           </div>
@@ -100,7 +105,7 @@
           </div>
           <div class="product-panel-scrim" aria-hidden="true"></div>
           <div class="product-panel-copy product-panel-copy--ai reveal-group">
-            <p class="product-index reveal">Proprietary AI</p>
+            <p class="product-index reveal"><span>Proprietary AI</span></p>
             <h3 class="reveal">We train our own models.</h3>
             <p class="product-panel-kicker reveal">Field data. Onboard inference. No cloud.</p>
           </div>
@@ -112,7 +117,7 @@
           </div>
           <div class="product-panel-scrim" aria-hidden="true"></div>
           <div class="product-panel-copy reveal-group">
-            <p class="product-index reveal">Built in house</p>
+            <p class="product-index reveal"><span>Built in house</span></p>
             <h3 class="reveal">NDAA compliant hardware.</h3>
             <p class="product-panel-kicker reveal">Actuators and sensors, developed by us, made in the USA.</p>
           </div>
@@ -127,7 +132,7 @@
             <img src="assets/team/hagen/01.jpg" alt="Hagen O&rsquo;Neill" class="is-active hagen-field" width="1600" height="1200" loading="lazy" decoding="async">
             <img src="assets/team/hagen/02.jpg" alt="Hagen O&rsquo;Neill" width="1182" height="666" loading="lazy" decoding="async">
           </div>
-          <p class="founder-mark">Founder</p>
+          <p class="founder-mark"><span>Founder</span></p>
           <div class="founder-pane-copy">
             <p class="founder-name">Hagen</p>
             <p class="founder-role">CEO</p>
@@ -140,7 +145,7 @@
             <img src="assets/team/chandler/01.jpg" alt="Chandler Johnson" width="1200" height="1600" loading="lazy" decoding="async">
             <img src="assets/team/chandler/02.jpg" alt="Chandler Johnson" width="1600" height="1200" loading="lazy" decoding="async">
           </div>
-          <p class="founder-mark">Founder</p>
+          <p class="founder-mark"><span>Founder</span></p>
           <div class="founder-pane-copy">
             <p class="founder-name">Chandler</p>
             <p class="founder-role">CTO</p>
@@ -187,7 +192,7 @@
     <p class="site-foot-legal">&copy; <span id="year"></span> Theron. All rights reserved.</p>
   </footer>
 
-  <script src="js/main.js?v=37"></script>
+  <script src="js/main.js?v=38"></script>
   <script type="importmap">{"imports":{"three":"https://unpkg.com/three@0.160.0/build/three.module.js","three/addons/":"https://unpkg.com/three@0.160.0/examples/jsm/"}}</script>
   <script type="module" src="js/wireframe.js?v=7"></script>
 </body>
