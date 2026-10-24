@@ -57,6 +57,9 @@ async function init(modelBuf, threeMod, loaderMod, utilsMod) {
   let inView = true;
   let last = 0;
   let lastTop = null;
+  let dragging = false;
+  let lastX = 0;
+  let lastY = 0;
 
   function frame() {
     const pull = camera.aspect >= 1
@@ -183,12 +186,62 @@ async function init(modelBuf, threeMod, loaderMod, utilsMod) {
     lastTop = top;
     const dt = last ? Math.min((now - last) / 1000, 0.08) : 0;
     last = now;
-    const idleSpeed = FAST + (CRUISE - FAST) * settled;
-    const scrollSpin = (dTop / vh) * Math.PI * 2 * 0.18 * (1 - settled);
-    pivot.rotation.y += dt * idleSpeed + scrollSpin;
+    if (!dragging) {
+      const idleSpeed = FAST + (CRUISE - FAST) * settled;
+      const scrollSpin = (dTop / vh) * Math.PI * 2 * 0.18 * (1 - settled);
+      pivot.rotation.y += dt * idleSpeed + scrollSpin;
+    }
     render();
     requestAnimationFrame(loop);
   }
+
+  function spinFromDrag(dx, dy) {
+    const span = canvas.clientWidth || 1;
+    pivot.rotation.y += (dx / span) * Math.PI * 2;
+    pivot.rotation.x += (dy / span) * Math.PI * 2;
+    const limit = Math.PI / 2 - 0.06;
+    if (pivot.rotation.x > limit) pivot.rotation.x = limit;
+    if (pivot.rotation.x < -limit) pivot.rotation.x = -limit;
+    render();
+  }
+
+  function onPointerDown(event) {
+    if (event.isPrimary === false) return;
+    if (event.pointerType === 'mouse' && event.button !== 0) return;
+    dragging = true;
+    lastX = event.clientX;
+    lastY = event.clientY;
+    last = 0;
+    canvas.setPointerCapture(event.pointerId);
+    canvas.classList.add('is-dragging');
+  }
+
+  function onPointerMove(event) {
+    if (!dragging || event.isPrimary === false) return;
+    const dx = event.clientX - lastX;
+    const dy = event.clientY - lastY;
+    lastX = event.clientX;
+    lastY = event.clientY;
+    if (dx || dy) spinFromDrag(dx, dy);
+  }
+
+  function onPointerUp(event) {
+    if (!dragging || event.isPrimary === false) return;
+    dragging = false;
+    if (canvas.hasPointerCapture(event.pointerId)) {
+      canvas.releasePointerCapture(event.pointerId);
+    }
+    canvas.classList.remove('is-dragging');
+  }
+
+  canvas.addEventListener('pointerdown', onPointerDown);
+  canvas.addEventListener('pointermove', onPointerMove);
+  canvas.addEventListener('pointerup', onPointerUp);
+  canvas.addEventListener('pointercancel', onPointerUp);
+  canvas.addEventListener('lostpointercapture', function () {
+    dragging = false;
+    canvas.classList.remove('is-dragging');
+  });
 
   function start() {
     if (ready && inView && !document.hidden && !reduceMotion) requestAnimationFrame(loop);
