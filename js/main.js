@@ -117,6 +117,7 @@
   function closeNav() {
     toggle.setAttribute('aria-expanded', 'false');
     toggle.setAttribute('aria-label', 'Open menu');
+    header.classList.remove('menu-open');
     document.body.style.overflow = '';
   }
 
@@ -124,6 +125,7 @@
     var isOpen = toggle.getAttribute('aria-expanded') === 'true';
     toggle.setAttribute('aria-expanded', String(!isOpen));
     toggle.setAttribute('aria-label', isOpen ? 'Open menu' : 'Close menu');
+    header.classList.toggle('menu-open', !isOpen);
     document.body.style.overflow = isOpen ? '' : 'hidden';
   });
 
