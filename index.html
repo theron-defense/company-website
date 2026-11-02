@@ -6,12 +6,12 @@
   <meta name="description" content="Theron. Fully autonomous hardware, usable in the field today. We work towards the final weapon, embodied AI protecting the West.">
   <meta name="color-scheme" content="light">
   <title>Theron</title>
-  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="assets/brand/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css?v=247">
-  <link rel="preload" as="image" href="assets/hero-poster.jpg?v=2">
+  <link rel="preload" as="image" href="assets/images/hero-poster.jpg?v=2">
   <script>
     document.documentElement.classList.add('js');
     (function () {
@@ -25,8 +25,8 @@
   <header class="site-header on-hero fixed inset-x-0 top-0 z-50 h-[72px] border-b border-line">
     <div class="mx-auto flex h-full w-[min(100%-2.5rem,1180px)] items-center justify-between gap-4">
       <a href="#top" class="shrink-0" aria-label="Theron home">
-        <img src="assets/logo.svg?v=2" alt="Theron" class="site-logo logo-on-light" width="158" height="73">
-        <img src="assets/logo-white.svg" alt="Theron" class="site-logo logo-on-dark hidden" width="158" height="73">
+        <img src="assets/brand/logo.svg?v=2" alt="Theron" class="site-logo logo-on-light" width="158" height="73">
+        <img src="assets/brand/logo-white.svg" alt="Theron" class="site-logo logo-on-dark hidden" width="158" height="73">
       </a>
       <div class="flex items-center gap-5 md:gap-8">
         <button class="nav-toggle peer -mr-1 flex shrink-0 cursor-pointer flex-col justify-center gap-1.5 border-0 bg-transparent p-2 md:hidden" aria-expanded="false" aria-controls="site-nav" aria-label="Open menu">
@@ -43,8 +43,8 @@
 
   <main>
     <section class="hero snap-pane" id="top">
-      <video class="hero-video" autoplay muted loop playsinline preload="metadata" fetchpriority="high" poster="assets/hero-poster.jpg?v=2" aria-hidden="true">
-        <source src="assets/hero-loop.mp4?v=4" type="video/mp4">
+      <video class="hero-video" autoplay muted loop playsinline preload="metadata" fetchpriority="high" poster="assets/images/hero-poster.jpg?v=2" aria-hidden="true">
+        <source src="assets/videos/hero-loop.mp4?v=4" type="video/mp4">
       </video>
       <div class="hero-scrim" aria-hidden="true"></div>
       <div class="hero-content">
@@ -61,7 +61,7 @@
         <article class="product-panel product-panel--pair" tabindex="0" aria-label="Aimbot, fully autonomous turrets">
           <div class="product-panel-media product-panel-media--lead snap-pane" id="aimbot">
             <video class="product-panel-video" muted loop playsinline preload="none" aria-hidden="true">
-              <source src="assets/capabilities/dawn-demo.mp4?v=3" type="video/mp4">
+              <source src="assets/videos/dawn-demo.mp4?v=3" type="video/mp4">
             </video>
             <div class="product-panel-scrim" aria-hidden="true"></div>
             <div class="product-panel-copy product-panel-copy--intro reveal-group">
@@ -72,7 +72,7 @@
           </div>
           <div class="product-panel-media product-panel-media--demo snap-pane">
             <video class="product-panel-video" muted loop playsinline preload="none" aria-hidden="true">
-              <source src="assets/capabilities/blue-moving-demo.mp4?v=5" type="video/mp4">
+              <source src="assets/videos/blue-moving-demo.mp4?v=5" type="video/mp4">
             </video>
             <div class="product-panel-scrim" aria-hidden="true"></div>
             <div class="product-panel-copy product-panel-copy--philosophy reveal-group">
@@ -86,7 +86,7 @@
         <article class="product-panel product-panel--film snap-pane" tabindex="0" aria-label="The drones we shoot">
           <div class="product-panel-media">
             <video class="product-panel-video" muted loop playsinline preload="none" aria-hidden="true">
-              <source src="assets/capabilities/drone-demo.mp4?v=1" type="video/mp4">
+              <source src="assets/videos/drone-demo.mp4?v=1" type="video/mp4">
             </video>
           </div>
           <div class="product-panel-scrim" aria-hidden="true"></div>
@@ -100,7 +100,7 @@
         <article class="product-panel product-panel--film product-panel--ai-viz snap-pane" tabindex="0" aria-label="Proprietary AI models">
           <div class="product-panel-media">
             <video class="product-panel-video" muted loop playsinline preload="none" aria-hidden="true">
-              <source src="assets/capabilities/rotating-drone-loop.mp4?v=1" type="video/mp4">
+              <source src="assets/videos/rotating-drone-loop.mp4?v=1" type="video/mp4">
             </video>
           </div>
           <div class="product-panel-scrim" aria-hidden="true"></div>
@@ -113,7 +113,7 @@
 
         <article class="product-panel product-panel--film product-panel--ndaa snap-pane" tabindex="0" aria-label="NDAA compliant hardware, built in house">
           <div class="product-panel-media">
-            <canvas class="product-hw-canvas" data-model="assets/capabilities/actuator-exploded.glb" aria-hidden="true"></canvas>
+            <canvas class="product-hw-canvas" data-model="assets/models/actuator-exploded.glb" aria-hidden="true"></canvas>
           </div>
           <div class="product-panel-scrim" aria-hidden="true"></div>
           <div class="product-panel-copy reveal-group">
@@ -129,8 +129,8 @@
       <div class="founder-split" id="team">
         <article class="founder-pane" data-slideshow>
           <div class="founder-pane-media">
-            <img src="assets/team/hagen/01.jpg" alt="Hagen O&rsquo;Neill" class="is-active hagen-field" width="1600" height="1200" loading="lazy" decoding="async">
-            <img src="assets/team/hagen/02.jpg" alt="Hagen O&rsquo;Neill" width="1182" height="666" loading="lazy" decoding="async">
+            <img src="assets/images/team/hagen/01.jpg" alt="Hagen O&rsquo;Neill" class="is-active hagen-field" width="1600" height="1200" loading="lazy" decoding="async">
+            <img src="assets/images/team/hagen/02.jpg" alt="Hagen O&rsquo;Neill" width="1182" height="666" loading="lazy" decoding="async">
           </div>
           <p class="founder-mark"><span>Founder</span></p>
           <div class="founder-pane-copy">
@@ -141,9 +141,9 @@
         </article>
         <article class="founder-pane" data-slideshow>
           <div class="founder-pane-media">
-            <img src="assets/team/chandler/03.jpg" alt="Chandler Johnson" class="is-active" width="768" height="1024" loading="lazy" decoding="async">
-            <img src="assets/team/chandler/01.jpg" alt="Chandler Johnson" width="1200" height="1600" loading="lazy" decoding="async">
-            <img src="assets/team/chandler/02.jpg" alt="Chandler Johnson" width="1600" height="1200" loading="lazy" decoding="async">
+            <img src="assets/images/team/chandler/03.jpg" alt="Chandler Johnson" class="is-active" width="768" height="1024" loading="lazy" decoding="async">
+            <img src="assets/images/team/chandler/01.jpg" alt="Chandler Johnson" width="1200" height="1600" loading="lazy" decoding="async">
+            <img src="assets/images/team/chandler/02.jpg" alt="Chandler Johnson" width="1600" height="1200" loading="lazy" decoding="async">
           </div>
           <p class="founder-mark"><span>Founder</span></p>
           <div class="founder-pane-copy">
@@ -154,7 +154,7 @@
         </article>
         <article class="founder-pane">
           <div class="founder-pane-media">
-            <img src="assets/team/george/01.jpg?v=2" alt="George Stratch" class="is-active" width="1024" height="814" loading="lazy" decoding="async">
+            <img src="assets/images/team/george/01.jpg?v=2" alt="George Stratch" class="is-active" width="1024" height="814" loading="lazy" decoding="async">
           </div>
           <div class="founder-pane-copy">
             <p class="founder-name">George</p>
@@ -164,7 +164,7 @@
         </article>
         <article class="founder-pane">
           <div class="founder-pane-media">
-            <img src="assets/team/skylar/01.jpg" alt="Skylar" class="is-active" width="768" height="1024" loading="lazy" decoding="async">
+            <img src="assets/images/team/skylar/01.jpg" alt="Skylar" class="is-active" width="768" height="1024" loading="lazy" decoding="async">
           </div>
           <div class="founder-pane-copy">
             <p class="founder-name">Skylar</p>

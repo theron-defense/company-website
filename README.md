@@ -49,6 +49,6 @@ Design tokens (brand colors, font) live in the `@theme` block of
 - `js/main.js` — nav/header, reveals, founder slideshows, video playback, contact network
 - `js/wireframe.js` — Three.js viewer for the NDAA actuator model
 - `assets/` — hero + capability videos, team photos, `vision-network.svg` backdrop
-- `assets/logo.svg` — primary logo (SVG wrapper, embedded source artwork)
-- `assets/logo-white.svg` — logo for dark backgrounds
-- `assets/favicon.svg` — favicon
+- `assets/brand/logo.svg` — primary logo (SVG wrapper, embedded source artwork)
+- `assets/brand/logo-white.svg` — logo for dark backgrounds
+- `assets/brand/favicon.svg` — favicon

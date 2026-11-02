@@ -517,7 +517,7 @@ main p {
 
 .section-band-field:not(.is-live) {
     background:
-    url("../assets/vision-network.svg?v=4") center / cover no-repeat,
+    url("../assets/images/vision-network.svg?v=4") center / cover no-repeat,
       linear-gradient(
       90deg,
       color-mix(in srgb, var(--color-near-black) 88%, var(--color-slate-blue)) 0%,
@@ -991,7 +991,7 @@ main p {
   }
 
   .hero {
-    background-image: url("../assets/hero-field.jpg");
+    background-image: url("../assets/images/hero-field.jpg");
     background-size: cover;
     background-position: 72% center;
   }
