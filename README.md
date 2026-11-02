@@ -34,10 +34,6 @@ chmod +x .tools/tailwindcss
 Design tokens (brand colors, font) live in the `@theme` block of
 `src/input.css`, along with the hero grid backdrop.
 
-Dark mode uses Tailwind's `dark:` variant (class on `<html>`). A header
-selector offers **Auto** (system), **Light**, and **Dark**; preference is
-saved in `localStorage`.
-
 ## GitHub Pages
 
 1. Push this repo to GitHub.
@@ -50,9 +46,9 @@ saved in `localStorage`.
 - `index.html` — single-page site (Tailwind utility classes)
 - `src/input.css` — Tailwind entry: theme tokens + hero grid CSS
 - `css/styles.css` — compiled output (committed for Pages)
-- `js/main.js` — mobile nav and header behavior
+- `js/main.js` — nav/header, reveals, founder slideshows, video playback, contact network
+- `js/wireframe.js` — Three.js viewer for the NDAA actuator model
+- `assets/` — hero + capability videos, team photos, `vision-network.svg` backdrop
 - `assets/logo.svg` — primary logo (SVG wrapper, embedded source artwork)
 - `assets/logo-white.svg` — logo for dark backgrounds
-- `assets/mark.png` — icon mark extracted from source (transparent)
-- `assets/logo-full.png` — full logo extracted from source (transparent)
 - `assets/favicon.svg` — favicon
