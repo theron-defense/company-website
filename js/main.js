@@ -32,6 +32,31 @@
     syncHeroPoster();
   }
 
+  // Opera for Android (and some data-saver modes) reject muted autoplay with
+  // NotAllowedError when the page is opened from the address bar or reloaded.
+  // When any play() is refused, retry every on-screen video on the first touch.
+  var gestureRetryArmed = false;
+  function retryOnGesture() {
+    if (gestureRetryArmed) return;
+    gestureRetryArmed = true;
+    function retry() {
+      ['touchend', 'pointerup', 'keydown', 'click'].forEach(function (ev) {
+        window.removeEventListener(ev, retry, true);
+      });
+      gestureRetryArmed = false;
+      syncVideo();
+      document.querySelectorAll('.product-panel-video').forEach(function (clip) {
+        if (clip._onScreen && clip.paused && !reduceMotion.matches) {
+          var p = clip.play();
+          if (p && typeof p.catch === 'function') p.catch(function () {});
+        }
+      });
+    }
+    ['touchend', 'pointerup', 'keydown', 'click'].forEach(function (ev) {
+      window.addEventListener(ev, retry, true);
+    });
+  }
+
   function syncVideo() {
     if (!video) return;
     if (reduceMotion.matches) {
@@ -45,7 +70,7 @@
     }
     var play = video.play();
     if (play && typeof play.catch === 'function') {
-      play.catch(function () {});
+      play.catch(retryOnGesture);
     }
   }
 
@@ -434,7 +459,7 @@
         return;
       }
       var play = clip.play();
-      if (play && typeof play.catch === 'function') play.catch(function () {});
+      if (play && typeof play.catch === 'function') play.catch(retryOnGesture);
     }
 
     if (!('IntersectionObserver' in window)) {
