@@ -146,6 +146,12 @@ main {
   border-color: rgb(255 255 255 / 0.08);
 }
 
+.site-header.on-hero a[href="#contact"],
+.site-header.on-team a[href="#contact"],
+.site-header.on-ndaa a[href="#contact"] {
+  box-shadow: 0 1px 12px rgb(1 17 33 / 0.45);
+}
+
 .site-header.on-team a[href="#contact"],
 .site-header.on-ndaa a[href="#contact"] {
   background: #fff;
