@@ -19,19 +19,6 @@
     document.documentElement.style.setProperty('--pane-h', next + 'px');
   }
 
-  // Portrait phones get a 9:16 cut of the hero (second <source> with a media
-  // query). The poster attribute has no media variant, so swap it here.
-  var portrait = window.matchMedia('(orientation: portrait)');
-  function syncHeroPoster() {
-    if (!video) return;
-    var p = video.getAttribute(portrait.matches ? 'data-poster-portrait' : 'data-poster-landscape');
-    if (p && video.getAttribute('poster') !== p) video.setAttribute('poster', p);
-  }
-  if (video) {
-    video.setAttribute('data-poster-landscape', video.getAttribute('poster'));
-    syncHeroPoster();
-  }
-
   // Opera for Android (and some data-saver modes) reject muted autoplay with
   // NotAllowedError when the page is opened from the address bar or reloaded.
   // When any play() is refused, retry every on-screen video on the first touch.
