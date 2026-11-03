@@ -1051,10 +1051,32 @@ main p {
 
 /* —— Portrait phones: letterbox the landscape videos instead of cropping —— */
 @media (max-width: 767px) and (orientation: portrait) {
+  .hero,
+  .product-panel--film:not(.product-panel--ai-viz),
+  .product-panel--pair,
+  .product-panel--film:not(.product-panel--ai-viz) .product-panel-media,
+  .product-panel--pair .product-panel-media--lead,
+  .product-panel--pair .product-panel-media--demo {
+    background: #000;
+  }
+
+  .hero-scrim {
+    background: none;
+  }
+
+  /* Overscan 8% per side: trims a little width to buy ~16% more height.
+     The Proprietary AI panel keeps its own contain layout (excluded). */
   .hero-video,
-  .product-panel--film .product-panel-video,
+  .product-panel--film:not(.product-panel--ai-viz) .product-panel-video,
   .product-panel--pair .product-panel-video {
     object-fit: contain;
-    background: var(--color-near-black);
+    background: #000;
+    width: 116%;
+    max-width: none;
+    height: 100%;
+    top: 0;
+    bottom: 0;
+    left: -8%;
+    right: auto;
   }
 }
