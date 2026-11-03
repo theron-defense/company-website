@@ -1064,19 +1064,19 @@ main p {
     background: none;
   }
 
-  /* Overscan 12% per side: trims some width to buy ~24% more height.
+  /* Overscan 18% per side: trims width to buy ~36% more height.
      Proprietary AI and NDAA panels keep their own layouts (excluded). */
   .hero-video,
   .product-panel--film:not(.product-panel--ai-viz):not(.product-panel--ndaa) .product-panel-video,
   .product-panel--pair .product-panel-video {
     object-fit: contain;
     background: #000;
-    width: 124%;
+    width: 136%;
     max-width: none;
     height: 100%;
     top: 0;
     bottom: 0;
-    left: -12%;
+    left: -18%;
     right: auto;
   }
 }
