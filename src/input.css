@@ -839,13 +839,14 @@ main p {
   padding: 0 max(1.25rem, 4.5vw) max(2.5rem, 7vw);
   color: #fff;
   text-align: right;
-  text-shadow: none;
+  text-shadow: 0 1px 14px rgb(1 17 33 / 0.35);
   mix-blend-mode: normal;
 }
 
 .product-panel--ndaa .product-panel-copy,
 .product-panel--ai-viz .product-panel-copy {
   mix-blend-mode: normal;
+  text-shadow: none;
 }
 
 .product-panel--film .product-index,
