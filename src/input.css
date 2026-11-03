@@ -846,7 +846,7 @@ main p {
 .product-panel--ndaa .product-panel-copy,
 .product-panel--ai-viz .product-panel-copy {
   mix-blend-mode: normal;
-  text-shadow: none;
+  text-shadow: 0 1px 14px rgb(1 17 33 / 0.35);
 }
 
 .product-panel--film .product-index,
