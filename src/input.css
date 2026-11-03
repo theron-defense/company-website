@@ -1052,9 +1052,9 @@ main p {
 /* —— Portrait phones: letterbox the landscape videos instead of cropping —— */
 @media (max-width: 767px) and (orientation: portrait) {
   .hero,
-  .product-panel--film:not(.product-panel--ai-viz),
+  .product-panel--film:not(.product-panel--ai-viz):not(.product-panel--ndaa),
   .product-panel--pair,
-  .product-panel--film:not(.product-panel--ai-viz) .product-panel-media,
+  .product-panel--film:not(.product-panel--ai-viz):not(.product-panel--ndaa) .product-panel-media,
   .product-panel--pair .product-panel-media--lead,
   .product-panel--pair .product-panel-media--demo {
     background: #000;
@@ -1064,19 +1064,19 @@ main p {
     background: none;
   }
 
-  /* Overscan 8% per side: trims a little width to buy ~16% more height.
-     The Proprietary AI panel keeps its own contain layout (excluded). */
+  /* Overscan 12% per side: trims some width to buy ~24% more height.
+     Proprietary AI and NDAA panels keep their own layouts (excluded). */
   .hero-video,
-  .product-panel--film:not(.product-panel--ai-viz) .product-panel-video,
+  .product-panel--film:not(.product-panel--ai-viz):not(.product-panel--ndaa) .product-panel-video,
   .product-panel--pair .product-panel-video {
     object-fit: contain;
     background: #000;
-    width: 116%;
+    width: 124%;
     max-width: none;
     height: 100%;
     top: 0;
     bottom: 0;
-    left: -8%;
+    left: -12%;
     right: auto;
   }
 }
