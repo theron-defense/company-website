@@ -98,7 +98,8 @@ a{color:#4E9AE0}a:hover{color:#6FB1EC}
   var current = 0;
   var unlocked = false;
 
-  var CAPTURE_ENDPOINT = 'https://formsubmit.co/ajax/contact@therondefense.com';
+  var CAPTURE_ENDPOINT = 'https://api.web3forms.com/submit';
+  var CAPTURE_KEY = '759530a6-925e-4e28-b41b-b95c329c1fcf';
 
   function validEmail(v) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
@@ -109,7 +110,7 @@ a{color:#4E9AE0}a:hover{color:#6FB1EC}
       fetch(CAPTURE_ENDPOINT, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify({ email: email, _subject: 'Hype deck view: ' + email, page: location.href, when: new Date().toISOString() })
+        body: JSON.stringify({ access_key: CAPTURE_KEY, email: email, subject: 'Hype deck view: ' + email, page: location.href, when: new Date().toISOString() })
       }).catch(function () {});
     } catch (e) {}
   }
