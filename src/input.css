@@ -1100,3 +1100,18 @@ main p {
     scroll-snap-stop: normal;
   }
 }
+
+/* Touch pager (js/main.js initTouchPager): document is locked, .snap-track
+   is translated one pane per swipe. Only applied on coarse pointers. */
+html.touch-pager,
+html.touch-pager body {
+  height: 100%;
+  overflow: hidden;
+  overscroll-behavior: none;
+  scroll-snap-type: none;
+}
+
+html.touch-pager .snap-track {
+  will-change: transform;
+  transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+}

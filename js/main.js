@@ -121,12 +121,138 @@
     document.body.style.overflow = isOpen ? '' : 'hidden';
   });
 
+  // Touch devices: native scrolling + scroll-snap lets you stop between panes
+  // and snaps late (iOS Safari especially). Do what fullPage.js does instead:
+  // lock the document and translate a track one pane per swipe.
+  var pager = null;
+  function initTouchPager() {
+    var coarse = window.matchMedia('(pointer: coarse)').matches && ('ontouchstart' in window);
+    if (!coarse || reduceMotion.matches) return;
+    var panes = Array.prototype.slice.call(document.querySelectorAll('.snap-pane'));
+    if (panes.length < 2) return;
+
+    var track = document.createElement('div');
+    track.className = 'snap-track';
+    var main = document.querySelector('main');
+    var foot = document.querySelector('.site-foot');
+    if (!main) return;
+    main.parentNode.insertBefore(track, main);
+    track.appendChild(main);
+    if (foot) track.appendChild(foot);
+    document.documentElement.classList.add('touch-pager');
+
+    var index = 0;
+    var locked = false;
+    var unlock = 0;
+    var startY = 0, startX = 0, startT = 0, tracking = false;
+    var THRESHOLD = 0.05; // fraction of viewport height, like fullPage's touchSensitivity
+
+    function offsetOf(el) {
+      var y = 0;
+      while (el && el !== track) { y += el.offsetTop; el = el.offsetParent; }
+      return y;
+    }
+
+    function apply(animate) {
+      track.style.transition = animate ? '' : 'none';
+      track.style.transform = 'translate3d(0,' + (-offsetOf(panes[index])) + 'px,0)';
+      if (!animate) {
+        // force style flush so the next change animates again
+        void track.offsetHeight;
+        track.style.transition = '';
+      }
+    }
+
+    function settle() {
+      locked = false;
+      onScroll();
+    }
+
+    function goTo(next, animate) {
+      if (next < 0 || next >= panes.length) return;
+      if (next === index && animate) return;
+      index = next;
+      locked = true;
+      window.clearTimeout(unlock);
+      apply(animate !== false);
+      // Header tint / reveals read rects, so sample during the move too.
+      var t0 = performance.now();
+      (function frame(now) {
+        onScroll();
+        if (now - t0 < 700) requestAnimationFrame(frame);
+      })(t0);
+      unlock = window.setTimeout(settle, animate === false ? 0 : 720);
+    }
+
+    function paneIndexFor(el) {
+      var pane = el.classList.contains('snap-pane') ? el : el.closest('.snap-pane');
+      return pane ? panes.indexOf(pane) : -1;
+    }
+
+    function shouldIgnore(target) {
+      if (header.classList.contains('menu-open')) return true;
+      if (target.closest && target.closest('.product-hw-canvas, .site-nav, a, button')) return true;
+      return false;
+    }
+
+    track.addEventListener('transitionend', function (e) {
+      if (e.target === track) { window.clearTimeout(unlock); settle(); }
+    });
+
+    document.addEventListener('touchstart', function (e) {
+      if (e.touches.length !== 1 || shouldIgnore(e.target)) { tracking = false; return; }
+      tracking = true;
+      startY = e.touches[0].clientY; startX = e.touches[0].clientX; startT = performance.now();
+    }, { passive: true });
+
+    document.addEventListener('touchmove', function (e) {
+      if (header.classList.contains('menu-open')) return;
+      if (e.target.closest && e.target.closest('.product-hw-canvas')) return;
+      e.preventDefault(); // kill rubber-banding; the track moves, not the page
+    }, { passive: false });
+
+    document.addEventListener('touchend', function (e) {
+      if (!tracking) return;
+      tracking = false;
+      var t = e.changedTouches[0];
+      var dy = startY - t.clientY;
+      var dx = startX - t.clientX;
+      if (Math.abs(dx) > Math.abs(dy)) return; // horizontal gesture
+      var fast = (performance.now() - startT) < 300 && Math.abs(dy) > 20;
+      if (Math.abs(dy) < window.innerHeight * THRESHOLD && !fast) return;
+      if (locked) return;
+      goTo(index + (dy > 0 ? 1 : -1), true);
+    }, { passive: true });
+
+    window.addEventListener('resize', function () { apply(false); });
+    window.addEventListener('orientationchange', function () { window.setTimeout(function () { apply(false); }, 50); });
+
+    // Deep link on load
+    if (location.hash) {
+      var el = document.getElementById(location.hash.slice(1));
+      var i = el ? paneIndexFor(el) : -1;
+      if (i >= 0) index = i;
+    }
+    apply(false);
+    onScroll();
+
+    return {
+      goToElement: function (el) {
+        var i = paneIndexFor(el);
+        if (i < 0) return false;
+        goTo(i, true);
+        return true;
+      }
+    };
+  }
+
   function goToId(id) {
     var target = document.getElementById(id);
     if (!target) return false;
     var pane = target.classList.contains('snap-pane')
       ? target
       : (target.closest('.snap-pane') || target);
+    if (pager && pager.goToElement(pane)) return true;
     var root = document.documentElement;
     var y = pane.getBoundingClientRect().top + window.pageYOffset;
     root.style.setProperty('scroll-snap-type', 'none', 'important');
@@ -635,6 +761,7 @@
   initTeamLinks();
   initContactNetwork();
   initProductVideos();
+  pager = initTouchPager() || null;
   initSnapTicks();
   initKnockoutTags();
 })();
