@@ -637,6 +637,18 @@
       if (clip.preload !== 'auto') { clip.preload = 'auto'; try { clip.load(); } catch (err) {} }
     }
 
+    // "Loading…" hint on the pane until the clip is actually rendering frames.
+    clips.forEach(function (clip) {
+      var box = clip.closest('.product-panel-media');
+      if (!box) return;
+      function loading(on) { box.classList.toggle('is-loading', on); }
+      loading(clip.readyState < 3);
+      clip.addEventListener('playing', function () { loading(false); });
+      clip.addEventListener('canplay', function () { if (!clip.paused) loading(false); });
+      clip.addEventListener('waiting', function () { loading(true); });
+      clip.addEventListener('stalled', function () { if (clip.readyState < 3) loading(true); });
+    });
+
     function playClip(clip) {
       if (reduceMotion.matches) {
         clip.pause();

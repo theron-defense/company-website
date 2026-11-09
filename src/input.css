@@ -225,6 +225,33 @@ main {
   }
 }
 
+/* —— Video loading hint —— */
+.product-panel-media.is-loading::after {
+  content: "Loading…";
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-family: var(--font-mono);
+  font-size: var(--text-small);
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgb(255 255 255 / 0.55);
+  pointer-events: none;
+  z-index: 0;
+  animation: loading-pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes loading-pulse {
+  0%, 100% { opacity: 0.45; }
+  50% { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .product-panel-media.is-loading::after { animation: none; }
+}
+
 /* —— Video hero —— */
 .hero {
   position: relative;
