@@ -696,10 +696,15 @@
       }
       var hw = document.querySelector('.product-hw-canvas');
       var urls = [];
+      // Team portraits currently shown in each founder card (the rest load lazily).
+      document.querySelectorAll('.founder-pane-media img.is-active').forEach(function (img) {
+        urls.push(img.getAttribute('src'));
+      });
       if (hw && hw.dataset.model) urls.push(hw.dataset.model);
       urls.forEach(function (u) {
         var l = document.createElement('link');
-        l.rel = 'prefetch'; l.href = u; l.as = 'fetch'; l.crossOrigin = 'anonymous';
+        l.rel = 'prefetch'; l.href = u;
+        if (/\.(webp|jpe?g|png)(\?|$)/.test(u)) { l.as = 'image'; } else { l.as = 'fetch'; l.crossOrigin = 'anonymous'; }
         document.head.appendChild(l);
       });
     }
