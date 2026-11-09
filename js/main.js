@@ -144,8 +144,11 @@
     var index = 0;
     var locked = false;
     var unlock = 0;
-    var startY = 0, startX = 0, startT = 0, tracking = false;
-    var THRESHOLD = 0.05; // fraction of viewport height, like fullPage's touchSensitivity
+    var startY = 0, startX = 0, startT = 0, lastY = 0, lastT = 0, velocity = 0;
+    var tracking = false, dragging = false, axisKnown = false;
+    var baseY = 0;
+    var COMMIT = 0.18;      // drag this fraction of the viewport to commit a page
+    var FLICK = 0.5;        // px/ms: faster than this commits regardless of distance
 
     function offsetOf(el) {
       var y = 0;
@@ -153,14 +156,15 @@
       return y;
     }
 
-    function apply(animate) {
+    function setY(y, animate) {
       track.style.transition = animate ? '' : 'none';
-      track.style.transform = 'translate3d(0,' + (-offsetOf(panes[index])) + 'px,0)';
-      if (!animate) {
-        // force style flush so the next change animates again
-        void track.offsetHeight;
-        track.style.transition = '';
-      }
+      track.style.transform = 'translate3d(0,' + (-y) + 'px,0)';
+    }
+
+    function apply(animate) {
+      baseY = offsetOf(panes[index]);
+      setY(baseY, animate);
+      if (!animate) { void track.offsetHeight; track.style.transition = ''; }
     }
 
     function settle() {
@@ -168,19 +172,21 @@
       onScroll();
     }
 
+    function sampleDuring(ms) {
+      var t0 = performance.now();
+      (function frame(now) {
+        onScroll();
+        if (now - t0 < ms) requestAnimationFrame(frame);
+      })(t0);
+    }
+
     function goTo(next, animate) {
-      if (next < 0 || next >= panes.length) return;
-      if (next === index && animate) return;
+      next = Math.max(0, Math.min(panes.length - 1, next));
       index = next;
       locked = true;
       window.clearTimeout(unlock);
       apply(animate !== false);
-      // Header tint / reveals read rects, so sample during the move too.
-      var t0 = performance.now();
-      (function frame(now) {
-        onScroll();
-        if (now - t0 < 700) requestAnimationFrame(frame);
-      })(t0);
+      sampleDuring(700);
       unlock = window.setTimeout(settle, animate === false ? 0 : 720);
     }
 
@@ -191,7 +197,7 @@
 
     function shouldIgnore(target) {
       if (header.classList.contains('menu-open')) return true;
-      if (target.closest && target.closest('.product-hw-canvas, .site-nav, a, button')) return true;
+      if (target.closest && target.closest('.product-hw-canvas, .site-nav')) return true;
       return false;
     }
 
@@ -201,28 +207,55 @@
 
     document.addEventListener('touchstart', function (e) {
       if (e.touches.length !== 1 || shouldIgnore(e.target)) { tracking = false; return; }
-      tracking = true;
-      startY = e.touches[0].clientY; startX = e.touches[0].clientX; startT = performance.now();
+      tracking = true; dragging = false; axisKnown = false; velocity = 0;
+      startY = lastY = e.touches[0].clientY; startX = e.touches[0].clientX;
+      startT = lastT = performance.now();
+      if (locked) {
+        // grab mid-animation: freeze where it is and continue from there
+        var m = /translate3d\(0(?:px)?,\s*(-?[\d.]+)px/.exec(getComputedStyle(track).transform === 'none' ? '' : track.style.transform);
+        window.clearTimeout(unlock);
+        locked = false;
+      }
+      baseY = offsetOf(panes[index]);
     }, { passive: true });
 
     document.addEventListener('touchmove', function (e) {
       if (header.classList.contains('menu-open')) return;
       if (e.target.closest && e.target.closest('.product-hw-canvas')) return;
-      e.preventDefault(); // kill rubber-banding; the track moves, not the page
+      e.preventDefault(); // never let the page itself scroll / rubber-band
+      if (!tracking || e.touches.length !== 1) return;
+      var y = e.touches[0].clientY, x = e.touches[0].clientX;
+      var dy = startY - y, dx = startX - x;
+      if (!axisKnown) {
+        if (Math.abs(dy) < 6 && Math.abs(dx) < 6) return;
+        axisKnown = true;
+        if (Math.abs(dx) > Math.abs(dy)) { tracking = false; return; }
+        dragging = true;
+      }
+      var now = performance.now();
+      if (now - lastT > 0) velocity = (lastY - y) / (now - lastT);
+      lastY = y; lastT = now;
+      // Resist past the ends
+      var atStart = index === 0 && dy < 0, atEnd = index === panes.length - 1 && dy > 0;
+      if (atStart || atEnd) dy = dy * 0.25;
+      setY(baseY + dy, false);
+      onScroll();
     }, { passive: false });
 
-    document.addEventListener('touchend', function (e) {
+    function finish(e) {
       if (!tracking) return;
       tracking = false;
+      if (!dragging) return;
       var t = e.changedTouches[0];
       var dy = startY - t.clientY;
-      var dx = startX - t.clientX;
-      if (Math.abs(dx) > Math.abs(dy)) return; // horizontal gesture
-      var fast = (performance.now() - startT) < 300 && Math.abs(dy) > 20;
-      if (Math.abs(dy) < window.innerHeight * THRESHOLD && !fast) return;
-      if (locked) return;
-      goTo(index + (dy > 0 ? 1 : -1), true);
-    }, { passive: true });
+      var h = window.innerHeight;
+      var next = index;
+      if (dy > h * COMMIT || (velocity > FLICK && dy > 10)) next = index + 1;
+      else if (dy < -h * COMMIT || (velocity < -FLICK && dy < -10)) next = index - 1;
+      goTo(next, true);
+    }
+    document.addEventListener('touchend', finish, { passive: true });
+    document.addEventListener('touchcancel', finish, { passive: true });
 
     window.addEventListener('resize', function () { apply(false); });
     window.addEventListener('orientationchange', function () { window.setTimeout(function () { apply(false); }, 50); });
