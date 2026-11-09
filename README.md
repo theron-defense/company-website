@@ -47,7 +47,7 @@ Design tokens (brand colors, font) live in the `@theme` block of
 - `src/input.css` — Tailwind entry: theme tokens + hero grid CSS
 - `css/styles.css` — compiled output (committed for Pages)
 - `js/main.js` — nav/header, reveals, founder slideshows, video playback, contact network
-- `js/wireframe.js` — Three.js viewer for the NDAA actuator model
+- `js/wireframe.bundle.js` — NDAA actuator viewer, built from `src/js/wireframe.js` + Three.js via `scripts/build-wireframe.sh` (self-hosted; no CDN at runtime)
 - `assets/` — hero + capability videos, team photos, `vision-network.svg` backdrop
 - `assets/brand/logo.svg` — primary logo (SVG wrapper, embedded source artwork)
 - `assets/brand/logo-white.svg` — logo for dark backgrounds

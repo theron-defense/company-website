@@ -599,11 +599,42 @@
     var clips = document.querySelectorAll('.product-panel-video');
     if (!clips.length) return;
 
-    function warm(clip) {
-      if (clip.dataset.warmed) return;
-      clip.dataset.warmed = '1';
+    // Warm one clip at a time so a 14 MB demo doesn't starve the small ones
+    // (and the GLB) on a phone connection. Next clip starts when the current
+    // one can play through, or after a timeout.
+    var warmQueue = [];
+    var warming = null;
+    function pumpWarm() {
+      if (warming || !warmQueue.length) return;
+      var clip = warmQueue.shift();
+      warming = clip;
+      var done = false;
+      function next() {
+        if (done) return;
+        done = true;
+        clip.removeEventListener('canplaythrough', next);
+        warming = null;
+        pumpWarm();
+      }
+      clip.addEventListener('canplaythrough', next);
+      window.setTimeout(next, 8000);
       clip.preload = 'auto';
       try { clip.load(); } catch (err) {}
+    }
+    function warm(clip, front) {
+      if (clip.dataset.warmed) return;
+      clip.dataset.warmed = '1';
+      if (front) warmQueue.unshift(clip); else warmQueue.push(clip);
+      pumpWarm();
+    }
+    // A clip that is actually on screen jumps the queue.
+    function warmNow(clip) {
+      if (clip.dataset.warmed === '1' && warming !== clip) {
+        var i = warmQueue.indexOf(clip);
+        if (i >= 0) warmQueue.splice(i, 1);
+      }
+      clip.dataset.warmed = '1';
+      if (clip.preload !== 'auto') { clip.preload = 'auto'; try { clip.load(); } catch (err) {} }
     }
 
     function playClip(clip) {
@@ -633,7 +664,7 @@
       entries.forEach(function (entry) {
         var clip = entry.target;
         clip._onScreen = entry.isIntersecting;
-        if (entry.isIntersecting) playClip(clip);
+        if (entry.isIntersecting) { warmNow(clip); playClip(clip); }
         else clip.pause();
       });
     }, { threshold: 0.01 });
@@ -649,6 +680,31 @@
         else if (clip._onScreen) playClip(clip);
       });
     });
+  }
+
+  // Once the page has settled, quietly fetch the small assets the later panes
+  // need (AI loop video, 3D model, Three bundle) so they're in cache before
+  // the first swipe. These are ~2 MB total; the big demo clips are not touched.
+  function prefetchLaterAssets() {
+    if (reduceMotion.matches) return;
+    function go() {
+      var small = document.querySelector('.product-panel--ai-viz .product-panel-video');
+      if (small && !small.dataset.warmed) {
+        small.dataset.warmed = '1';
+        small.preload = 'auto';
+        try { small.load(); } catch (err) {}
+      }
+      var hw = document.querySelector('.product-hw-canvas');
+      var urls = [];
+      if (hw && hw.dataset.model) urls.push(hw.dataset.model);
+      urls.forEach(function (u) {
+        var l = document.createElement('link');
+        l.rel = 'prefetch'; l.href = u; l.as = 'fetch'; l.crossOrigin = 'anonymous';
+        document.head.appendChild(l);
+      });
+    }
+    if ('requestIdleCallback' in window) window.requestIdleCallback(go, { timeout: 4000 });
+    else window.setTimeout(go, 2500);
   }
 
   function initSnapTicks() {
@@ -794,6 +850,7 @@
   initTeamLinks();
   initContactNetwork();
   initProductVideos();
+  prefetchLaterAssets();
   pager = initTouchPager() || null;
   initSnapTicks();
   initKnockoutTags();

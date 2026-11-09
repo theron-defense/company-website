@@ -1,3 +1,9 @@
+// Source for js/wireframe.bundle.js — build with scripts/build-wireframe.sh
+// (esbuild bundles Three.js so the site has no runtime dependency on unpkg).
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { mergeVertices } from 'three/addons/utils/BufferGeometryUtils.js';
+
 const canvas = document.querySelector('.product-hw-canvas');
 
 if (canvas) {
@@ -9,23 +15,13 @@ if (canvas) {
       if (!res.ok) throw new Error(res.statusText);
       return res.arrayBuffer();
     });
-    init(
-      modelBuf,
-      import('three'),
-      import('three/addons/loaders/GLTFLoader.js'),
-      import('three/addons/utils/BufferGeometryUtils.js')
-    );
-  }, { rootMargin: '80% 0px' });
+    init(modelBuf);
+  }, { rootMargin: '150% 0px' });
   lazy.observe(canvas);
 }
 
-async function init(modelBuf, threeMod, loaderMod, utilsMod) {
-  const [THREE, { GLTFLoader }, { mergeVertices }, data] = await Promise.all([
-    threeMod,
-    loaderMod,
-    utilsMod,
-    modelBuf,
-  ]);
+async function init(modelBuf) {
+  const data = await modelBuf;
 
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
