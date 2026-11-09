@@ -12,7 +12,12 @@
     year.textContent = new Date().getFullYear();
   }
 
+  // Only needed where 100dvh is unsupported. On iOS Safari, re-setting pane
+  // heights on every visualViewport resize (URL bar collapse) causes relayout
+  // mid-scroll and fights scroll-snap, so let dvh handle it where it exists.
+  var needsPaneSync = !(window.CSS && CSS.supports && CSS.supports('height', '100dvh'));
   function syncPaneHeight() {
+    if (!needsPaneSync) return;
     var vv = window.visualViewport;
     var next = Math.round((vv && vv.height) || window.innerHeight || 0);
     if (!next) return;

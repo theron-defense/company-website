@@ -1088,3 +1088,15 @@ main p {
     right: auto;
   }
 }
+
+/* Touch devices: momentum scrolling fights mandatory snapping on full-height
+   video panes (iOS Safari stutters). Snap only when a pane edge is near. */
+@media (pointer: coarse) {
+  html {
+    scroll-snap-type: y proximity;
+  }
+
+  .snap-pane {
+    scroll-snap-stop: normal;
+  }
+}
