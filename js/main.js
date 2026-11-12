@@ -648,23 +648,33 @@
       window.requestAnimationFrame(frame);
     }
 
-    // Drag: mouse
-    var dragX = null;
-    viewport.addEventListener('mousedown', function (e) {
-      if (e.button !== 0) return;
-      dragX = e.clientX;
+    // Drag: mouse. Pointer capture keeps delivering moves/ups even when the
+    // cursor leaves the window; blur/visibility change end the drag too.
+    var dragId = null, dragX = 0;
+    function endDrag() {
+      if (dragId === null) return;
+      try { viewport.releasePointerCapture(dragId); } catch (err) {}
+      dragId = null;
+      viewport.classList.remove('is-dragging');
+    }
+    viewport.addEventListener('pointerdown', function (e) {
+      if (e.pointerType !== 'mouse' || e.button !== 0) return;
+      dragId = e.pointerId; dragX = e.clientX;
+      try { viewport.setPointerCapture(dragId); } catch (err) {}
       viewport.classList.add('is-dragging');
       e.preventDefault();
     });
-    window.addEventListener('mousemove', function (e) {
-      if (dragX === null) return;
+    viewport.addEventListener('pointermove', function (e) {
+      if (dragId === null || e.pointerId !== dragId) return;
+      if (e.buttons === 0) { endDrag(); return; } // button released off-window
       pos += dragX - e.clientX;
       dragX = e.clientX;
     });
-    window.addEventListener('mouseup', function () {
-      dragX = null;
-      viewport.classList.remove('is-dragging');
-    });
+    viewport.addEventListener('pointerup', endDrag);
+    viewport.addEventListener('pointercancel', endDrag);
+    viewport.addEventListener('lostpointercapture', endDrag);
+    window.addEventListener('blur', endDrag);
+    document.addEventListener('visibilitychange', endDrag);
     // Drag: touch (the page pager ignores horizontal gestures that start here)
     var touchX = null;
     viewport.addEventListener('touchstart', function (e) {
