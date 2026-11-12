@@ -452,6 +452,10 @@ main p {
   opacity: 1;
 }
 
+.founder-pane-media img.aaron-shop {
+  object-position: 50% 15%;
+}
+
 .founder-pane-media img.hagen-field {
   object-position: 28% 50%;
 }
