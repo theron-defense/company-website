@@ -626,6 +626,9 @@
 
     function speed() { return 90; } // px per second
     var pos = 0, last = 0;
+    var vel = 0;          // px/s left over from a drag, decays each frame
+    var lastMoveT = 0, lastMoveDx = 0;
+    var FRICTION = 3.2;   // higher = shorter glide
 
     function half() { return track.scrollWidth / 2; }
 
@@ -643,9 +646,25 @@
       var dt = last ? Math.min(0.05, (now - last) / 1000) : 0;
       last = now;
       if (!reduceMotion.matches) pos += speed() * dt;
+      if (vel !== 0) {
+        pos += vel * dt;
+        vel *= Math.exp(-FRICTION * dt);
+        if (Math.abs(vel) < 4) vel = 0;
+      }
       wrap();
       paint();
       window.requestAnimationFrame(frame);
+    }
+
+    function sample(dx) {
+      var t = performance.now();
+      if (lastMoveT) { var dt = (t - lastMoveT) / 1000; if (dt > 0) lastMoveDx = dx / dt; }
+      lastMoveT = t;
+    }
+    function fling() {
+      // Only count a release within 80 ms of the last move as a fling.
+      if (performance.now() - lastMoveT < 80) vel = Math.max(-2400, Math.min(2400, lastMoveDx));
+      lastMoveT = 0; lastMoveDx = 0;
     }
 
     // Drag: mouse. Pointer capture keeps delivering moves/ups even when the
@@ -653,13 +672,14 @@
     var dragId = null, dragX = 0;
     function endDrag() {
       if (dragId === null) return;
+      fling();
       try { viewport.releasePointerCapture(dragId); } catch (err) {}
       dragId = null;
       viewport.classList.remove('is-dragging');
     }
     viewport.addEventListener('pointerdown', function (e) {
       if (e.pointerType !== 'mouse' || e.button !== 0) return;
-      dragId = e.pointerId; dragX = e.clientX;
+      dragId = e.pointerId; dragX = e.clientX; vel = 0; lastMoveT = 0;
       try { viewport.setPointerCapture(dragId); } catch (err) {}
       viewport.classList.add('is-dragging');
       e.preventDefault();
@@ -667,7 +687,8 @@
     viewport.addEventListener('pointermove', function (e) {
       if (dragId === null || e.pointerId !== dragId) return;
       if (e.buttons === 0) { endDrag(); return; } // button released off-window
-      pos += dragX - e.clientX;
+      var mdx = dragX - e.clientX;
+      pos += mdx; sample(mdx);
       dragX = e.clientX;
     });
     viewport.addEventListener('pointerup', endDrag);
@@ -678,14 +699,15 @@
     // Drag: touch (the page pager ignores horizontal gestures that start here)
     var touchX = null;
     viewport.addEventListener('touchstart', function (e) {
-      if (e.touches.length === 1) touchX = e.touches[0].clientX;
+      if (e.touches.length === 1) { touchX = e.touches[0].clientX; vel = 0; lastMoveT = 0; }
     }, { passive: true });
     viewport.addEventListener('touchmove', function (e) {
       if (touchX === null || e.touches.length !== 1) return;
-      pos += touchX - e.touches[0].clientX;
+      var tdx = touchX - e.touches[0].clientX;
+      pos += tdx; sample(tdx);
       touchX = e.touches[0].clientX;
     }, { passive: true });
-    viewport.addEventListener('touchend', function () { touchX = null; }, { passive: true });
+    viewport.addEventListener('touchend', function () { if (touchX !== null) fling(); touchX = null; }, { passive: true });
     viewport.addEventListener('touchcancel', function () { touchX = null; }, { passive: true });
     // Horizontal wheel / trackpad
     viewport.addEventListener('wheel', function (e) {
