@@ -87,11 +87,13 @@ main {
 }
 
 /* —— Header over media vs rest of page —— */
+/* The header is fully transparent over every section; only its foreground
+   (logo colour, link colour, shadows) changes per section. */
 .site-header {
-  transition:
-    background-color 0.35s ease,
-    border-color 0.35s ease,
-    box-shadow 0.35s ease;
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+  transition: color 0.35s ease;
 }
 
 .site-header.on-hero {
@@ -1085,13 +1087,6 @@ main p {
 
   .snap-pane {
     scroll-snap-stop: normal;
-  }
-}
-
-/* Phones: header over the team pane goes near-black (desktop keeps brand blue). */
-@media (max-width: 767px) {
-  .site-header.on-team {
-    background: #000;
   }
 }
 
