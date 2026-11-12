@@ -498,25 +498,10 @@ main p {
   text-shadow: 0 1px 14px rgb(1 17 33 / 0.35);
 }
 
+/* Founder tag: same construction as the panel labels (see .tag-label). */
 .founder-mark {
   display: block;
   margin: 0 0 0.45rem;
-  color: var(--color-signal-orange);
-  line-height: 0;
-}
-
-.founder-mark svg {
-  display: block;
-  width: 5.25rem;
-  height: auto;
-  overflow: visible;
-}
-
-.founder-mark text {
-  font-family: var(--font-mono);
-  font-size: 11.5px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
 }
 
 .founder-name {
@@ -873,10 +858,18 @@ main p {
 .product-panel--pair .product-index {
   display: block;
   margin: 0 0 0.65rem;
+}
+
+/* Orange label block with the background showing through the letters.
+   One rule set for the founder tag and every panel label so they match. */
+.founder-mark,
+.product-panel--film .product-index,
+.product-panel--pair .product-index {
   color: var(--color-signal-orange);
   line-height: 0;
 }
 
+.founder-mark svg,
 .product-panel--film .product-index svg,
 .product-panel--pair .product-index svg {
   display: inline-block;
@@ -885,6 +878,7 @@ main p {
   overflow: visible;
 }
 
+.founder-mark text,
 .product-panel--film .product-index text,
 .product-panel--pair .product-index text {
   font-family: var(--font-mono);
