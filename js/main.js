@@ -619,7 +619,9 @@
       track.appendChild(clone);
     });
 
-    var SPEED = 32; // px per second
+    // Single-row (landscape) strip has far more width per loop; move it faster.
+    var oneRow = window.matchMedia('(orientation: landscape) and (min-width: 768px)');
+    function speed() { return oneRow.matches ? 48 : 32; } // px per second
     var pos = 0, last = 0;
 
     function half() { return track.scrollWidth / 2; }
@@ -637,7 +639,7 @@
     function frame(now) {
       var dt = last ? Math.min(0.05, (now - last) / 1000) : 0;
       last = now;
-      if (!reduceMotion.matches) pos += SPEED * dt;
+      if (!reduceMotion.matches) pos += speed() * dt;
       wrap();
       paint();
       window.requestAnimationFrame(frame);
