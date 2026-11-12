@@ -104,7 +104,7 @@ main {
 
 .site-header.on-team {
   border-color: transparent;
-  background: var(--color-brand-blue);
+  background: transparent;
   box-shadow: none;
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
@@ -132,10 +132,6 @@ main {
   filter: drop-shadow(0 1px 10px rgb(1 17 33 / 0.45));
 }
 
-.site-header.on-team .logo-on-dark {
-  filter: none;
-}
-
 .site-header.on-hero .nav-bar,
 .site-header.on-team .nav-bar {
   background: #fff;
@@ -152,18 +148,15 @@ main {
   box-shadow: 0 1px 12px rgb(1 17 33 / 0.45);
 }
 
-.site-header.on-team a[href="#contact"],
 .site-header.on-ndaa a[href="#contact"] {
   background: #fff;
   color: var(--color-brand-blue);
 }
 
-.site-header.on-team a[href="#contact"]:hover,
 .site-header.on-ndaa a[href="#contact"]:hover {
   background: var(--color-warm-light);
   color: var(--color-brand-blue);
 }
-
 
 /* —— Mobile menu: header + panel become one solid sheet —— */
 @media (max-width: 767px) {
@@ -377,26 +370,54 @@ main p {
 }
 
 .team-section {
+  position: relative;
   padding: 0;
   background: var(--color-warm-mid);
 }
 
-.founder-split {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 0;
-  margin-top: 0;
+/* Team grid: 2 rows, columns sized from the row height (~3:4 cards).
+   JS (initTeamCarousel) duplicates the cards and translates the strip at a
+   constant speed so it loops; dragging just offsets it. */
+.team-viewport {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  touch-action: pan-x;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
-@media (max-width: 1023px) {
+.team-viewport.is-dragging {
+  cursor: grabbing;
+}
+
+.founder-split {
+  --team-rows: 2;
+  --team-row-h: calc(var(--pane-h) / var(--team-rows));
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-rows: repeat(var(--team-rows), minmax(0, 1fr));
+  /* Portrait: 2 columns in view. Landscape: 2.5 (set below). */
+  grid-auto-columns: max(50vw, calc(var(--team-row-h) * 0.78));
+  gap: 0;
+  margin-top: 0;
+  width: max-content;
+  height: 100%;
+  will-change: transform;
+}
+
+/* Landscape screens: one row of portrait tiles, 2.5 in view (6 per set, so
+   nobody is ever on screen twice). */
+@media (orientation: landscape) and (min-width: 768px) {
   .founder-split {
-    grid-template-columns: 1fr 1fr;
+    --team-rows: 1;
+    grid-auto-columns: 40vw;
   }
 }
 
-/* Second team pane: two cards side by side at every width. */
-.founder-split--pair {
-  grid-template-columns: 1fr 1fr;
+.founder-pane-media img {
+  -webkit-user-drag: none;
 }
 
 .founder-pane {
@@ -443,7 +464,7 @@ main p {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center;
+  object-position: 50% 10%; /* tiles are wide; keep heads in frame */
   opacity: 0;
   transition: opacity 0.7s ease;
 }
@@ -456,8 +477,12 @@ main p {
   object-position: 50% 0%;
 }
 
+.founder-pane-media img.top-anchor {
+  object-position: 50% 0%;
+}
+
 .founder-pane-media img.hagen-field {
-  object-position: 28% 50%;
+  object-position: 28% 30%;
 }
 
 .founder-pane-copy {
@@ -474,33 +499,24 @@ main p {
 }
 
 .founder-mark {
-  position: absolute;
-  --founder-inset: max(1.15rem, 1.6vw);
-  top: calc(72px + var(--founder-inset));
-  left: var(--founder-inset);
-  z-index: 2;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  isolation: isolate;
-  margin: 0;
-  padding: 0.12rem 0.5rem 0.1rem;
-  font-family: var(--font-mono);
-  font-size: 0.95rem;
-  font-weight: 700;
-  line-height: 1;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: #000;
-  background: var(--color-signal-orange);
-  text-shadow: none;
-  mix-blend-mode: normal;
+  display: block;
+  margin: 0 0 0.45rem;
+  color: var(--color-signal-orange);
+  line-height: 0;
 }
 
-.founder-mark span {
-  color: #000;
-  mix-blend-mode: destination-out;
-  transform: translateY(0.08em);
+.founder-mark svg {
+  display: block;
+  width: 5.25rem;
+  height: auto;
+  overflow: visible;
+}
+
+.founder-mark text {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
 }
 
 .founder-name {
@@ -543,26 +559,12 @@ main p {
     padding: 0;
   }
 
-  .founder-split {
-    grid-template-columns: 1fr;
-    gap: 0;
-  }
-
   .founder-pane {
     min-height: min(72svh, 36rem);
   }
 
   .team-section.snap-pane {
     padding-top: 72px;
-  }
-
-  .founder-mark {
-    --founder-inset: 0.65rem;
-    top: var(--founder-inset);
-    left: var(--founder-inset);
-    font-size: 0.68rem;
-    letter-spacing: 0.16em;
-    padding: 0.1rem 0.4rem 0.08rem;
   }
 
   .founder-pane-copy {
@@ -635,31 +637,6 @@ main p {
   text-shadow: 0 1px 14px rgb(1 17 33 / 0.35);
 }
 
-.site-foot-copy .product-index {
-  display: flex;
-  align-items: center;
-  gap: 0.85rem;
-  margin: 0 0 clamp(0.9rem, 1.4vw, 1.5rem);
-  padding: 0;
-  font-size: clamp(1.1rem, 1.35vw, 1.6rem);
-  font-weight: 600;
-  line-height: 1;
-  letter-spacing: 0.24em;
-  text-transform: uppercase;
-  color: var(--color-signal-orange);
-  background: none;
-  isolation: auto;
-  mix-blend-mode: normal;
-}
-
-.site-foot-copy .product-index::before {
-  content: "";
-  flex: none;
-  width: 1.75rem;
-  height: 2px;
-  background: currentColor;
-}
-
 .site-foot h2 {
   margin: 0;
   font-family: var(--font-display);
@@ -670,7 +647,7 @@ main p {
   color: #fff;
 }
 
-.site-foot-copy p:not(.product-index) {
+.site-foot-copy p {
   margin: clamp(1rem, 1.4vw, 1.6rem) 0 0;
   font-size: clamp(1.05rem, 1.15vw, 1.35rem);
   line-height: 1.55;
@@ -894,34 +871,26 @@ main p {
 
 .product-panel--film .product-index,
 .product-panel--pair .product-index {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  isolation: isolate;
+  display: block;
   margin: 0 0 0.65rem;
-  padding: 0.12rem 0.5rem 0.1rem;
-  line-height: 1;
-  font-size: 0.95rem;
+  color: var(--color-signal-orange);
+  line-height: 0;
+}
+
+.product-panel--film .product-index svg,
+.product-panel--pair .product-index svg {
+  display: inline-block;
+  height: 1.3rem;
+  width: auto;
+  overflow: visible;
+}
+
+.product-panel--film .product-index text,
+.product-panel--pair .product-index text {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
   font-weight: 700;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: #000;
-  background: var(--color-signal-orange);
-  mix-blend-mode: normal;
-}
-
-.product-panel--film .product-index span,
-.product-panel--pair .product-index span {
-  color: #000;
-  mix-blend-mode: destination-out;
-  transform: translateY(0.08em);
-}
-
-.product-panel--film .product-index::before,
-.product-panel--pair .product-index::before,
-.product-panel--film .product-index::after,
-.product-panel--pair .product-index::after {
-  content: none;
+  letter-spacing: 0.14em;
 }
 
 .product-panel.product-panel--film h3,
@@ -1040,10 +1009,8 @@ main p {
   min-height: var(--pane-h);
 }
 
-.team-section.snap-pane .founder-split {
+.team-section.snap-pane .team-viewport {
   flex: 1;
-  width: 100%;
-  height: 100%;
   min-height: 0;
 }
 
@@ -1065,12 +1032,6 @@ main p {
   height: var(--pane-h);
   min-height: var(--pane-h);
   max-height: var(--pane-h);
-}
-
-@media (max-width: 639px) {
-  .team-section.snap-pane .founder-split {
-    grid-template-columns: 1fr 1fr;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1134,6 +1095,13 @@ main p {
 
   .snap-pane {
     scroll-snap-stop: normal;
+  }
+}
+
+/* Phones: header over the team pane goes near-black (desktop keeps brand blue). */
+@media (max-width: 767px) {
+  .site-header.on-team {
+    background: #000;
   }
 }
 

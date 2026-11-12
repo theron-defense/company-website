@@ -146,7 +146,7 @@
     var locked = false;
     var unlock = 0;
     var startY = 0, startX = 0, startT = 0, lastY = 0, lastT = 0, velocity = 0;
-    var tracking = false, dragging = false, axisKnown = false;
+    var tracking = false, dragging = false, axisKnown = false, inCarousel = false;
     var baseY = 0;
     var COMMIT = 0.18;      // drag this fraction of the viewport to commit a page
     var FLICK = 0.5;        // px/ms: faster than this commits regardless of distance
@@ -209,6 +209,7 @@
     document.addEventListener('touchstart', function (e) {
       if (e.touches.length !== 1 || shouldIgnore(e.target)) { tracking = false; return; }
       tracking = true; dragging = false; axisKnown = false; velocity = 0;
+      inCarousel = !!(e.target.closest && e.target.closest('.team-viewport'));
       startY = lastY = e.touches[0].clientY; startX = e.touches[0].clientX;
       startT = lastT = performance.now();
       if (locked) {
@@ -223,16 +224,21 @@
     document.addEventListener('touchmove', function (e) {
       if (header.classList.contains('menu-open')) return;
       if (e.target.closest && e.target.closest('.product-hw-canvas')) return;
-      e.preventDefault(); // never let the page itself scroll / rubber-band
-      if (!tracking || e.touches.length !== 1) return;
+      if (!tracking || e.touches.length !== 1) { if (e.cancelable && !inCarousel) e.preventDefault(); return; }
       var y = e.touches[0].clientY, x = e.touches[0].clientX;
       var dy = startY - y, dx = startX - x;
       if (!axisKnown) {
+        // Inside the team carousel let the browser decide the axis first, so a
+        // horizontal pan stays native (touch-action: pan-x). Elsewhere, block
+        // the page from scrolling immediately.
+        if (!inCarousel && e.cancelable) e.preventDefault();
         if (Math.abs(dy) < 6 && Math.abs(dx) < 6) return;
         axisKnown = true;
         if (Math.abs(dx) > Math.abs(dy)) { tracking = false; return; }
         dragging = true;
       }
+      if (!e.cancelable) return; // native pan already in progress
+      e.preventDefault(); // vertical: the track moves, never the page
       var now = performance.now();
       if (now - lastT > 0) velocity = (lastY - y) / (now - lastT);
       lastY = y; lastT = now;
@@ -269,6 +275,10 @@
     }
     apply(false);
     onScroll();
+    // The document never scrolls under the pager, so nothing fires 'scroll'.
+    // Re-evaluate header tint and reveals on a slow tick as a safety net
+    // (covers deep links, resizes and anything that moves the track outside goTo).
+    window.setInterval(onScroll, 400);
 
     return {
       goToElement: function (el) {
@@ -542,58 +552,132 @@
     });
   }
 
+  // Founder slideshows: each card flips on the same period but with a
+  // staggered start, so they don't all turn over at once. Hovering a card
+  // flips it immediately; nothing pauses.
   function initSlideshows() {
-    var panes = document.querySelectorAll('[data-slideshow]');
-    panes.forEach(function (pane) {
+    var panes = Array.prototype.slice.call(document.querySelectorAll('[data-slideshow]'));
+    panes = panes.filter(function (pane) { return pane.querySelectorAll('.founder-pane-media img').length > 1; });
+    if (!panes.length) return;
+
+    var PERIOD = 5200;
+    var timers = [];
+    var states = panes.map(function (pane, i) {
       var slides = pane.querySelectorAll('.founder-pane-media img');
-      if (slides.length < 2) return;
-
-      var index = 0;
-      var timer = null;
-      var hovering = false;
-      var resting = 0;
-
-      function show(next) {
-        slides[index].classList.remove('is-active');
-        index = (next + slides.length) % slides.length;
-        slides[index].classList.add('is-active');
-      }
-
-      function play() {
-        if (reduceMotion.matches || hovering) return;
-        stop();
-        timer = window.setInterval(function () {
-          show(index + 1);
-        }, 5200);
-      }
-
-      function stop() {
-        if (timer) window.clearInterval(timer);
-        timer = null;
-      }
-
-      pane.addEventListener('mouseenter', function () {
-        hovering = true;
-        resting = index;
-        stop();
-        show(index + 1);
-      });
-
-      pane.addEventListener('mouseleave', function () {
-        hovering = false;
-        show(resting);
-        play();
-      });
-
-      if ('IntersectionObserver' in window && teamSection) {
-        new IntersectionObserver(function (entries) {
-          if (entries[0].isIntersecting) play();
-          else stop();
-        }, { rootMargin: '20% 0px' }).observe(pane);
-      } else {
-        play();
-      }
+      var st = { slides: slides, index: 0, offset: (PERIOD / panes.length) * i };
+      pane.addEventListener('mouseenter', function () { show(st, st.index + 1); });
+      return st;
     });
+
+    function show(st, next) {
+      st.slides[st.index].classList.remove('is-active');
+      st.index = (next + st.slides.length) % st.slides.length;
+      st.slides[st.index].classList.add('is-active');
+    }
+
+    function play() {
+      if (reduceMotion.matches || timers.length) return;
+      states.forEach(function (st) {
+        timers.push(window.setTimeout(function () {
+          show(st, st.index + 1);
+          timers.push(window.setInterval(function () { show(st, st.index + 1); }, PERIOD));
+        }, st.offset));
+      });
+    }
+
+    function stop() {
+      timers.forEach(function (t) { window.clearTimeout(t); window.clearInterval(t); });
+      timers = [];
+    }
+
+    if ('IntersectionObserver' in window && teamSection) {
+      new IntersectionObserver(function (entries) {
+        if (entries[0].isIntersecting) play();
+        else stop();
+      }, { rootMargin: '20% 0px' }).observe(teamSection);
+    } else {
+      play();
+    }
+  }
+
+  // Team grid: duplicate the cards once so the strip can loop, then translate
+  // it at a constant speed from the first frame. Never pauses. Dragging
+  // (mouse or touch) and horizontal wheel just offset the position.
+  function initTeamCarousel() {
+    var track = document.getElementById('team');
+    var viewport = track && track.closest('.team-viewport');
+    if (!track || !viewport) return;
+
+    var originals = Array.prototype.slice.call(track.children);
+    originals.forEach(function (card) {
+      var clone = card.cloneNode(true);
+      clone.setAttribute('aria-hidden', 'true');
+      clone.querySelectorAll('[id]').forEach(function (el) { el.id = el.id + '-dup'; });
+      clone.querySelectorAll('[mask]').forEach(function (el) {
+        el.setAttribute('mask', el.getAttribute('mask').replace(')', '-dup)'));
+      });
+      track.appendChild(clone);
+    });
+
+    var SPEED = 32; // px per second
+    var pos = 0, last = 0;
+
+    function half() { return track.scrollWidth / 2; }
+
+    function wrap() {
+      var h = half();
+      if (h <= 0) return;
+      pos = ((pos % h) + h) % h;
+    }
+
+    function paint() {
+      track.style.transform = 'translate3d(' + (-pos).toFixed(2) + 'px,0,0)';
+    }
+
+    function frame(now) {
+      var dt = last ? Math.min(0.05, (now - last) / 1000) : 0;
+      last = now;
+      if (!reduceMotion.matches) pos += SPEED * dt;
+      wrap();
+      paint();
+      window.requestAnimationFrame(frame);
+    }
+
+    // Drag: mouse
+    var dragX = null;
+    viewport.addEventListener('mousedown', function (e) {
+      if (e.button !== 0) return;
+      dragX = e.clientX;
+      viewport.classList.add('is-dragging');
+      e.preventDefault();
+    });
+    window.addEventListener('mousemove', function (e) {
+      if (dragX === null) return;
+      pos += dragX - e.clientX;
+      dragX = e.clientX;
+    });
+    window.addEventListener('mouseup', function () {
+      dragX = null;
+      viewport.classList.remove('is-dragging');
+    });
+    // Drag: touch (the page pager ignores horizontal gestures that start here)
+    var touchX = null;
+    viewport.addEventListener('touchstart', function (e) {
+      if (e.touches.length === 1) touchX = e.touches[0].clientX;
+    }, { passive: true });
+    viewport.addEventListener('touchmove', function (e) {
+      if (touchX === null || e.touches.length !== 1) return;
+      pos += touchX - e.touches[0].clientX;
+      touchX = e.touches[0].clientX;
+    }, { passive: true });
+    viewport.addEventListener('touchend', function () { touchX = null; }, { passive: true });
+    viewport.addEventListener('touchcancel', function () { touchX = null; }, { passive: true });
+    // Horizontal wheel / trackpad
+    viewport.addEventListener('wheel', function (e) {
+      if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) { pos += e.deltaX; e.stopPropagation(); }
+    }, { passive: true });
+
+    window.requestAnimationFrame(frame);
   }
 
   function initProductVideos() {
@@ -793,67 +877,6 @@
     });
   }
 
-  function paintKnockoutTags() {
-    document.querySelectorAll('.product-index, .founder-mark').forEach(function (el) {
-      var span = el.querySelector('span');
-      if (!span) return;
-      var width = el.clientWidth;
-      var height = el.clientHeight;
-      if (width < 2 || height < 2) return;
-      var dpr = window.devicePixelRatio || 1;
-      var key = width + 'x' + height + '@' + dpr + ':' + span.textContent;
-      if (el._koKey === key) return;
-      el._koKey = key;
-      var canvas = document.createElement('canvas');
-      canvas.width = Math.max(1, Math.round(width * dpr));
-      canvas.height = Math.max(1, Math.round(height * dpr));
-      var ctx = canvas.getContext('2d');
-      if (!ctx) return;
-      ctx.scale(dpr, dpr);
-      ctx.fillStyle = '#D96826';
-      ctx.fillRect(0, 0, width, height);
-      var cs = getComputedStyle(el);
-      ctx.font = cs.font;
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'alphabetic';
-      var spacing = parseFloat(cs.letterSpacing) || 0;
-      var label = span.textContent.replace(/\s+/g, ' ').trim().toUpperCase();
-      var metrics = ctx.measureText(label);
-      var ascent = metrics.actualBoundingBoxAscent || parseFloat(cs.fontSize) * 0.72;
-      var descent = metrics.actualBoundingBoxDescent || 0;
-      var y = (height + ascent - descent) / 2;
-      ctx.globalCompositeOperation = 'destination-out';
-      ctx.fillStyle = '#000';
-      fillSpacedText(ctx, label, width / 2, y, spacing);
-      ctx.globalCompositeOperation = 'source-over';
-      ctx.fillStyle = 'rgba(1, 17, 33, 0.34)';
-      fillSpacedText(ctx, label, width / 2, y, spacing);
-      el.style.backgroundColor = 'transparent';
-      el.style.backgroundImage = 'url(' + canvas.toDataURL('image/png') + ')';
-      el.style.backgroundSize = '100% 100%';
-      el.style.backgroundRepeat = 'no-repeat';
-      span.style.color = 'transparent';
-    });
-  }
-
-  function initKnockoutTags() {
-    var paintTimer = 0;
-    var paint = function () { paintKnockoutTags(); };
-    var paintSoon = function () {
-      window.clearTimeout(paintTimer);
-      paintTimer = window.setTimeout(paint, 80);
-    };
-    if (document.fonts && document.fonts.ready) {
-      document.fonts.ready.then(paint).catch(paint);
-    } else {
-      paint();
-    }
-    window.addEventListener('resize', paintSoon);
-    if (window.visualViewport) {
-      window.visualViewport.addEventListener('resize', paintSoon);
-    }
-  }
-
   if (video && 'IntersectionObserver' in window) {
     new IntersectionObserver(function () {
       syncVideo();
@@ -864,6 +887,7 @@
   onScroll();
   syncVideo();
   revealGroups();
+  initTeamCarousel();
   initSlideshows();
   initTeamLinks();
   initContactNetwork();
@@ -871,5 +895,4 @@
   prefetchLaterAssets();
   pager = initTouchPager() || null;
   initSnapTicks();
-  initKnockoutTags();
 })();
