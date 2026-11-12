@@ -449,10 +449,6 @@ main p {
   );
 }
 
-.founder-pane.has-link {
-  cursor: pointer;
-}
-
 .founder-pane-media {
     position: absolute;
     inset: 0;

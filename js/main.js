@@ -540,14 +540,19 @@
   }
 
   // Team cards with a LinkedIn link open it in a new tab when clicked anywhere.
+  // Only the "LinkedIn" text is a link. A drag that ends on it must not
+  // navigate, so suppress clicks that follow a real pointer move.
   function initTeamLinks() {
-    document.querySelectorAll('.founder-pane').forEach(function (pane) {
-      var link = pane.querySelector('.founder-social');
-      if (!link) return;
-      pane.classList.add('has-link');
-      pane.addEventListener('click', function (event) {
-        if (event.target.closest('a')) return;
-        window.open(link.href, '_blank', 'noopener,noreferrer');
+    var downX = 0, downY = 0, moved = false;
+    document.addEventListener('pointerdown', function (e) {
+      downX = e.clientX; downY = e.clientY; moved = false;
+    }, true);
+    document.addEventListener('pointermove', function (e) {
+      if (Math.abs(e.clientX - downX) > 6 || Math.abs(e.clientY - downY) > 6) moved = true;
+    }, true);
+    document.querySelectorAll('.founder-social').forEach(function (link) {
+      link.addEventListener('click', function (e) {
+        if (moved) { e.preventDefault(); e.stopPropagation(); }
       });
     });
   }
