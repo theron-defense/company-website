@@ -56,6 +56,10 @@ async function init(modelBuf) {
   let dragging = false;
   let lastX = 0;
   let lastY = 0;
+  // Momentum: angular velocity (rad/s) left over from a drag, decays each frame.
+  let velY = 0, velX = 0;
+  let moveT = 0, moveDx = 0, moveDy = 0;
+  const FRICTION = 2.6;
 
   function frame() {
     const pull = camera.aspect >= 1
@@ -186,6 +190,17 @@ async function init(modelBuf) {
       const idleSpeed = FAST + (CRUISE - FAST) * settled;
       const scrollSpin = (dTop / vh) * Math.PI * 2 * 0.18 * (1 - settled);
       pivot.rotation.y += dt * idleSpeed + scrollSpin;
+      if (velY || velX) {
+        pivot.rotation.y += velY * dt;
+        pivot.rotation.x += velX * dt;
+        const limit = Math.PI / 2 - 0.06;
+        if (pivot.rotation.x > limit) { pivot.rotation.x = limit; velX = 0; }
+        if (pivot.rotation.x < -limit) { pivot.rotation.x = -limit; velX = 0; }
+        const k = Math.exp(-FRICTION * dt);
+        velY *= k; velX *= k;
+        if (Math.abs(velY) < 0.02) velY = 0;
+        if (Math.abs(velX) < 0.02) velX = 0;
+      }
     }
     render();
     requestAnimationFrame(loop);
@@ -208,6 +223,7 @@ async function init(modelBuf) {
     lastX = event.clientX;
     lastY = event.clientY;
     last = 0;
+    velY = 0; velX = 0; moveT = 0;
     canvas.setPointerCapture(event.pointerId);
     canvas.classList.add('is-dragging');
   }
@@ -218,12 +234,23 @@ async function init(modelBuf) {
     const dy = event.clientY - lastY;
     lastX = event.clientX;
     lastY = event.clientY;
+    const t = performance.now();
+    if (moveT) { const sdt = (t - moveT) / 1000; if (sdt > 0) { moveDx = dx / sdt; moveDy = dy / sdt; } }
+    moveT = t;
     if (dx || dy) spinFromDrag(dx, dy);
   }
 
   function onPointerUp(event) {
     if (!dragging || event.isPrimary === false) return;
     dragging = false;
+    // Fling: convert the last pointer velocity (px/s) into rad/s, same mapping as spinFromDrag.
+    if (moveT && performance.now() - moveT < 80) {
+      const span = canvas.clientWidth || 1;
+      const cap = Math.PI * 4;
+      velY = Math.max(-cap, Math.min(cap, (moveDx / span) * Math.PI * 2));
+      velX = Math.max(-cap, Math.min(cap, (moveDy / span) * Math.PI * 2));
+    }
+    moveT = 0;
     if (canvas.hasPointerCapture(event.pointerId)) {
       canvas.releasePointerCapture(event.pointerId);
     }
