@@ -383,29 +383,20 @@ main p {
 
 .founder-split {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 0;
   margin-top: 0;
 }
 
 @media (max-width: 1023px) {
   .founder-split {
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
   }
 }
 
-/* Five cards: on narrow screens 2 columns x 3 rows, last card spans the row. */
-@media (max-width: 639px) {
-  .founder-split {
-    grid-template-columns: 1fr 1fr;
-  }
-  .founder-pane:nth-child(5) {
-    grid-column: 1 / -1;
-  }
-  /* Wide box on a portrait photo: keep the face in frame. */
-  .founder-pane:nth-child(5) .founder-pane-media img {
-    object-position: 50% 22%;
-  }
+/* Second team pane: two cards side by side at every width. */
+.founder-split--pair {
+  grid-template-columns: 1fr 1fr;
 }
 
 .founder-pane {

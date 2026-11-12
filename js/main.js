@@ -4,7 +4,8 @@
   const year = document.getElementById('year');
   const video = document.querySelector('.hero-video');
   const mediaSections = document.querySelectorAll('.hero, .product-panel, .site-foot');
-  const teamSection = document.querySelector('.team-section');
+  const teamSections = document.querySelectorAll('.team-section');
+  const teamSection = teamSections[0] || null;
   const ndaaSection = document.querySelector('.product-panel--ndaa');
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
@@ -90,10 +91,10 @@
       }
     });
     var overTeam = false;
-    if (teamSection) {
-      var teamBox = teamSection.getBoundingClientRect();
-      overTeam = teamBox.top <= headerHeight && teamBox.bottom > headerHeight;
-    }
+    teamSections.forEach(function (sec) {
+      var teamBox = sec.getBoundingClientRect();
+      if (teamBox.top <= headerHeight && teamBox.bottom > headerHeight) overTeam = true;
+    });
     var overNdaa = false;
     if (ndaaSection) {
       var ndaaBox = ndaaSection.getBoundingClientRect();
