@@ -198,7 +198,7 @@
 
     function shouldIgnore(target) {
       if (header.classList.contains('menu-open')) return true;
-      if (target.closest && target.closest('.product-hw-canvas, .site-nav')) return true;
+      if (target.closest && target.closest('.product-hw-grip, .site-nav')) return true;
       return false;
     }
 
@@ -223,7 +223,7 @@
 
     document.addEventListener('touchmove', function (e) {
       if (header.classList.contains('menu-open')) return;
-      if (e.target.closest && e.target.closest('.product-hw-canvas')) return;
+      if (e.target.closest && e.target.closest('.product-hw-grip')) return;
       if (!tracking || e.touches.length !== 1) { if (e.cancelable && !inCarousel) e.preventDefault(); return; }
       var y = e.touches[0].clientY, x = e.touches[0].clientX;
       var dy = startY - y, dx = startX - x;

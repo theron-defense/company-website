@@ -5,6 +5,7 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { mergeVertices } from 'three/addons/utils/BufferGeometryUtils.js';
 
 const canvas = document.querySelector('.product-hw-canvas');
+const grip = document.querySelector('.product-hw-grip') || canvas;
 
 if (canvas) {
   const lazy = new IntersectionObserver((entries) => {
@@ -70,12 +71,28 @@ async function init(modelBuf) {
     if (pitch) pivot.quaternion.premultiply(_q.setFromAxisAngle(WORLD_X, pitch));
   }
 
+  // Place the camera so the model's bounding sphere (any orientation) fits
+  // inside the grip box, which is a sub-rectangle of the full-pane canvas.
+  let radius = 1;
   function frame() {
-    const pull = camera.aspect >= 1
-      ? Math.max(1, 1.3 / camera.aspect)
-      : Math.max(1, Math.min(1.32, 0.9 / camera.aspect));
-    camera.position.copy(cameraHome).multiplyScalar(pull);
+    const cw = canvas.clientWidth || 1, ch = canvas.clientHeight || 1;
+    const g = grip.getBoundingClientRect();
+    // Let the sphere overshoot the grip box by 35% (it still stays inside the
+    // full-pane canvas); the sphere is a loose bound for the long exploded stack.
+    const fx = Math.max(0.2, Math.min(1, (g.width / cw) * 1.35));
+    const fy = Math.max(0.2, Math.min(1, (g.height / ch) * 1.35));
+    const halfV = THREE.MathUtils.degToRad(camera.fov / 2);
+    const halfH = Math.atan(Math.tan(halfV) * camera.aspect);
+    const dV = radius / Math.sin(halfV * fy);
+    const dH = radius / Math.sin(halfH * fx);
+    const d = Math.max(dV, dH);
+    camera.position.copy(cameraHome).normalize().multiplyScalar(d);
+    // Aim at the grip box centre rather than the canvas centre.
+    const c = canvas.getBoundingClientRect();
+    const offX = ((g.left + g.width / 2) - (c.left + c.width / 2)) / cw;   // -0.5..0.5
+    const offY = ((g.top + g.height / 2) - (c.top + c.height / 2)) / ch;
     camera.lookAt(0, 0, 0);
+    camera.setViewOffset(cw, ch, -offX * cw, -offY * ch, cw, ch);
   }
 
   function resize() {
@@ -212,7 +229,7 @@ async function init(modelBuf) {
   }
 
   function spinFromDrag(dx, dy) {
-    const span = canvas.clientWidth || 1;
+    const span = grip.clientWidth || 1;
     turn((dx / span) * Math.PI * 2, (dy / span) * Math.PI * 2);
     render();
   }
@@ -225,8 +242,8 @@ async function init(modelBuf) {
     lastY = event.clientY;
     last = 0;
     velY = 0; velX = 0; moveT = 0;
-    canvas.setPointerCapture(event.pointerId);
-    canvas.classList.add('is-dragging');
+    grip.setPointerCapture(event.pointerId);
+    grip.classList.add('is-dragging');
   }
 
   function onPointerMove(event) {
@@ -246,25 +263,25 @@ async function init(modelBuf) {
     dragging = false;
     // Fling: convert the last pointer velocity (px/s) into rad/s, same mapping as spinFromDrag.
     if (moveT && performance.now() - moveT < 80) {
-      const span = canvas.clientWidth || 1;
+      const span = grip.clientWidth || 1;
       const cap = Math.PI * 4;
       velY = Math.max(-cap, Math.min(cap, (moveDx / span) * Math.PI * 2));
       velX = Math.max(-cap, Math.min(cap, (moveDy / span) * Math.PI * 2));
     }
     moveT = 0;
-    if (canvas.hasPointerCapture(event.pointerId)) {
-      canvas.releasePointerCapture(event.pointerId);
+    if (grip.hasPointerCapture(event.pointerId)) {
+      grip.releasePointerCapture(event.pointerId);
     }
-    canvas.classList.remove('is-dragging');
+    grip.classList.remove('is-dragging');
   }
 
-  canvas.addEventListener('pointerdown', onPointerDown);
-  canvas.addEventListener('pointermove', onPointerMove);
-  canvas.addEventListener('pointerup', onPointerUp);
-  canvas.addEventListener('pointercancel', onPointerUp);
-  canvas.addEventListener('lostpointercapture', function () {
+  grip.addEventListener('pointerdown', onPointerDown);
+  grip.addEventListener('pointermove', onPointerMove);
+  grip.addEventListener('pointerup', onPointerUp);
+  grip.addEventListener('pointercancel', onPointerUp);
+  grip.addEventListener('lostpointercapture', function () {
     dragging = false;
-    canvas.classList.remove('is-dragging');
+    grip.classList.remove('is-dragging');
   });
 
   function start() {
@@ -331,6 +348,12 @@ async function init(modelBuf) {
     const box = new THREE.Box3().setFromObject(group);
     const size = box.getSize(new THREE.Vector3()).length();
     group.position.copy(c).negate();
+    let r2 = 0;
+    for (let i = 0; i < n; i++) {
+      const dx = pts[i * 3] - c.x, dy = pts[i * 3 + 1] - c.y, dz = pts[i * 3 + 2] - c.z;
+      const q = dx * dx + dy * dy + dz * dz; if (q > r2) r2 = q;
+    }
+    radius = Math.sqrt(r2);
     const holder = new THREE.Group();
     holder.quaternion.copy(align);
     holder.add(group);
