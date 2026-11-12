@@ -301,11 +301,39 @@ async function init(modelBuf) {
       collectSmoothEdges(geo, ends, normals);
     });
 
+    // The actuator is a stack of round parts exploded along one axis, so the
+    // bounding-box centre is not on that axis. Find the axis as the principal
+    // component of all vertices, centre on the vertex centroid, and align the
+    // axis with the pivot's Y so the spin is concentric.
+    const pts = [];
+    group.traverse((o) => {
+      if (!o.isMesh) return;
+      const a = o.geometry.getAttribute('position');
+      for (let i = 0; i < a.count; i++) pts.push(a.getX(i), a.getY(i), a.getZ(i));
+    });
+    const n = pts.length / 3;
+    const c = new THREE.Vector3();
+    for (let i = 0; i < n; i++) c.x += pts[i * 3], c.y += pts[i * 3 + 1], c.z += pts[i * 3 + 2];
+    c.divideScalar(Math.max(1, n));
+    let xx = 0, xy = 0, xz = 0, yy = 0, yz = 0, zz = 0;
+    for (let i = 0; i < n; i++) {
+      const dx = pts[i * 3] - c.x, dy = pts[i * 3 + 1] - c.y, dz = pts[i * 3 + 2] - c.z;
+      xx += dx * dx; xy += dx * dy; xz += dx * dz; yy += dy * dy; yz += dy * dz; zz += dz * dz;
+    }
+    // power iteration for the dominant eigenvector
+    let ax = new THREE.Vector3(1, 1, 1).normalize();
+    for (let k = 0; k < 64; k++) {
+      ax.set(xx * ax.x + xy * ax.y + xz * ax.z, xy * ax.x + yy * ax.y + yz * ax.z, xz * ax.x + yz * ax.y + zz * ax.z).normalize();
+    }
+    if (ax.y < 0) ax.negate();
+    const align = new THREE.Quaternion().setFromUnitVectors(ax, new THREE.Vector3(0, 1, 0));
     const box = new THREE.Box3().setFromObject(group);
-    const center = box.getCenter(new THREE.Vector3());
     const size = box.getSize(new THREE.Vector3()).length();
-    group.position.sub(center);
-    pivot.add(group);
+    group.position.copy(c).negate();
+    const holder = new THREE.Group();
+    holder.quaternion.copy(align);
+    holder.add(group);
+    pivot.add(holder);
     model = group;
 
     smooth = { ends: new Float32Array(ends), normals: new Float32Array(normals), count: ends.length / 6 };
