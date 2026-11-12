@@ -645,7 +645,8 @@
     function frame(now) {
       var dt = last ? Math.min(0.05, (now - last) / 1000) : 0;
       last = now;
-      if (!reduceMotion.matches) pos += speed() * dt;
+      var held = dragId !== null || touchX !== null;
+      if (!reduceMotion.matches && !held) pos += speed() * dt; // frozen to the pointer while held
       if (vel !== 0) {
         pos += vel * dt;
         vel *= Math.exp(-FRICTION * dt);
@@ -669,7 +670,7 @@
 
     // Drag: mouse. Pointer capture keeps delivering moves/ups even when the
     // cursor leaves the window; blur/visibility change end the drag too.
-    var dragId = null, dragX = 0;
+    var dragId = null, dragX = 0, touchX = null;
     function endDrag() {
       if (dragId === null) return;
       fling();
@@ -697,7 +698,6 @@
     window.addEventListener('blur', endDrag);
     document.addEventListener('visibilitychange', endDrag);
     // Drag: touch (the page pager ignores horizontal gestures that start here)
-    var touchX = null;
     viewport.addEventListener('touchstart', function (e) {
       if (e.touches.length === 1) { touchX = e.touches[0].clientX; vel = 0; lastMoveT = 0; }
     }, { passive: true });
