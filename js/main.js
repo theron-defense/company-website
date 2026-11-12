@@ -619,9 +619,7 @@
       track.appendChild(clone);
     });
 
-    // Single-row (landscape) strip has far more width per loop; move it faster.
-    var oneRow = window.matchMedia('(orientation: landscape) and (min-width: 768px)');
-    function speed() { return oneRow.matches ? 90 : 60; } // px per second
+    function speed() { return 90; } // px per second
     var pos = 0, last = 0;
 
     function half() { return track.scrollWidth / 2; }
