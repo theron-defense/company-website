@@ -3,6 +3,7 @@ index.html as SVG masks made of glyph PATHS, so they render identically in
 every browser (SVG <text> inside <mask> is unreliable on Brave/Android etc).
 
 Run from repo root:  uv run --with fonttools python scripts/build-labels.py
+Output is a single evenodd compound path per label (no mask/text/ids).
 Font: .tools/fonts/IBMPlexMono-SemiBold.ttf (IBM Plex Mono, OFL).
 """
 import re, os, sys
@@ -34,7 +35,7 @@ def label_svg(mask_id, text):
         g = cmap[ord(ch)]
         pen = SVGPathPen(glyphs)
         # flip y, scale to viewBox units, translate to pen position
-        glyphs[g].draw(TransformPen(pen, (scale, 0, 0, -scale, adv, BASE)))
+        glyphs[g].draw(TransformPen(pen, (scale, 0, 0, -scale, adv + PAD, BASE)))
         p = pen.getCommands()
         if p:
             d_parts.append(p)
@@ -43,11 +44,13 @@ def label_svg(mask_id, text):
     w = round(adv + 2 * PAD, 1)
     # shift paths right by PAD
     d = ' '.join(d_parts)
+    # One compound path: the block rectangle plus every glyph outline, filled
+    # with the even-odd rule so the letters are holes. No <mask>, no <text>,
+    # no ids -- nothing a mobile browser can get wrong.
+    rect = 'M0 0H{w}V{h}H0Z'.format(w=w, h=H)
+    d = rect + ' ' + ' '.join(d_parts)
     return ('<svg viewBox="0 0 {w} {h}" width="{w}" height="{h}" aria-hidden="true">'
-            '<mask id="{m}"><rect width="{w}" height="{h}" fill="#fff"/>'
-            '<path transform="translate({pad} 0)" fill="#000" d="{d}"/></mask>'
-            '<rect width="{w}" height="{h}" fill="currentColor" mask="url(#{m})"/></svg>').format(
-                w=w, h=H, m=mask_id, pad=PAD, d=d)
+            '<path fill="currentColor" fill-rule="evenodd" d="{d}"/></svg>').format(w=w, h=H, d=d)
 
 s = open(HTML, newline='').read()
 n = 0
@@ -55,12 +58,12 @@ def repl_panel(m):
     global n; n += 1
     label = m.group(1)
     return '<p class="product-index reveal" aria-label="%s">%s</p>' % (label, label_svg('pi-%d' % n, label))
-s = re.sub(r'<p class="product-index reveal" aria-label="([^"]+)"><svg.*?</svg></p>', repl_panel, s)
+s = re.sub(r'<p class="product-index reveal" aria-label="([^"]+)"><svg.*?</svg></p>', repl_panel, s, flags=re.S)
 k = 0
 def repl_f(m):
     global k; k += 1
     return '<p class="founder-mark" aria-label="Founder">%s</p>' % label_svg('fm-%d' % k, 'Founder')
-s = re.sub(r'<p class="founder-mark" aria-label="Founder"><svg.*?</svg></p>', repl_f, s)
+s = re.sub(r'<p class="founder-mark" aria-label="Founder"><svg.*?</svg></p>', repl_f, s, flags=re.S)
 assert n == 5 and k == 2, (n, k)
 s = re.sub(r'css/styles\.css\?v=(\d+)', lambda m: 'css/styles.css?v=%d' % (int(m.group(1)) + 1), s)
 open(HTML, 'w', newline='').write(s)

@@ -618,9 +618,6 @@
       var clone = card.cloneNode(true);
       clone.setAttribute('aria-hidden', 'true');
       clone.querySelectorAll('[id]').forEach(function (el) { el.id = el.id + '-dup'; });
-      clone.querySelectorAll('[mask]').forEach(function (el) {
-        el.setAttribute('mask', el.getAttribute('mask').replace(')', '-dup)'));
-      });
       track.appendChild(clone);
     });
 
