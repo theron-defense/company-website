@@ -546,10 +546,6 @@ main p {
     min-height: min(72svh, 36rem);
   }
 
-  .team-section.snap-pane {
-    padding-top: 72px;
-  }
-
   .founder-pane-copy {
     --founder-copy-inset: 0.65rem;
   }
