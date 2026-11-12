@@ -533,6 +533,15 @@ main p {
   text-decoration: none;
 }
 
+/* Placeholder keeping name/role at the same height on cards without a link. */
+.founder-social--empty {
+  pointer-events: none;
+}
+
+.founder-social--empty::before {
+  content: " a0"; /* nbsp: same line box as the link text */
+}
+
 .founder-social:hover {
   color: #fff;
 }
