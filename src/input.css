@@ -539,7 +539,7 @@ main p {
 }
 
 .founder-social--empty::before {
-  content: " a0"; /* nbsp: same line box as the link text */
+  content: " "; /* nbsp: same line box as the link text */
 }
 
 .founder-social:hover {
