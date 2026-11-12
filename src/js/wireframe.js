@@ -60,6 +60,15 @@ async function init(modelBuf) {
   let velY = 0, velX = 0;
   let moveT = 0, moveDx = 0, moveDy = 0;
   const FRICTION = 2.6;
+  // Trackball rotation about WORLD axes (premultiply), so there is no pitch
+  // limit and no gimbal flip: keep dragging in any direction forever.
+  const _q = new THREE.Quaternion();
+  const WORLD_X = new THREE.Vector3(1, 0, 0);
+  const WORLD_Y = new THREE.Vector3(0, 1, 0);
+  function turn(yaw, pitch) {
+    if (yaw) pivot.quaternion.premultiply(_q.setFromAxisAngle(WORLD_Y, yaw));
+    if (pitch) pivot.quaternion.premultiply(_q.setFromAxisAngle(WORLD_X, pitch));
+  }
 
   function frame() {
     const pull = camera.aspect >= 1
@@ -189,13 +198,9 @@ async function init(modelBuf) {
     if (!dragging) {
       const idleSpeed = FAST + (CRUISE - FAST) * settled;
       const scrollSpin = (dTop / vh) * Math.PI * 2 * 0.18 * (1 - settled);
-      pivot.rotation.y += dt * idleSpeed + scrollSpin;
+      turn(dt * idleSpeed + scrollSpin, 0);
       if (velY || velX) {
-        pivot.rotation.y += velY * dt;
-        pivot.rotation.x += velX * dt;
-        const limit = Math.PI / 2 - 0.06;
-        if (pivot.rotation.x > limit) { pivot.rotation.x = limit; velX = 0; }
-        if (pivot.rotation.x < -limit) { pivot.rotation.x = -limit; velX = 0; }
+        turn(velY * dt, velX * dt);
         const k = Math.exp(-FRICTION * dt);
         velY *= k; velX *= k;
         if (Math.abs(velY) < 0.02) velY = 0;
@@ -208,11 +213,7 @@ async function init(modelBuf) {
 
   function spinFromDrag(dx, dy) {
     const span = canvas.clientWidth || 1;
-    pivot.rotation.y += (dx / span) * Math.PI * 2;
-    pivot.rotation.x += (dy / span) * Math.PI * 2;
-    const limit = Math.PI / 2 - 0.06;
-    if (pivot.rotation.x > limit) pivot.rotation.x = limit;
-    if (pivot.rotation.x < -limit) pivot.rotation.x = -limit;
+    turn((dx / span) * Math.PI * 2, (dy / span) * Math.PI * 2);
     render();
   }
 
