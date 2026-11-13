@@ -614,11 +614,41 @@
     if (!track || !viewport) return;
 
     var originals = Array.prototype.slice.call(track.children);
-    originals.forEach(function (card) {
-      var clone = card.cloneNode(true);
-      clone.setAttribute('aria-hidden', 'true');
-      clone.querySelectorAll('[id]').forEach(function (el) { el.id = el.id + '-dup'; });
-      track.appendChild(clone);
+    // In the 2-row grid an odd card count leaves the last column half full, so
+    // the cloned set starts one row down and the loop point doesn't line up
+    // (visible jump). Pad each set to a whole number of columns.
+    function rowsNow() {
+      var v = getComputedStyle(track).getPropertyValue('--team-rows');
+      return parseInt(v, 10) || 1;
+    }
+    var spacers = [];
+    function padSet() {
+      spacers.forEach(function (sp) { sp.remove(); });
+      spacers = [];
+      Array.prototype.slice.call(track.querySelectorAll('.founder-pane--clone')).forEach(function (c) { c.remove(); });
+      var rows = rowsNow();
+      var rem = originals.length % rows;
+      if (rem) {
+        for (var i = 0; i < rows - rem; i++) {
+          var sp = document.createElement('div');
+          sp.className = 'founder-pane founder-pane--spacer';
+          sp.setAttribute('aria-hidden', 'true');
+          track.appendChild(sp); spacers.push(sp);
+        }
+      }
+      Array.prototype.slice.call(track.children).forEach(function (card) {
+        var clone = card.cloneNode(true);
+        clone.classList.add('founder-pane--clone');
+        clone.setAttribute('aria-hidden', 'true');
+        clone.querySelectorAll('[id]').forEach(function (el) { el.id = el.id + '-dup'; });
+        track.appendChild(clone);
+      });
+    }
+    padSet();
+    var lastRows = rowsNow();
+    window.addEventListener('resize', function () {
+      var r = rowsNow();
+      if (r !== lastRows) { lastRows = r; padSet(); pos = 0; }
     });
 
     function speed() { return 90; } // px per second

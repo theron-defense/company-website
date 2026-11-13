@@ -418,6 +418,10 @@ main p {
   }
 }
 
+.founder-pane--spacer {
+  background: #000;
+}
+
 .founder-pane-media img {
   -webkit-user-drag: none;
 }
