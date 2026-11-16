@@ -936,7 +936,7 @@ main p {
 
 .product-panel--ai-viz,
 .product-panel--ai-viz .product-panel-media {
-  background: #171821;
+  background: #161720; /* measured from the clip's background */
 }
 
 .product-panel--ai-viz .product-panel-media {
@@ -952,6 +952,10 @@ main p {
   max-height: 88vh;
   margin: 0 auto;
   object-fit: contain;
+  /* Feather the edges: the clip's near-black bg decodes a step lighter on some
+     displays (limited-range BT.709), which otherwise shows as a square. */
+  -webkit-mask-image: radial-gradient(circle closest-side at 50% 50%, #000 60%, transparent 100%);
+  mask-image: radial-gradient(circle closest-side at 50% 50%, #000 60%, transparent 100%);
 }
 
 .product-panel--ai-viz .product-panel-copy,
